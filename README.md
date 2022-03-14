@@ -28,4 +28,4 @@ jim command_name
 - __exit doesn't close the shell__
 - __add aliases when user clicks y__
 - __--ls with params__
-
+- __find def shell__

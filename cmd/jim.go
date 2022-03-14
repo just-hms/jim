@@ -23,7 +23,7 @@ func run(command models.Command) {
 	if runtime.GOOS == "windows" {
 		c = exec.Command("powershell", "-c", command.Value)
 	} else {
-		exec.Command(command.Value)
+		c = exec.Command("sh", "-c", command.Value)
 	}
 
 	c.Stdin = os.Stdin
@@ -133,6 +133,13 @@ var actions = map[string]*Action{
 	},
 	"--add": {
 		Value: func(args []string) {
+
+			to_search := models.Command{}
+
+			if err := models.DB().Where("name = ?", args[0]).First(&to_search).Error; err == nil {
+				Alertf("a command named %s already exists!!!\n", args[0])
+				return
+			}
 
 			args[1] = strings.Replace(args[1], "$", utils.CurrentFolder(), -1)
 
