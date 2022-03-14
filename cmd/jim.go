@@ -7,29 +7,33 @@ import (
 	"jim/utils"
 	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 	"time"
 
 	"github.com/fatih/color"
 )
 
-/*
-	TODO:
-	- maybe join all args after --shit where it's needed
-	- change default shell to execute
-	- exit doesn't work
-*/
-
 func run(command models.Command) {
 	command.LastTouched = time.Now()
 	models.DB().Save(&command)
 
-	c := exec.Command("powershell", "-c", command.Value)
+	var c *exec.Cmd
+
+	if runtime.GOOS == "windows" {
+		c = exec.Command("powershell", "-c", command.Value)
+	} else {
+		exec.Command(command.Value)
+	}
+
 	c.Stdin = os.Stdin
 	c.Stdout = os.Stdout
 	c.Stderr = os.Stderr
 
 	if err := c.Run(); err != nil {
+
+		fmt.Println(err.Error())
+
 		if exitError, ok := err.(*exec.ExitError); ok {
 
 			exitCode := exitError.ExitCode()
@@ -37,7 +41,7 @@ func run(command models.Command) {
 			// TODO exit doesn't work
 
 			if exitCode == 1 {
-				fmt.Println("exit 1 test")
+				Alertf("exit 1 test")
 				go func() { os.Exit(0) }()
 				func() {}()
 			}
