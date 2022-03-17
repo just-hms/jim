@@ -23,7 +23,15 @@ func run(command models.Command) {
 	if runtime.GOOS == "windows" {
 		c = exec.Command("powershell", "-c", command.Value)
 	} else {
-		c = exec.Command("sh", "-c", command.Value)
+
+		shell, err := os.LookupEnv("$SHELL")
+
+		if !err {
+			Alertf("no shell found!!!")
+			return
+		}
+
+		c = exec.Command(shell, "-c", command.Value)
 	}
 
 	c.Stdin = os.Stdin

@@ -37,20 +37,5 @@ func Build() {
 
 	DB().AutoMigrate(
 		&Command{},
-		&Shell{},
 	)
-
-	// TODO : edit this
-	var shell Shell
-
-	if err := DB().First(&shell).Error; err == nil {
-		return
-	}
-
-	shell = Shell{
-		Name:      "powershell",
-		IsDefault: true,
-	}
-
-	DB().Create(&shell)
 }
