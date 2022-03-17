@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"sort"
 	"strings"
 	"time"
 
@@ -179,6 +180,23 @@ var actions = map[string]*Action{
 		Description:  "modify a specified command",
 		ArgumentsLen: 2,
 	},
+	"--modi": {
+		Value: func(args []string) {
+			args[1] = strings.Replace(args[1], "$", utils.CurrentFolder(), -1)
+
+			command := models.Command{}
+
+			if err := models.DB().Where("id = ?", args[0]).First(&command).Error; err != nil {
+				Alertf("id not found")
+				return
+			}
+
+			command.Value = args[1]
+			models.DB().Save(&command)
+		},
+		Description:  "modify a command ny id",
+		ArgumentsLen: 2,
+	},
 	"--rm": {
 		Value: func(args []string) {
 			command := models.Command{}
@@ -190,6 +208,20 @@ var actions = map[string]*Action{
 			models.DB().Unscoped().Delete(&command)
 		},
 		Description:  "remove a command",
+		ArgumentsLen: 1,
+	},
+	"--rmi": {
+		Value: func(args []string) {
+			command := models.Command{}
+
+			if err := models.DB().Where("id = ?", args[0]).First(&command).Error; err != nil {
+				Alertf("id not found")
+				return
+			}
+
+			models.DB().Unscoped().Delete(&command)
+		},
+		Description:  "remove a command by id",
 		ArgumentsLen: 1,
 	},
 	"--cls": {
@@ -267,8 +299,15 @@ func main() {
 
 			Titlef("%-20s%-20s\n", "Command", "Descripion")
 
-			for key, value := range actions {
-				fmt.Printf("%-20s%-20s\n", key, value.Description)
+			keys := make([]string, 0, len(actions))
+			for k := range actions {
+				keys = append(keys, k)
+			}
+
+			sort.Strings(keys)
+
+			for _, key := range keys {
+				fmt.Printf("%-20s%-20s\n", key, actions[key].Description)
 			}
 		},
 		Description:  "list of all possible actions and their descriprion",
