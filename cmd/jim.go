@@ -15,14 +15,14 @@ import (
 	"github.com/fatih/color"
 )
 
-func run(command models.Command) {
+func run(command models.Command, args string) {
 	command.LastTouched = time.Now()
 	models.DB().Save(&command)
 
 	var c *exec.Cmd
 
 	if runtime.GOOS == "windows" {
-		c = exec.Command("powershell", "-c", command.Value)
+		c = exec.Command("powershell", "-c", command.Value, args)
 	} else {
 
 		shell, err := os.LookupEnv("$SHELL")
@@ -32,7 +32,7 @@ func run(command models.Command) {
 			return
 		}
 
-		c = exec.Command(shell, "-c", command.Value)
+		c = exec.Command(shell, "-c", command.Value, args)
 	}
 
 	c.Stdin = os.Stdin
@@ -246,11 +246,11 @@ var actions = map[string]*Action{
 				return
 			}
 
-			run(command)
+			run(command, args[1])
 
 		},
 		Description:  "run a command",
-		ArgumentsLen: 1,
+		ArgumentsLen: 2,
 	},
 	"--rn": {
 		Value: func(args []string) {
@@ -271,20 +271,6 @@ var actions = map[string]*Action{
 		},
 		Description:  "rename a command",
 		ArgumentsLen: 2,
-	},
-	"--cache": {
-		Value: func(args []string) {
-			command := models.Command{}
-
-			if err := models.DB().Order("last_touched").First(&command).Error; err != nil {
-				fmt.Println("...")
-				return
-			}
-
-			run(command)
-		},
-		Description:  "run the last touched command",
-		ArgumentsLen: 0,
 	},
 }
 
@@ -333,7 +319,10 @@ func main() {
 
 		// TODO : somthing like append([]string{command}, args...),
 
-		actions["--run"].Value([]string{command})
+		actions["--run"].Value([]string{
+			command,
+			strings.Join(args, " "),
+		})
 		return
 	}
 
