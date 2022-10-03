@@ -15,17 +15,11 @@ jim --add command_name "command"
 jim command_name
 ```
 
-# todo 🚀
+# to-do 🚀
 
-- __pass arguments to aliases__
-
-    --run should accept args
-
-- __change default shell__
-
-    maybe check for errors and try to find one that works from the defaults
-    
-- __exit doesn't close the shell__
-- __add aliases when user clicks y__
-- __--ls with params__
-- __find def shell__
+- __add aliases when user clicks y?__
+- __add a file__
+- __--ls with parameters__
+- __multiple delete on rm and rmi__
+- __add parameters__
+- __add a hook for last touched__
