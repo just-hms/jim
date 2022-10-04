@@ -29,14 +29,16 @@ func init() {
 		"cls":  Clear,
 		"run":  Run,
 		"rn":   Rename,
+		"help": Help,
 	}
 
-	Actions["help"] = Help
+	var newActions = map[string]*Action{}
 
 	for k := range Actions {
-		Actions[utils.ACTION_PREFIX+k] = Actions[k]
-		Actions[k] = nil
+		newActions[utils.ACTION_PREFIX+k] = Actions[k]
 	}
+
+	Actions = newActions
 
 }
 
