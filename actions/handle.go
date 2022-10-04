@@ -97,6 +97,5 @@ func FindCommandByName(name string, command *models.Command) error {
 }
 
 func ArgumentsLenCorresponds(action *Action, args []string) bool {
-
 	return action.ArgumentsLen == len(args) || action.ArgumentsLen == utils.CUSTOM_ARGUMENTS_LEN
 }

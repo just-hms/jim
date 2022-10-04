@@ -23,3 +23,5 @@ jim command_name
 - __multiple delete on rm and rmi__
 - __add parameters__
 - __add a hook for last touched__
+- __--link to link two or more scripts__
+- __build --help --add__
