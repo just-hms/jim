@@ -53,7 +53,6 @@ func run(command models.Command, args string) {
 	c.Stderr = os.Stderr
 
 	if err := c.Run(); err != nil {
-
 		fmt.Println(err.Error())
 	}
 }

@@ -27,7 +27,7 @@ var List = &Action{
 
 		if len(args) == 1 {
 			for i := range commands {
-				if strings.Contains(commands[i].Value, args[0]) {
+				if strings.Contains(commands[i].Name, args[0]) {
 					filtered = append(filtered, commands[i])
 				}
 			}
