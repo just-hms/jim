@@ -25,3 +25,5 @@ jim command_name
 - __add a hook for last touched__
 - __--link to link two or more scripts__
 - __build --help --add__
+- __NoSQL DB to create jim edit__
+
