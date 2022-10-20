@@ -19,10 +19,10 @@ jobs:
         uses: thatisuday/go-build-action@v1
         with:
           platforms: "linux/amd64, darwin/amd64, windows/amd64"
-          package: "jim"
-          name: "jim"
-          compress: "true"
-          dest: "dist"
+          package: jim
+          name: jim
+          compress: true
+          dest: dist
 
       - name: Copy build-artifacts
         uses: skx/github-action-publish-binaries@master
