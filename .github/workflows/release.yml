@@ -16,10 +16,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate build files
-        uses: thatisuday/go-build-action@v1
+        uses: thatisuday/go-build-action@v1.0.2
         with:
-          # platforms: "linux/amd64, darwin/amd64, windows/amd64"
-          platforms: "linux/amd64"
+          platforms: "linux/amd64, darwin/amd64, windows/amd64"
           package: ""
           name: "jim"
           compress: "true"
