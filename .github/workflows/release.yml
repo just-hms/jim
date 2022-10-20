@@ -15,17 +15,14 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run : go get
-        
       - name: Generate build files
         uses: thatisuday/go-build-action@v1
         with:
           platforms: "linux/amd64, darwin/amd64, windows/amd64"
-          package: ''
-          name: jim
-          compress: true
-          dest: dist
+          package: ""
+          name: "jim"
+          compress: "true"
+          dest: "dist"
 
       - name: Copy build-artifacts
         uses: skx/github-action-publish-binaries@master
