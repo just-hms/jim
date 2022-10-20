@@ -3,12 +3,15 @@ package actions
 import (
 	"jim/models"
 	"jim/utils"
-	"strings"
 	"time"
 )
 
 var Add = &Action{
 	Value: func(args []string) {
+
+		if len(args) != 1 && len(args) != 2 {
+			utils.Alertf("wrong format!!!")
+		}
 
 		to_search := models.Command{}
 
@@ -17,12 +20,15 @@ var Add = &Action{
 			return
 		}
 
-		args[1] = strings.Replace(args[1], utils.CURRENT_FOLDER_FLAG, utils.CurrentFolder(), -1)
+		command_value, err := utils.GetCommandFromArgs(args, "")
+
+		if err != nil {
+			utils.Alertf(err.Error())
+		}
 
 		command := models.Command{
-			Name:        args[0],
-			Value:       args[1],
-			LastTouched: time.Now(),
+			Name:  args[0],
+			Value: command_value,
 		}
 
 		models.DB().Create(&command)
@@ -30,5 +36,5 @@ var Add = &Action{
 	},
 	Description:     "add a command",
 	HelpDescription: "wp",
-	ArgumentsLen:    2,
+	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
 }

@@ -29,7 +29,6 @@ var Run = &Action{
 
 func run(command models.Command, args string) {
 
-	command.LastTouched = time.Now()
 	models.DB().Save(&command)
 
 	var c *exec.Cmd

@@ -20,17 +20,19 @@ var Actions = map[string]*Action{}
 func init() {
 
 	Actions = map[string]*Action{
-		"ls":   List,
-		"add":  Add,
-		"mod":  Mod,
-		"modi": ModById,
-		"rm":   Remove,
-		"rmi":  RemoveById,
-		"cls":  Clear,
-		"run":  Run,
-		"rn":   Rename,
-		"help": Help,
+		"ls":    List,
+		"add":   Add,
+		"edit":  Mod,
+		"editi": ModById,
+		"rm":    Remove,
+		"rmi":   RemoveById,
+		"clear": Clear,
+		"run":   Run,
+		"rn":    Rename,
+		"help":  Help,
 	}
+
+	// add prefix to actions hook
 
 	var newActions = map[string]*Action{}
 
@@ -41,6 +43,8 @@ func init() {
 	Actions = newActions
 
 }
+
+// returns error if no command was found
 
 func FindCommandByName(name string, command *models.Command) error {
 
@@ -82,7 +86,7 @@ func FindCommandByName(name string, command *models.Command) error {
 
 	}
 
-	if max_lev_rateo >= 0.80 {
+	if max_lev_rateo >= utils.MIN_ACCEPTABLE_LEV_RATEO {
 		return nil
 	}
 

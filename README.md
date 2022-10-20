@@ -17,13 +17,13 @@ jim command_name
 
 # to-do 🚀
 
-- __add aliases when user clicks y?__
-- __add a file__
-- __--ls with parameters__
+- __put the file input into a published something__
+- __check arguments with a fun specified in the Action__
+- __add default Args checkers__
+
 - __multiple delete on rm and rmi__
-- __add parameters__
+
 - __add a hook for last touched__
-- __--link to link two or more scripts__
 - __build --help --add__
 - __NoSQL DB to create jim edit__
 

@@ -37,8 +37,14 @@ var List = &Action{
 
 		utils.Titlef(" %-10s%-30s%-1s\n", "ID", "Name", "Comand")
 
+		substring := "\n                                         "
+
 		for _, v := range filtered {
-			fmt.Printf(" %-10d%-30s%-1s\n", v.ID, v.Name, v.Value)
+
+			trimed := strings.Trim(v.Value, "\n")
+			replaced := strings.Replace(trimed, "\n", substring, -1)
+
+			fmt.Printf(" %-10d%-30s%-1s\n", v.ID, v.Name, replaced)
 		}
 
 	},
