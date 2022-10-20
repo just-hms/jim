@@ -10,21 +10,19 @@ var Help = &Action{
 
 	Value: func(args []string) {
 
-		fmt.Println("The jim command line utility enables running long commands with one word")
-		fmt.Println("")
-
-		fmt.Printf("usage:\n")
+		fmt.Print(
+			"The jim command line utility enables running long commands with one word\n\n",
+			"usage:\n",
+		)
 
 		utils.Titlef("           jim [%s<action>] [<arguments>]\n", utils.ACTION_PREFIX)
-		utils.Commentf("           to edit your commands\n")
-		fmt.Println("")
+		utils.Commentf("           to edit your commands\n\n")
 
 		utils.Titlef("           jim %srun command\n", utils.ACTION_PREFIX)
 		fmt.Println("      or")
 
 		utils.Titlef("           jim command\n")
-		utils.Commentf("           to launch a command\n")
-		fmt.Println("")
+		utils.Commentf("           to launch a command\n\n")
 
 		fmt.Println("The following Actions are available")
 
@@ -49,8 +47,8 @@ var Help = &Action{
 		fmt.Println("")
 
 		fmt.Printf("jim will change %s into the current path, try typing:\n", utils.CURRENT_FOLDER_FLAG)
-		utils.Titlef("\n           jim %sadd kek \"code %s\"\n", utils.ACTION_PREFIX, utils.CURRENT_FOLDER_FLAG)
-		utils.Titlef("           jim %sls kek\n\n", utils.ACTION_PREFIX)
+		utils.Titlef("\n           jim %sadd . \"echo %s\"\n", utils.ACTION_PREFIX, utils.CURRENT_FOLDER_FLAG)
+		utils.Titlef("           jim .\n\n")
 		fmt.Printf("and see what happens\n\n")
 
 		fmt.Println("For more details on a specific action, pass it the help argument.")

@@ -105,11 +105,14 @@ func GetCommandFromArgs(args []string, old_command string) (string, error) {
 		command_value, err = fileInput(old_command)
 
 		if err != nil {
-			return "", errors.New("the command cannot be empty")
+			return "", err
 		}
 
 		command_value = strings.TrimSpace(command_value)
 
+		if command_value == "" {
+			return "", errors.New("the command cannot be empty")
+		}
 	} else {
 		command_value = args[1]
 	}
