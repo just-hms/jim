@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/fatih/color"
@@ -58,11 +59,22 @@ func fileInput(file_default_content string) (string, error) {
 	tmpFile.Close()
 
 	// get the default editor
-	editor, found := os.LookupEnv("$EDITOR")
+	var editor string
+	var found bool
 
-	// supposedly on windows you have only notepad???
-	if !found {
+	if runtime.GOOS == "windows" {
 		editor = "notepad"
+
+	} else {
+
+		editor, found = os.LookupEnv("$VISUAL")
+
+		if !found {
+			editor, found = os.LookupEnv("$EDITOR")
+		}
+		if !found {
+			editor = "vi"
+		}
 	}
 
 	// get the default editor path

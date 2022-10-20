@@ -54,6 +54,6 @@ var Help = &Action{
 		fmt.Println("For more details on a specific action, pass it the help argument.")
 
 	},
-	Description:  "list of all 	 Actions and their description",
+	Description:  "list of all actions and their description",
 	ArgumentsLen: 0,
 }

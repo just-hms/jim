@@ -22,7 +22,8 @@ var Add = &Action{
 		command_value, err := utils.GetCommandFromArgs(args, "")
 
 		if err != nil {
-			utils.Alertf(err.Error())
+			utils.Alertf("%s\n", err.Error())
+			return
 		}
 
 		command := models.Command{

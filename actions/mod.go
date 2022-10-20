@@ -18,7 +18,8 @@ var Mod = &Action{
 		command_value, err := utils.GetCommandFromArgs(args, command.Value)
 
 		if err != nil {
-			utils.Alertf(err.Error())
+			utils.Alertf("%s\n", err.Error())
+			return
 		}
 
 		command.Value = command_value
@@ -42,7 +43,8 @@ var ModById = &Action{
 		command_value, err := utils.GetCommandFromArgs(args, command.Value)
 
 		if err != nil {
-			utils.Alertf(err.Error())
+			utils.Alertf("%s\n", err.Error())
+			return
 		}
 
 		command.Value = command_value
