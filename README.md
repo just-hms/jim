@@ -33,7 +33,7 @@ $ echo "export PATH=/opt/jim:\$PATH" >> ~/.profile
 ## Mac-OS installation
 
 ```sh
-$ wget -O /tmp/jim.tar.gz https://github.com/just-hms/jim/releases/download/v0.0.0/jim-darwin-amd64.tar.gz
+$ curl -o /tmp/jim.tar.gz https://github.com/just-hms/jim/releases/download/v0.0.0/jim-darwin-amd64.tar.gz
 $ sudo mkdir -p /opt/jim
 $ sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
 $ echo "export PATH=/opt/jim:\$PATH" >> ~/.profile
