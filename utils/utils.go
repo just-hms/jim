@@ -67,10 +67,10 @@ func fileInput(file_default_content string) (string, error) {
 
 	} else {
 
-		editor, found = os.LookupEnv("$VISUAL")
+		editor, found = os.LookupEnv("VISUAL")
 
 		if !found {
-			editor, found = os.LookupEnv("$EDITOR")
+			editor, found = os.LookupEnv("EDITOR")
 		}
 		if !found {
 			editor = "vi"

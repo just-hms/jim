@@ -1,8 +1,9 @@
 package models
 
 import (
-	"jim/utils"
+	"os"
 	"path/filepath"
+	"runtime"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -17,7 +18,19 @@ func DB() (db *gorm.DB) {
 		return database
 	}
 
-	dbName := filepath.Join(utils.ExecutableFolder(), "jim.db")
+	dbFolder := ""
+
+	if runtime.GOOS == "windows" {
+		dbFolder, _ = os.LookupEnv("APPDATA")
+		dbFolder = filepath.Join(dbFolder, "/jim")
+	} else {
+		dbFolder, _ = os.LookupEnv("HOME")
+		dbFolder = filepath.Join(dbFolder, "/.local/share/jim")
+	}
+
+	os.MkdirAll(dbFolder, os.ModePerm)
+
+	dbName := filepath.Join(dbFolder, "/jim.db")
 
 	db, err := gorm.Open(sqlite.Open(dbName), &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,

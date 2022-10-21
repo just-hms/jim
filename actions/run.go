@@ -36,7 +36,7 @@ func run(command models.Command, args string) {
 		c = exec.Command("powershell", "-c", command.Value, args)
 	} else {
 
-		shell, err := os.LookupEnv("$SHELL")
+		shell, err := os.LookupEnv("SHELL")
 
 		if !err {
 			utils.Alertf("no shell found!!!")
