@@ -18,20 +18,17 @@ $ setx
 ## Linux installation
 
 ```sh
-
-$ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-linux-amd64.tar.gz > /tmp/jim.tar.gz 
+$ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-linux-amd64.tar.gz > /tmp/jim.tar.gz
 $ sudo mkdir -p /opt/jim
 $ sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
-$ sudo sh -c 'grep -qxF "export PATH=/opt/jim:\$PATH" /etc/profile || echo "export PATH=/opt/jim:\$PATH" >> /etc/profile'
+$ sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```
 
 ## Mac-OS installation
 
 ```sh
-$ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-darwin-amd64.tar.gz > /tmp/jim.tar.gz 
+$ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-darwin-amd64.tar.gz > /tmp/jim.tar.gz
 $ sudo mkdir -p /opt/jim
 $ sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
-$ sudo sh -c 'grep -qxF "export PATH=/opt/jim:\$PATH" /etc/profile || echo "export PATH=/opt/jim:\$PATH" >> /etc/profile'
+$ sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```
-
-
