@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -39,6 +40,7 @@ func DB() (db *gorm.DB) {
 	})
 
 	if err != nil {
+		fmt.Println(err)
 		panic("failed to connect database")
 	}
 
