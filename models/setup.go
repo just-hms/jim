@@ -40,7 +40,7 @@ func DB() (db *gorm.DB) {
 	})
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 		panic("failed to connect database")
 	}
 
