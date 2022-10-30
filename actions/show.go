@@ -48,7 +48,7 @@ var Show = &Action{
 		fmt.Printf("\n Total := %s\n", time.Duration(total))
 
 	},
-	Description:     "run a command and watch it",
+	Description:     "show the wathing results",
 	HelpDescription: "wp",
 	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
 }
