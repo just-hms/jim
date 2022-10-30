@@ -23,10 +23,10 @@ $ sudo mkdir -p /opt/jim && sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
 $ sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```
 
-## Mac-OS installation
+<!-- ## Mac-OS installation
 
 ```sh
 $ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-darwin-amd64.tar.gz > /tmp/jim.tar.gz
 $ sudo mkdir -p /opt/jim && sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
 $ sudo ln -s /opt/jim/jim /usr/local/bin/jim
-```
+``` --> 
