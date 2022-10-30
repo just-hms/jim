@@ -8,16 +8,11 @@ import (
 	"os/exec"
 	"runtime"
 	"strings"
+	"time"
 )
 
-var Run = &Action{
+var Watch = &Action{
 	Value: func(args []string) {
-
-		if len(args) != 1 && len(args) != 2 {
-			utils.Alertf("wrong format!!!")
-			return
-		}
-
 		command := models.Command{}
 
 		if err := FindCommandByName(args[0], &command); err != nil {
@@ -25,18 +20,19 @@ var Run = &Action{
 		}
 
 		if len(args) == 2 {
-			run(command, strings.Join(args[1:], " "))
+			watch(command, strings.Join(args[1:], " "))
 			return
 		}
 
-		run(command, "")
+		watch(command, "")
+
 	},
-	Description:     "run a command (not required)",
+	Description:     "run a command and watch it",
 	HelpDescription: "wp",
 	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
 }
 
-func run(command models.Command, args string) {
+func watch(command models.Command, args string) {
 
 	models.DB().Save(&command)
 
@@ -44,7 +40,8 @@ func run(command models.Command, args string) {
 
 	if runtime.GOOS == "windows" {
 
-		c = exec.Command("powershell", "-c", command.Value, args)
+		c = exec.Command("powershell", "-c", "Measure-Command { "+command.Value+"}", args)
+
 	} else {
 
 		shell, err := os.LookupEnv("SHELL")
@@ -54,14 +51,26 @@ func run(command models.Command, args string) {
 			return
 		}
 
-		c = exec.Command(shell, "-c", command.Value, args)
+		c = exec.Command("time", shell, "-c", command.Value, args)
 	}
 
 	c.Stdin = os.Stdin
-	c.Stdout = os.Stdout
-	c.Stderr = os.Stderr
+	// c.Stdout = os.Stdout
+	// c.Stderr = os.Stderr
+
+	start := time.Now()
 
 	if err := c.Run(); err != nil {
 		fmt.Println(err.Error())
+		return
 	}
+
+	elapsed := time.Since(start)
+
+	session := models.Session{
+		Elapsed:   elapsed,
+		CommandID: command.ID,
+	}
+
+	models.DB().Create(&session)
 }

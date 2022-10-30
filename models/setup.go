@@ -8,6 +8,7 @@ import (
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"gorm.io/gorm/logger"
 )
 
@@ -52,5 +53,12 @@ func Build() {
 
 	DB().AutoMigrate(
 		&Command{},
+		&Session{},
 	)
+}
+
+// preload all associations (only one level deep)
+
+func Eager() *gorm.DB {
+	return DB().Preload(clause.Associations)
 }

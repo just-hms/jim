@@ -16,7 +16,7 @@ var List = &Action{
 		}
 
 		commands := []models.Command{}
-		models.DB().Table("commands").Scan(&commands)
+		models.DB().Find(&commands)
 
 		if len(commands) == 0 {
 			fmt.Println("...")

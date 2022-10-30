@@ -69,6 +69,7 @@ func fileInput(file_default_content string) (string, error) {
 
 		editor, found = os.LookupEnv("VISUAL")
 
+		// this doesn't work
 		if !found {
 			editor, found = os.LookupEnv("EDITOR")
 		}

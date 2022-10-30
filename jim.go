@@ -37,7 +37,6 @@ func main() {
 	if action == nil {
 
 		// if no action  was found call the run command
-		// TODO : check this
 		actions.Run.Value([]string{
 			command,
 			strings.Join(args, " "),
@@ -58,7 +57,6 @@ func main() {
 		return
 	}
 
-	// call the specified action
-
 	action.Value(args)
+
 }

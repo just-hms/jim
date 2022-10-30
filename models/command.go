@@ -6,6 +6,7 @@ import (
 
 type Command struct {
 	gorm.Model
-	Name  string `gorm:"uniqueIndex"`
-	Value string
+	Name     string `gorm:"uniqueIndex"` // kek
+	Value    string // code ...
+	Sessions []Session
 }
