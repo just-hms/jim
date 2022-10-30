@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"fmt"
 	"jim/models"
 	"jim/utils"
 	"os"
@@ -30,7 +31,9 @@ var WatchHelper = &Action{
 			c = exec.Command(
 				"powershell",
 				"-c",
-				"Start-Process -NoNewWindow jim \"--bg-watch "+strings.Join(args, " ")+"\"")
+				"Invoke-Expression",
+				"'cmd /c start powershell -windowstyle hidden -c jim --bg-watch "+command.Name+" "+strings.Join(args[1:], " ")+"'",
+			)
 		} else {
 
 			shell, err := os.LookupEnv("SHELL")
@@ -44,6 +47,14 @@ var WatchHelper = &Action{
 				shell,
 				"-c",
 				"nohup jim --bg-watch "+strings.Join(args, " ")+" &")
+		}
+
+		c.Stdin = os.Stdin
+		c.Stdout = os.Stdout
+		c.Stderr = os.Stderr
+
+		if err := c.Run(); err != nil {
+			fmt.Println(err.Error())
 		}
 
 		c.Run()
