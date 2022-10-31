@@ -34,9 +34,9 @@ func main() {
 	// get the action from the command
 	action := actions.Actions[command]
 
+	// if no action  was found call the run command
 	if action == nil {
 
-		// if no action  was found call the run command
 		actions.Run.Value([]string{
 			command,
 			strings.Join(args, " "),
@@ -44,7 +44,8 @@ func main() {
 		return
 	}
 
-	// if the user wrote: "jim --add --help"
+	// if the user wrote: "jim --action --help"
+
 	if len(args) == 1 && args[0] == utils.ACTION_PREFIX+"help" {
 		println(action.HelpDescription)
 		return
@@ -52,11 +53,12 @@ func main() {
 
 	// check if the argument len is correct
 
-	if !actions.ArgumentsLenCorresponds(action, args) {
+	if !action.ArgumentsCheck(args) {
 		utils.Alertf("wrong format!!!")
 		return
 	}
 
+	// call the action
 	action.Value(args)
 
 }

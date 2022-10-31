@@ -134,3 +134,58 @@ func GetCommandFromArgs(args []string, old_command string) (string, error) {
 
 	return command_value, nil
 }
+
+func CrossCmd(arg ...string) (*exec.Cmd, error) {
+
+	var c *exec.Cmd
+
+	if runtime.GOOS == "windows" {
+
+		c = exec.Command(
+			"powershell",
+			append([]string{"-c"}, arg...)...,
+		)
+	} else {
+
+		shell, err := os.LookupEnv("SHELL")
+
+		if !err {
+			return c, errors.New("no shell found")
+		}
+
+		c = exec.Command(
+			shell,
+			append([]string{"-c"}, arg...)...,
+		)
+	}
+
+	return c, nil
+
+}
+
+func DetachedCrossCmd(arg ...string) (*exec.Cmd, error) {
+
+	var (
+		c   *exec.Cmd
+		err error
+	)
+
+	if runtime.GOOS == "windows" {
+		c, err = CrossCmd(
+			"Invoke-Expression",
+
+			"'cmd /c start powershell -windowstyle hidden -c "+
+				strings.Join(arg, " ")+
+				"'",
+		)
+		return c, err
+	}
+
+	c, err = CrossCmd(
+		strings.Join(arg, " "),
+		"& disown",
+	)
+
+	return c, err
+
+}

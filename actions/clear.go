@@ -18,5 +18,7 @@ var Clear = &Action{
 	},
 	Description:     "clear all commands",
 	HelpDescription: "wp",
-	ArgumentsLen:    0,
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 0
+	},
 }

@@ -5,8 +5,6 @@ import (
 	"jim/models"
 	"jim/utils"
 	"os"
-	"os/exec"
-	"runtime"
 	"strings"
 )
 
@@ -33,28 +31,24 @@ var Run = &Action{
 	},
 	Description:     "run a command (not required)",
 	HelpDescription: "wp",
-	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
+
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 1 || len(args) == 2
+	},
 }
 
 func run(command models.Command, args string) {
 
 	models.DB().Save(&command)
 
-	var c *exec.Cmd
+	c, err := utils.CrossCmd(
+		command.Value,
+		args,
+	)
 
-	if runtime.GOOS == "windows" {
-
-		c = exec.Command("powershell", "-c", command.Value, args)
-	} else {
-
-		shell, err := os.LookupEnv("SHELL")
-
-		if !err {
-			utils.Alertf("no shell found!!!")
-			return
-		}
-
-		c = exec.Command(shell, "-c", command.Value, args)
+	if err != nil {
+		utils.Alertf(err.Error())
+		return
 	}
 
 	c.Stdin = os.Stdin

@@ -11,7 +11,7 @@ import (
 type Action struct {
 	Value           func([]string)
 	Description     string
-	ArgumentsLen    int
+	ArgumentsCheck  func([]string) bool
 	HelpDescription string
 }
 
@@ -101,8 +101,4 @@ func FindCommandByName(name string, command *models.Command) error {
 
 	return errors.New("not found")
 
-}
-
-func ArgumentsLenCorresponds(action *Action, args []string) bool {
-	return action.ArgumentsLen == len(args) || action.ArgumentsLen == utils.CUSTOM_ARGUMENTS_LEN
 }

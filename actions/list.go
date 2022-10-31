@@ -10,11 +10,6 @@ import (
 var List = &Action{
 	Value: func(args []string) {
 
-		if len(args) != 0 && len(args) != 1 {
-			utils.Alertf("wrong format!!!")
-			return
-		}
-
 		commands := []models.Command{}
 		models.DB().Find(&commands)
 
@@ -49,6 +44,9 @@ var List = &Action{
 
 	},
 	Description:     "list of all commands",
-	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
 	HelpDescription: "wp",
+
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 0 || len(args) == 1
+	},
 }

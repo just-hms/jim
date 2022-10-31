@@ -8,10 +8,6 @@ import (
 var Add = &Action{
 	Value: func(args []string) {
 
-		if len(args) != 1 && len(args) != 2 {
-			utils.Alertf("wrong format!!!")
-		}
-
 		to_search := models.Command{}
 
 		if err := models.DB().Where("name = ?", args[0]).First(&to_search).Error; err == nil {
@@ -36,5 +32,8 @@ var Add = &Action{
 	},
 	Description:     "add a command",
 	HelpDescription: "wp",
-	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
+
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 1 || len(args) == 2
+	},
 }

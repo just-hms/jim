@@ -24,5 +24,8 @@ var Rename = &Action{
 	},
 	Description:     "rename a command",
 	HelpDescription: "wp",
-	ArgumentsLen:    2,
+
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 2
+	},
 }

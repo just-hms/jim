@@ -27,7 +27,10 @@ var Mod = &Action{
 	},
 	Description:     "modify a specified command",
 	HelpDescription: "wp",
-	ArgumentsLen:    1,
+
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 1
+	},
 }
 
 var ModById = &Action{
@@ -53,5 +56,7 @@ var ModById = &Action{
 	Description:     "modify a command by id",
 	HelpDescription: "wp",
 
-	ArgumentsLen: 1,
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 1
+	},
 }

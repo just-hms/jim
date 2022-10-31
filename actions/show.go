@@ -50,5 +50,8 @@ var Show = &Action{
 	},
 	Description:     "show the wathing results",
 	HelpDescription: "wp",
-	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
+
+	ArgumentsCheck: func(args []string) bool {
+		return true
+	},
 }

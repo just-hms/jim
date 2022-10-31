@@ -8,10 +8,6 @@ import (
 var Remove = &Action{
 	Value: func(args []string) {
 
-		if len(args) < 1 {
-			utils.Alertf("wrong format!!!")
-		}
-
 		for _, arg := range args {
 
 			command := models.Command{}
@@ -26,15 +22,13 @@ var Remove = &Action{
 	Description:     "remove one or more command",
 	HelpDescription: "wp",
 
-	ArgumentsLen: -1,
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) >= 1
+	},
 }
 
 var RemoveById = &Action{
 	Value: func(args []string) {
-
-		if len(args) < 1 {
-			utils.Alertf("wrong format!!!")
-		}
 
 		for _, arg := range args {
 
@@ -52,5 +46,7 @@ var RemoveById = &Action{
 	Description:     "remove one or more command by id",
 	HelpDescription: "wp",
 
-	ArgumentsLen: -1,
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) >= 1
+	},
 }

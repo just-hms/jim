@@ -29,7 +29,10 @@ var Watch = &Action{
 	},
 	Description:     "run a command and watch it",
 	HelpDescription: "wp",
-	ArgumentsLen:    utils.CUSTOM_ARGUMENTS_LEN,
+
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) >= 1
+	},
 }
 
 func watch(command models.Command, args string) {

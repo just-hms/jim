@@ -59,6 +59,8 @@ var Help = &Action{
 		fmt.Println("For more details on a specific action, pass it the help argument.")
 
 	},
-	Description:  "list of all actions and their description",
-	ArgumentsLen: 0,
+	Description: "list of all actions and their description",
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 0
+	},
 }
