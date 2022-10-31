@@ -19,6 +19,7 @@ var Run = &Action{
 		command := models.Command{}
 
 		if err := FindCommandByName(args[0], &command); err != nil {
+			utils.Alertf(err.Error())
 			return
 		}
 

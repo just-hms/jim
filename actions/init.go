@@ -2,7 +2,6 @@ package actions
 
 import (
 	"errors"
-	"fmt"
 	"jim/levenshtein"
 	"jim/models"
 	"jim/utils"
@@ -20,18 +19,19 @@ var Actions = map[string]*Action{}
 func init() {
 
 	Actions = map[string]*Action{
-		"ls":       List,
-		"add":      Add,
-		"edit":     Mod,
-		"editi":    ModById,
-		"rm":       Remove,
-		"rmi":      RemoveById,
-		"clear":    Clear,
-		"run":      Run,
-		"rn":       Rename,
-		"help":     Help,
-		"watch":    WatchHelper,
-		"show":     Show,
+		"ls":    List,
+		"add":   Add,
+		"mod":   Mod,
+		"modi":  ModById,
+		"rm":    Remove,
+		"rmi":   RemoveById,
+		"clear": Clear,
+		"run":   Run,
+		"rn":    Rename,
+		"help":  Help,
+		"watch": WatchHelper,
+		"show":  Show,
+
 		"bg-watch": Watch,
 	}
 
@@ -61,8 +61,7 @@ func FindCommandByName(name string, command *models.Command) error {
 	models.DB().Find(&commands)
 
 	if len(commands) == 0 {
-		fmt.Println("...")
-		return errors.New("commands empty")
+		return errors.New("there is no command yet")
 	}
 
 	max_lev_rateo := 0.0
@@ -84,7 +83,6 @@ func FindCommandByName(name string, command *models.Command) error {
 	}
 
 	if max_lev_rateo == 0 {
-		fmt.Println("...")
 		return errors.New("nothing similiar found")
 
 	}
@@ -99,6 +97,6 @@ func FindCommandByName(name string, command *models.Command) error {
 		return nil
 	}
 
-	return errors.New("not found")
+	return errors.New("command not found")
 
 }

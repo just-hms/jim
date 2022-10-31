@@ -59,8 +59,11 @@ func fileInput(file_default_content string) (string, error) {
 	tmpFile.Close()
 
 	// get the default editor
-	var editor string
-	var found bool
+
+	var (
+		editor string
+		found  bool
+	)
 
 	if runtime.GOOS == "windows" {
 		editor = "notepad"
@@ -110,8 +113,10 @@ func fileInput(file_default_content string) (string, error) {
 
 func GetCommandFromArgs(args []string, old_command string) (string, error) {
 
-	var command_value string
-	var err error
+	var (
+		command_value string
+		err           error
+	)
 
 	if len(args) == 1 {
 
