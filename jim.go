@@ -21,8 +21,8 @@ func main() {
 		return
 	}
 
-	// the command is the first argument
-	command := os.Args[1]
+	// the input_command is the first argument
+	input_command := os.Args[1]
 	var args []string
 
 	// the args are the other
@@ -32,13 +32,13 @@ func main() {
 	}
 
 	// get the action from the command
-	action := actions.Actions[command]
+	action := actions.Actions[input_command]
 
 	// if no action  was found call the run command
 	if action == nil {
 
 		actions.Run.Value([]string{
-			command,
+			input_command,
 			strings.Join(args, " "),
 		})
 		return
@@ -67,10 +67,18 @@ func main() {
 
 		executable, _ := os.Executable()
 
+		command := models.Command{}
+
+		if err := actions.FindCommandByName(args[0], &command); err != nil {
+			utils.Alertf(err.Error())
+			return
+		}
+
 		c, err := utils.DetachedCrossCmd(
 			executable,
-			command,
-			strings.Join(args[0:], " "),
+			input_command,
+			command.Name,
+			strings.Join(args[1:], " "),
 		)
 
 		if err != nil {

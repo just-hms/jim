@@ -48,7 +48,7 @@ var Show = &Action{
 		fmt.Printf("\n Total := %s\n", time.Duration(total))
 
 	},
-	Description:     "show the wathing results",
+	Description:     "show the watching results",
 	HelpDescription: "wp",
 
 	ArgumentsCheck: func(args []string) bool {
