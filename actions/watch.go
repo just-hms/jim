@@ -25,7 +25,7 @@ var Watch = &Action{
 		watch(command, "")
 
 	},
-	Description:     "run a command and watch it",
+	Description:     "run a command in background and time it (user input and output don't work)",
 	HelpDescription: "wp",
 
 	ArgumentsCheck: func(args []string) bool {

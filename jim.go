@@ -58,8 +58,11 @@ func main() {
 		return
 	}
 
+	// check if the command needs to be launched in background
+
 	bg := os.Getenv("JIM_ENV")
 
+	// if yes and it is not launch it in backgorund
 	if action.BackGround && (bg == "" || bg != "background") {
 
 		executable, _ := os.Executable()
@@ -67,7 +70,7 @@ func main() {
 		c, err := utils.DetachedCrossCmd(
 			executable,
 			command,
-			strings.Join(args[1:], " "),
+			strings.Join(args[0:], " "),
 		)
 
 		if err != nil {
@@ -76,9 +79,8 @@ func main() {
 		}
 
 		c.Env = append(os.Environ(), "JIM_ENV=background")
-
 		c.Run()
-
+		return
 	}
 
 	// call the action

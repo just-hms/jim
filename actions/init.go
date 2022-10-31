@@ -32,8 +32,6 @@ func init() {
 		"help":  Help,
 		"watch": Watch,
 		"show":  Show,
-
-		"bg-watch": Watch,
 	}
 
 	// add prefix to actions hook
