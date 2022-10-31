@@ -12,6 +12,7 @@ type Action struct {
 	Description     string
 	ArgumentsCheck  func([]string) bool
 	HelpDescription string
+	BackGround      bool
 }
 
 var Actions = map[string]*Action{}
@@ -29,7 +30,7 @@ func init() {
 		"run":   Run,
 		"rn":    Rename,
 		"help":  Help,
-		"watch": WatchHelper,
+		"watch": Watch,
 		"show":  Show,
 
 		"bg-watch": Watch,

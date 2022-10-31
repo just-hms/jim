@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"jim/utils"
 	"sort"
-	"strings"
 )
 
 var Help = &Action{
@@ -35,10 +34,6 @@ var Help = &Action{
 		sort.Strings(keys)
 
 		for _, key := range keys {
-
-			if strings.Contains(key, "bg") {
-				continue
-			}
 
 			utils.Titlef(" %s", key)
 

@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"jim/models"
 	"jim/utils"
-	"os"
-	"os/exec"
-	"runtime"
 	"strings"
 	"time"
 )
@@ -34,33 +31,21 @@ var Watch = &Action{
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) >= 1
 	},
+
+	BackGround: true,
 }
 
 func watch(command models.Command, args string) {
 
-	models.DB().Save(&command)
+	c, err := utils.CrossCmd(
+		command.Value,
+		args,
+	)
 
-	var c *exec.Cmd
-
-	if runtime.GOOS == "windows" {
-
-		c = exec.Command("powershell", "-c", "Measure-Command { "+command.Value+"}", args)
-
-	} else {
-
-		shell, err := os.LookupEnv("SHELL")
-
-		if !err {
-			utils.Alertf("no shell found!!!")
-			return
-		}
-
-		c = exec.Command("time", shell, "-c", command.Value, args)
+	if err != nil {
+		utils.Alertf(err.Error())
+		return
 	}
-
-	c.Stdin = os.Stdin
-	// c.Stdout = os.Stdout
-	// c.Stderr = os.Stderr
 
 	start := time.Now()
 

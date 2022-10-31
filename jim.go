@@ -58,6 +58,29 @@ func main() {
 		return
 	}
 
+	bg := os.Getenv("JIM_ENV")
+
+	if action.BackGround && (bg == "" || bg != "background") {
+
+		executable, _ := os.Executable()
+
+		c, err := utils.DetachedCrossCmd(
+			executable,
+			command,
+			strings.Join(args[1:], " "),
+		)
+
+		if err != nil {
+			utils.Alertf(err.Error())
+			return
+		}
+
+		c.Env = append(os.Environ(), "JIM_ENV=background")
+
+		c.Run()
+
+	}
+
 	// call the action
 	action.Value(args)
 
