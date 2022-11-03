@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"jim/models"
 	"os"
@@ -171,7 +170,7 @@ func CrossCmd(arg ...string) (*exec.Cmd, error) {
 
 }
 
-func DetachedCrossCmd(arg ...string) (*exec.Cmd, error) {
+func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 
 	var (
 		c   *exec.Cmd
@@ -179,6 +178,7 @@ func DetachedCrossCmd(arg ...string) (*exec.Cmd, error) {
 	)
 
 	if runtime.GOOS == "windows" {
+
 		c, err = CrossCmd(
 			"Invoke-Expression",
 
@@ -186,17 +186,13 @@ func DetachedCrossCmd(arg ...string) (*exec.Cmd, error) {
 				strings.Join(arg, " ")+
 				"'",
 		)
+
 		return c, err
 	}
 
 	c, err = CrossCmd(
-		"'",
-		strings.Join(arg, " "),
-		"'& disown",
+		"'" + arg[0] + "' " + strings.Join(arg[1:], " ") + "& disown",
 	)
-
-	fmt.Println(strings.Join(arg, " "))
-	fmt.Println(c.Args)
 
 	return c, err
 
@@ -205,15 +201,27 @@ func DetachedCrossCmd(arg ...string) (*exec.Cmd, error) {
 func ContinueInBackGround(command models.Command, params string) {
 	executable, _ := os.Executable()
 
-	action := "--bg-" + strings.Replace(os.Args[1], ACTION_PREFIX, "", -1)
+	action := BG_PREFIX + strings.Replace(os.Args[1], ACTION_PREFIX, "", -1)
 
-	c, _ := DetachedCrossCmd(
+	c, _ := DetachedCmd(
 		executable,
 		action,
 		strconv.FormatUint(uint64(command.ID), 10),
-		command.Value,
 		params,
 	)
 
+	c.Stderr = os.Stderr
 	c.Run()
+}
+
+func TakeUp(args []string) (models.Command, string, error) {
+
+	command := models.Command{}
+
+	if err := models.DB().Where("id = ?", args[0]).First(&command).Error; err != nil {
+		return command, "", errors.New("command not fuound")
+	}
+
+	return command, strings.Join(args[1:], " "), nil
+
 }

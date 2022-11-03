@@ -34,6 +34,21 @@ func main() {
 	// get the action from the command
 	action := actions.Actions[input_command]
 
+	// if no action was found check if it's the background one
+	if action == nil {
+
+		action = actions.Actions[utils.ACTION_PREFIX+
+			strings.Replace(
+				input_command,
+				utils.BG_PREFIX, "", -1,
+			)]
+
+		if action != nil {
+			action.BackgroundShit(args)
+			return
+		}
+	}
+
 	// if no action  was found call the run command
 	if action == nil {
 
@@ -41,6 +56,7 @@ func main() {
 			input_command,
 			strings.Join(args, " "),
 		})
+
 		return
 	}
 
@@ -54,7 +70,7 @@ func main() {
 	// check if the argument len is correct
 
 	if !action.ArgumentsCheck(args) {
-		utils.Alertf("wrong format!!!")
+		utils.Alertf("wrong format!!!\n")
 		return
 	}
 

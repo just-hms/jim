@@ -12,6 +12,7 @@ type Action struct {
 	Description     string
 	ArgumentsCheck  func([]string) bool
 	HelpDescription string
+	BackgroundShit  func([]string)
 }
 
 var Actions = map[string]*Action{}
@@ -31,8 +32,6 @@ func init() {
 		"help":  Help,
 		"watch": Watch,
 		"show":  Show,
-
-		"bg-watch": BgWatch,
 	}
 
 	// add prefix to actions hook

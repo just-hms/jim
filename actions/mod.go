@@ -11,7 +11,7 @@ var Mod = &Action{
 		command := models.Command{}
 
 		if err := FindCommandByName(args[0], &command); err != nil {
-			utils.Alertf(err.Error())
+			utils.Alertf("%s\n", err.Error())
 			return
 		}
 
@@ -39,7 +39,7 @@ var ModById = &Action{
 		command := models.Command{}
 
 		if err := models.DB().Where("id = ?", args[0]).First(&command).Error; err != nil {
-			utils.Alertf("specified id not found")
+			utils.Alertf("specified id not found\n")
 			return
 		}
 

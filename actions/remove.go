@@ -35,7 +35,7 @@ var RemoveById = &Action{
 			command := models.Command{}
 
 			if err := models.DB().Where("id = ?", arg).First(&command).Error; err != nil {
-				utils.Alertf("id not found")
+				utils.Alertf("id not found\n")
 				return
 			}
 
