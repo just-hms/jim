@@ -59,6 +59,6 @@ func Build() {
 
 // preload all associations (only one level deep)
 
-func Eager() *gorm.DB {
+func EagerDB() *gorm.DB {
 	return DB().Preload(clause.Associations)
 }

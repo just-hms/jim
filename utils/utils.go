@@ -2,11 +2,14 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
+	"jim/models"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/fatih/color"
@@ -187,10 +190,30 @@ func DetachedCrossCmd(arg ...string) (*exec.Cmd, error) {
 	}
 
 	c, err = CrossCmd(
+		"'",
 		strings.Join(arg, " "),
-		"& disown",
+		"'& disown",
 	)
+
+	fmt.Println(strings.Join(arg, " "))
+	fmt.Println(c.Args)
 
 	return c, err
 
+}
+
+func ContinueInBackGround(command models.Command, params string) {
+	executable, _ := os.Executable()
+
+	action := "--bg-" + strings.Replace(os.Args[1], ACTION_PREFIX, "", -1)
+
+	c, _ := DetachedCrossCmd(
+		executable,
+		action,
+		strconv.FormatUint(uint64(command.ID), 10),
+		command.Value,
+		params,
+	)
+
+	c.Run()
 }

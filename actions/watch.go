@@ -1,15 +1,17 @@
 package actions
 
 import (
-	"fmt"
 	"jim/models"
 	"jim/utils"
+	"strconv"
+
 	"strings"
 	"time"
 )
 
 var Watch = &Action{
 	Value: func(args []string) {
+
 		command := models.Command{}
 
 		if err := FindCommandByName(args[0], &command); err != nil {
@@ -17,12 +19,13 @@ var Watch = &Action{
 			return
 		}
 
+		params := ""
+
 		if len(args) == 2 {
-			watch(command, strings.Join(args[1:], " "))
-			return
+			params = strings.Join(args[1:], " ")
 		}
 
-		watch(command, "")
+		utils.ContinueInBackGround(command, params)
 
 	},
 	Description:     "run a command in background and time it (user input and output don't work)",
@@ -31,26 +34,41 @@ var Watch = &Action{
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) >= 1
 	},
-
-	BackGround: true,
 }
 
-func watch(command models.Command, args string) {
+var BgWatch = &Action{
+	Value: func(args []string) {
 
-	c, err := utils.CrossCmd(
-		command.Value,
-		args,
-	)
+		command_id, _ := strconv.ParseUint(args[0], 10, 32)
+		command_value := args[1]
+		args_string := strings.Join(args[2:], " ")
+
+		watch(
+			command_value,
+			uint(command_id),
+			args_string,
+		)
+
+	},
+	Description:     "utility action, don't call this from the command line",
+	HelpDescription: "wp",
+
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) >= 2
+	},
+}
+
+func watch(command_value string, command_id uint, args string) {
+
+	c, err := utils.CrossCmd(command_value, args)
 
 	if err != nil {
-		utils.Alertf(err.Error())
 		return
 	}
 
 	start := time.Now()
 
 	if err := c.Run(); err != nil {
-		fmt.Println(err.Error())
 		return
 	}
 
@@ -58,7 +76,7 @@ func watch(command models.Command, args string) {
 
 	session := models.Session{
 		Elapsed:   elapsed,
-		CommandID: command.ID,
+		CommandID: command_id,
 	}
 
 	models.DB().Create(&session)

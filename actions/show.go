@@ -28,9 +28,9 @@ var Show = &Action{
 				return
 			}
 
-			models.Eager().Where("command_id = ?", command.ID).Find(&sessions)
+			models.EagerDB().Where("command_id = ?", command.ID).Find(&sessions)
 		} else {
-			models.Eager().Find(&sessions)
+			models.EagerDB().Find(&sessions)
 		}
 
 		utils.Titlef(" %-10s%-30s%-1s\n", "Command", "Date", "Duration")

@@ -58,39 +58,6 @@ func main() {
 		return
 	}
 
-	// check if the command needs to be launched in background
-
-	bg := os.Getenv("JIM_ENV")
-
-	// if yes and it is not launch it in backgorund
-	if action.BackGround && (bg == "" || bg != "background") {
-
-		executable, _ := os.Executable()
-
-		command := models.Command{}
-
-		if err := actions.FindCommandByName(args[0], &command); err != nil {
-			utils.Alertf(err.Error())
-			return
-		}
-
-		c, err := utils.DetachedCrossCmd(
-			executable,
-			input_command,
-			command.Name,
-			strings.Join(args[1:], " "),
-		)
-
-		if err != nil {
-			utils.Alertf(err.Error())
-			return
-		}
-
-		c.Env = append(os.Environ(), "JIM_ENV=background")
-		c.Run()
-		return
-	}
-
 	// call the action
 	action.Value(args)
 
