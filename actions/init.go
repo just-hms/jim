@@ -20,18 +20,19 @@ var Actions = map[string]*Action{}
 func init() {
 
 	Actions = map[string]*Action{
-		"ls":    List,
-		"add":   Add,
-		"mod":   Mod,
-		"modi":  ModById,
-		"rm":    Remove,
-		"rmi":   RemoveById,
-		"clear": Clear,
-		"run":   Run,
-		"rn":    Rename,
-		"help":  Help,
-		"watch": Watch,
-		"show":  Show,
+		"ls":      List,
+		"add":     Add,
+		"mod":     Mod,
+		"modi":    ModById,
+		"rm":      Remove,
+		"rmi":     RemoveById,
+		"clear":   Clear,
+		"run":     Run,
+		"rn":      Rename,
+		"help":    Help,
+		"watch":   Watch,
+		"show":    Show,
+		"version": Version,
 	}
 
 	// add prefix to actions hook
