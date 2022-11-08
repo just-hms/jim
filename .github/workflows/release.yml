@@ -23,7 +23,7 @@ jobs:
           name: "jim"
           compress: "true"
           dest: "dist"
-          ldflags: "-X 'utils.Version=v1.0.0'"
+          ldflags: "\"-X 'utils.Version=${{ github.ref_name }}'\""
 
       - name: Generate build files
         uses: thatisuday/go-build-action@v1.0.2
