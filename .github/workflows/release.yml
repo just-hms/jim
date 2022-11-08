@@ -18,7 +18,16 @@ jobs:
       - name: Generate build files
         uses: thatisuday/go-build-action@v1.0.2
         with:
-          platforms: "windows/amd64"
+          platforms: "windows/amd64, linux/amd64"
+          package: ""
+          name: "jim"
+          compress: "true"
+          dest: "dist"
+
+      - name: Generate build files
+        uses: thatisuday/go-build-action@v1.0.2
+        with:
+          platforms: "darwin/amd64"
           package: ""
           name: "jim"
           compress: "true"
