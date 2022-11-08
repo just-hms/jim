@@ -23,7 +23,6 @@ jobs:
           name: "jim"
           compress: "true"
           dest: "dist"
-          ldflags : ""  
 
       - name: Copy build-artifacts
         uses: skx/github-action-publish-binaries@master
