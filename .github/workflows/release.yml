@@ -28,34 +28,34 @@ jobs:
         run : |
             
             CGO_ENABLED=1 GOOS=windows GOARCH=amd64 \
-            /usr/local/go/bin/go build -buildmode exe \
+            go build -buildmode exe \
             -ldflags="-X 'jim/utils.Version=${{ github.ref_name }}" -o /github/workspace/dist/jim.exe
 
-            /bin/tar -cvzf jim-windows-amd64.tar.gz jim.exe README.md
+            tar -cvzf jim-windows-amd64.tar.gz jim.exe README.md
 
-            /bin/rm -f jim README.md
+            rm -f jim README.md
       
       - name: Linux build
         run : |
             
             CGO_ENABLED=1 GOOS=linux GOARCH=amd64 \
-            /usr/local/go/bin/go build -buildmode exe \
+            go build -buildmode exe \
             -ldflags="-X 'jim/utils.Version=${{ github.ref_name }}" -o /github/workspace/dist/jim 
 
-            /bin/tar -cvzf jim-linux-amd64.tar.gz jim README.md
+            tar -cvzf jim-linux-amd64.tar.gz jim README.md
 
-            /bin/rm -f jim README.md
+            rm -f jim README.md
       
       - name: Mac os build
         run : |
             
             CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 \
-            /usr/local/go/bin/go build -buildmode exe \
+            go build -buildmode exe \
             -ldflags="-X 'jim/utils.Version=${{ github.ref_name }}" -o /github/workspace/dist/jim 
 
-            /bin/tar -cvzf jim-darwin-amd64.tar.gz jim README.md
+            tar -cvzf jim-darwin-amd64.tar.gz jim README.md
 
-            /bin/rm -f jim README.md
+            rm -f jim README.md
       
       - name: Copy build-artifacts
         uses: skx/github-action-publish-binaries@master
