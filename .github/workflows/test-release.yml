@@ -8,7 +8,7 @@ on:
 jobs:
   build:
 
-    name: Build
+    name: Pulish
 
     runs-on: ${{ matrix.os }}
     strategy:
