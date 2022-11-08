@@ -23,7 +23,7 @@ jobs:
           name: "jim"
           compress: "true"
           dest: "dist"
-          ldflags: "\"-X 'utils.Version=${{ github.ref_name }}'\""
+          ldflags: "\"-X 'jim/utils.Version=${{ github.ref_name }}'\""
 
       - name: Copy build-artifacts
         uses: skx/github-action-publish-binaries@master

@@ -14,6 +14,8 @@ import (
 	"github.com/fatih/color"
 )
 
+var Version = "development"
+
 func ExecutableFolder() string {
 	path, _ := os.Executable()
 	path, _ = filepath.EvalSymlinks(path)
