@@ -13,50 +13,18 @@ jobs:
     steps:
 
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Set up Go
-        uses: actions/setup-go@v3
+      - name: Generate build files
+        uses: thatisuday/go-build-action@v1.0.2
         with:
-          go-version: 1.19
+          platforms: "windows/amd64, linux/amd64, darwin/amd64"
+          package: ""
+          name: "jim"
+          compress: "true"
+          dest: "dist"
+          ldflags: "\"-X 'jim/utils.Version=${{ github.ref_name }}'\""
 
-      - name: Test
-        run: go test
-
-
-      - name: Windows build
-        run : |
-            
-            CGO_ENABLED=1 GOOS=windows GOARCH=amd64 \
-            go build -buildmode exe \
-            -ldflags="-X 'jim/utils.Version=${{ github.ref_name }}" -o /github/workspace/dist/jim.exe
-
-            tar -cvzf jim-windows-amd64.tar.gz jim.exe README.md
-
-            rm -f jim README.md
-      
-      - name: Linux build
-        run : |
-            
-            CGO_ENABLED=1 GOOS=linux GOARCH=amd64 \
-            go build -buildmode exe \
-            -ldflags="-X 'jim/utils.Version=${{ github.ref_name }}" -o /github/workspace/dist/jim 
-
-            tar -cvzf jim-linux-amd64.tar.gz jim README.md
-
-            rm -f jim README.md
-      
-      - name: Mac os build
-        run : |
-            
-            CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 \
-            go build -buildmode exe \
-            -ldflags="-X 'jim/utils.Version=${{ github.ref_name }}" -o /github/workspace/dist/jim 
-
-            tar -cvzf jim-darwin-amd64.tar.gz jim README.md
-
-            rm -f jim README.md
-      
       - name: Copy build-artifacts
         uses: skx/github-action-publish-binaries@master
         env:
