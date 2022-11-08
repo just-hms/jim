@@ -9,7 +9,7 @@ jobs:
 
   generate:
     name: Generate cross-platform builds
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
 
       - name: Checkout the repository
