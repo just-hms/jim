@@ -13,7 +13,7 @@ var database *buntdb.DB = nil
 
 func init() {
 	DB().CreateIndex("commands", "command:*", buntdb.IndexString)
-	DB().CreateIndex("sessions", "session:command:*:*", buntdb.IndexString)
+	DB().CreateIndex("sessions", "session:*:*", buntdb.IndexString)
 }
 func DB() (db *buntdb.DB) {
 

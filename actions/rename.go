@@ -36,7 +36,7 @@ var Rename = &Action{
 
 			// iterate over the sessions
 
-			tx.AscendKeys("session:command:"+command.Name+":*", func(k, v string) bool {
+			tx.AscendKeys("session:"+command.Name+":*", func(k, v string) bool {
 				rnKeys = append(rnKeys, k)
 				return true // continue
 			})

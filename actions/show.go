@@ -32,6 +32,10 @@ var Show = &Action{
 			return
 		}
 
+		if len(sessions) == 0 {
+			return
+		}
+
 		utils.Titlef(" %-10s%-30s%-1s\n", "Command", "Date", "Duration")
 
 		total := 0

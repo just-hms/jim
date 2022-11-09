@@ -13,7 +13,7 @@ var Version = &Action{
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) == 0
 	},
-	HelpDescription: "",
+	HelpDescription: "wp",
 	BackgroundShit: func([]string) {
 	},
 }

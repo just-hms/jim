@@ -64,7 +64,7 @@ var Watch = &Action{
 
 		setErr := models.DB().Update(func(tx *buntdb.Tx) error {
 			_, _, err := tx.Set(
-				"session:command:"+command.Name+":"+strconv.FormatInt(session.Start.Unix(), 10),
+				"session:"+command.Name+":"+strconv.FormatInt(session.Start.Unix(), 10),
 				strconv.FormatInt(session.Elapsed.Milliseconds(), 10),
 				nil,
 			)

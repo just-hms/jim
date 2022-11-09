@@ -19,7 +19,7 @@ func ListSessions(filter string, sessions *[]Session) error {
 	return DB().View(func(tx *buntdb.Tx) error {
 		err := tx.Ascend("sessions", func(key, value string) bool {
 
-			key_data := strings.Split(strings.TrimPrefix(key, "session:command:"), ":")
+			key_data := strings.Split(strings.TrimPrefix(key, "session:"), ":")
 
 			start_unix, _ := strconv.ParseInt(key_data[1], 10, 64)
 			elapsed, _ := strconv.ParseInt(value, 10, 64)
