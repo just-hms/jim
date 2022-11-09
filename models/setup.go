@@ -32,9 +32,7 @@ func DB() (db *buntdb.DB) {
 	}
 
 	os.MkdirAll(dbFolder, os.ModePerm)
-
 	dbName := filepath.Join(dbFolder, "/jim.kv.db")
-
 	db, err := buntdb.Open(dbName)
 
 	if err != nil {
