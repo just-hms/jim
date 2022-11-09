@@ -17,7 +17,7 @@ jobs:
 
       - name: Generate build files
         uses: thatisuday/go-build-action@v1.0.2
-        - run: go mod download github.com/tidwall/assert
+        run: go mod download github.com/tidwall/assert
         with:
           platforms: "linux/amd64, windows/amd64, darwin/amd64"
           package: ""
