@@ -5,6 +5,8 @@ import (
 	"jim/levenshtein"
 	"jim/models"
 	"jim/utils"
+
+	"github.com/tidwall/buntdb"
 )
 
 type Action struct {
@@ -23,9 +25,7 @@ func init() {
 		"ls":      List,
 		"add":     Add,
 		"mod":     Mod,
-		"modi":    ModById,
 		"rm":      Remove,
-		"rmi":     RemoveById,
 		"clear":   Clear,
 		"run":     Run,
 		"rn":      Rename,
@@ -51,17 +51,23 @@ func init() {
 
 func FindCommandByName(name string, command *models.Command) error {
 
-	if err := models.DB().Where("name = ?", name).First(command).Error; err == nil {
+	getErr := models.DB().View(func(tx *buntdb.Tx) error {
+		var err error
+		command.Value, err = tx.Get("command:" + name)
+		command.Name = name // set the name to the key if found
+		return err
+	})
+
+	if getErr == nil {
 		return nil
 	}
 
 	// if no result was found try with similiar names
 
-	commands := []models.Command{}
-	models.DB().Find(&commands)
+	var commands []models.Command
 
-	if len(commands) == 0 {
-		return errors.New("there is no command yet")
+	if err := models.ListCommands("", &commands); err != nil {
+		return errors.New("error retrieving the command")
 	}
 
 	max_lev_rateo := 0.0

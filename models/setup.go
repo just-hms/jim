@@ -6,15 +6,16 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/logger"
+	"github.com/tidwall/buntdb"
 )
 
-var database *gorm.DB = nil
+var database *buntdb.DB = nil
 
-func DB() (db *gorm.DB) {
+func init() {
+	DB().CreateIndex("commands", "command:*", buntdb.IndexString)
+	DB().CreateIndex("sessions", "session:command:*:*", buntdb.IndexString)
+}
+func DB() (db *buntdb.DB) {
 
 	if database != nil {
 		return database
@@ -32,13 +33,9 @@ func DB() (db *gorm.DB) {
 
 	os.MkdirAll(dbFolder, os.ModePerm)
 
-	dbName := filepath.Join(dbFolder, "/jim.db")
+	dbName := filepath.Join(dbFolder, "/jim.kv.db")
 
-	db, err := gorm.Open(sqlite.Open(dbName), &gorm.Config{
-		DisableForeignKeyConstraintWhenMigrating: true,
-		SkipDefaultTransaction:                   true, // speed up
-		Logger:                                   logger.Default.LogMode(logger.Silent),
-	})
+	db, err := buntdb.Open(dbName)
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -47,18 +44,4 @@ func DB() (db *gorm.DB) {
 
 	database = db
 	return database
-}
-
-func Build() {
-
-	DB().AutoMigrate(
-		&Command{},
-		&Session{},
-	)
-}
-
-// preload all associations (only one level deep)
-
-func EagerDB() *gorm.DB {
-	return DB().Preload(clause.Associations)
 }

@@ -30,3 +30,7 @@ $ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-darwin-am
 $ sudo mkdir -p /opt/jim && sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
 $ sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ``` --> 
+
+
+# to-do
+- add interactive listing for deleting renaming and editing and shit

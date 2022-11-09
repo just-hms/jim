@@ -10,36 +10,35 @@ import (
 var List = &Action{
 	Value: func(args []string) {
 
-		commands := []models.Command{}
-		models.DB().Find(&commands)
+		var commands []models.Command
 
-		if len(commands) == 0 {
-			fmt.Println("...")
+		filter := ""
+
+		if len(args) >= 1 {
+			filter = args[0]
+		}
+
+		if err := models.ListCommands(filter, &commands); err != nil {
+			utils.Alertf("error retrieving the command\n")
 			return
 		}
 
-		filtered := []models.Command{}
-
-		if len(args) == 1 {
-			for i := range commands {
-				if strings.Contains(commands[i].Name, args[0]) {
-					filtered = append(filtered, commands[i])
-				}
-			}
-		} else {
-			filtered = commands
+		if len(commands) == 0 {
+			return
 		}
 
-		utils.Titlef(" %-10s%-30s%-1s\n", "ID", "Name", "Comand")
+		utils.Titlef(" %-30s%-1s\n", "Command", "Value")
 
-		substring := "\n                                         "
+		multiline_tab := "\n                               "
 
-		for _, v := range filtered {
+		for _, v := range commands {
 
-			trimed := strings.Trim(v.Value, "\n")
-			replaced := strings.Replace(trimed, "\n", substring, -1)
+			trimmed := strings.TrimSpace(v.Value)
 
-			fmt.Printf(" %-10d%-30s%-1s\n", v.ID, v.Name, replaced)
+			// tab the lines after the first
+			tabbed := strings.ReplaceAll(trimmed, "\n", multiline_tab)
+
+			fmt.Printf(" %-30s%-1s\n", v.Name, tabbed)
 		}
 
 	},

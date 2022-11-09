@@ -40,8 +40,6 @@ var Run = &Action{
 
 func run(command models.Command, args string) {
 
-	models.DB().Save(&command)
-
 	c, err := utils.CrossCmd(
 		command.Value,
 		args,

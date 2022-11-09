@@ -8,10 +8,10 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"strconv"
 	"strings"
 
 	"github.com/fatih/color"
+	"github.com/tidwall/buntdb"
 )
 
 var Version = "development"
@@ -115,33 +115,33 @@ func fileInput(file_default_content string) (string, error) {
 
 }
 
-func GetCommandFromArgs(args []string, old_command string) (string, error) {
+func GetCommandFromArgs(args []string, command *models.Command) error {
 
 	var (
-		command_value string
-		err           error
+		new_command_value string
+		err               error
 	)
 
 	if len(args) == 1 {
 
-		command_value, err = fileInput(old_command)
+		new_command_value, err = fileInput(command.Value)
 
 		if err != nil {
-			return "", err
+			return err
 		}
 
-		command_value = strings.TrimSpace(command_value)
+		new_command_value = strings.TrimSpace(new_command_value)
 
-		if command_value == "" {
-			return "", errors.New("the command cannot be empty")
+		if new_command_value == "" {
+			return errors.New("the command cannot be empty")
 		}
 	} else {
-		command_value = args[1]
+		new_command_value = args[1]
 	}
 
-	command_value = ReplaceCurrentFolderFlag(command_value)
+	command.Value = ReplaceCurrentFolderFlag(new_command_value)
 
-	return command_value, nil
+	return nil
 }
 
 func CrossCmd(arg ...string) (*exec.Cmd, error) {
@@ -208,7 +208,7 @@ func ContinueInBackGround(command models.Command, params string) {
 	c, _ := DetachedCmd(
 		executable,
 		action,
-		strconv.FormatUint(uint64(command.ID), 10),
+		command.Name,
 		params,
 	)
 
@@ -220,10 +220,13 @@ func TakeUp(args []string) (models.Command, string, error) {
 
 	command := models.Command{}
 
-	if err := models.DB().Where("id = ?", args[0]).First(&command).Error; err != nil {
-		return command, "", errors.New("command not fuound")
-	}
+	err := models.DB().View(func(tx *buntdb.Tx) error {
+		var err error
+		command.Value, err = tx.Get("command:" + args[0])
+		command.Name = args[0] // set the name to the key if found
+		return err
+	})
 
-	return command, strings.Join(args[1:], " "), nil
+	return command, strings.Join(args[1:], " "), err
 
 }

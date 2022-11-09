@@ -3,6 +3,8 @@ package actions
 import (
 	"jim/models"
 	"jim/utils"
+
+	"github.com/tidwall/buntdb"
 )
 
 var Mod = &Action{
@@ -15,45 +17,22 @@ var Mod = &Action{
 			return
 		}
 
-		command_value, err := utils.GetCommandFromArgs(args, command.Value)
-
-		if err != nil {
+		if err := utils.GetCommandFromArgs(args, &command); err != nil {
 			utils.Alertf("%s\n", err.Error())
 			return
 		}
 
-		command.Value = command_value
-		models.DB().Save(&command)
+		setErr := models.DB().Update(func(tx *buntdb.Tx) error {
+			_, _, err := tx.Set("command:"+command.Name, command.Value, nil)
+			return err
+		})
+
+		if setErr != nil {
+			utils.Alertf("error adding the command\n")
+			return
+		}
 	},
 	Description:     "modify a specified command",
-	HelpDescription: "wp",
-
-	ArgumentsCheck: func(args []string) bool {
-		return len(args) == 1
-	},
-}
-
-var ModById = &Action{
-	Value: func(args []string) {
-
-		command := models.Command{}
-
-		if err := models.DB().Where("id = ?", args[0]).First(&command).Error; err != nil {
-			utils.Alertf("specified id not found\n")
-			return
-		}
-
-		command_value, err := utils.GetCommandFromArgs(args, command.Value)
-
-		if err != nil {
-			utils.Alertf("%s\n", err.Error())
-			return
-		}
-
-		command.Value = command_value
-		models.DB().Save(&command)
-	},
-	Description:     "modify a command by id",
 	HelpDescription: "wp",
 
 	ArgumentsCheck: func(args []string) bool {

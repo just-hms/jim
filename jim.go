@@ -2,16 +2,11 @@ package main
 
 import (
 	"jim/actions"
-	"jim/models"
 	"jim/utils"
 
 	"os"
 	"strings"
 )
-
-func init() {
-	models.Build()
-}
 
 func main() {
 

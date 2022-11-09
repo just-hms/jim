@@ -19,39 +19,35 @@ import (
 var Show = &Action{
 	Value: func(args []string) {
 
-		sessions := []models.Session{}
+		var sessions []models.Session
 
-		if len(args) >= 1 && args[0] != utils.ACTION_PREFIX+"from" && args[0] != utils.ACTION_PREFIX+"to" {
+		filter := ""
 
-			command := models.Command{}
-			if err := FindCommandByName(args[0], &command); err != nil {
-				return
-			}
+		if len(args) >= 1 {
+			filter = args[0]
+		}
 
-			models.EagerDB().Where("command_id = ?", command.ID).Find(&sessions)
-		} else {
-			models.EagerDB().Find(&sessions)
+		if err := models.ListSessions(filter, &sessions); err != nil {
+			utils.Alertf("error retrieving the sessions\n")
+			return
 		}
 
 		utils.Titlef(" %-10s%-30s%-1s\n", "Command", "Date", "Duration")
 
 		total := 0
-
 		for _, s := range sessions {
-			startDate := s.CreatedAt.Format("2006-01-02 15:04:05")
-
-			fmt.Printf(" %-10s%-30s%-1s\n", s.Command.Name, startDate, s.Elapsed)
-
+			startDate := s.Start.Format("2006-01-02 15:04:05")
+			fmt.Printf(" %-10s%-30s%-1s\n", s.Command, startDate, s.Elapsed)
 			total += int(s.Elapsed)
 		}
 
 		fmt.Printf("\n Total := %s\n", time.Duration(total))
-
 	},
-	Description:     "show the watching results",
-	HelpDescription: "wp",
-
+	Description: "show the watching results",
 	ArgumentsCheck: func(args []string) bool {
 		return true
+	},
+	HelpDescription: "wp",
+	BackgroundShit: func([]string) {
 	},
 }

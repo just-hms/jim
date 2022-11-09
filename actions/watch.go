@@ -3,9 +3,12 @@ package actions
 import (
 	"jim/models"
 	"jim/utils"
+	"strconv"
 
 	"strings"
 	"time"
+
+	"github.com/tidwall/buntdb"
 )
 
 var Watch = &Action{
@@ -48,19 +51,29 @@ var Watch = &Action{
 			return
 		}
 
-		start := time.Now()
+		session := models.Session{
+			Start:   time.Now(),
+			Command: command.Name,
+		}
 
 		if err := c.Run(); err != nil {
 			return
 		}
 
-		elapsed := time.Since(start)
+		session.Elapsed = time.Since(session.Start)
 
-		session := models.Session{
-			Elapsed:   elapsed,
-			CommandID: command.ID,
+		setErr := models.DB().Update(func(tx *buntdb.Tx) error {
+			_, _, err := tx.Set(
+				"session:command:"+command.Name+":"+strconv.FormatInt(session.Start.Unix(), 10),
+				strconv.FormatInt(session.Elapsed.Milliseconds(), 10),
+				nil,
+			)
+			return err
+		})
+
+		if setErr != nil {
+			utils.Alertf("error adding the session\n")
+			return
 		}
-
-		models.DB().Create(&session)
 	},
 }

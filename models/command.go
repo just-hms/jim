@@ -1,19 +1,33 @@
 package models
 
 import (
-	"gorm.io/gorm"
+	"strings"
+
+	"github.com/tidwall/buntdb"
 )
 
 type Command struct {
-	gorm.Model
-	Name     string `gorm:"uniqueIndex"` // kek
-	Value    string // code ...
-	Sessions []Session
+	Name  string
+	Value string
 }
 
-func (command *Command) AfterDelete(tx *gorm.DB) error {
+func ListCommands(filter string, commands *[]Command) error {
 
-	return tx.Model(&Session{}).
-		Where("command_id = ?", command.ID).
-		Unscoped().Delete(&Session{}).Error
+	return DB().View(func(tx *buntdb.Tx) error {
+		err := tx.Ascend("commands", func(key, value string) bool {
+
+			command := Command{
+				Name:  strings.Split(key, "command:")[1],
+				Value: value,
+			}
+
+			if filter != "" && !strings.Contains(command.Name, filter) {
+				return true
+			}
+
+			*commands = append(*commands, command)
+			return true // continue iteration
+		})
+		return err
+	})
 }

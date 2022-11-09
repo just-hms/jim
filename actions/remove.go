@@ -3,6 +3,8 @@ package actions
 import (
 	"jim/models"
 	"jim/utils"
+
+	"github.com/tidwall/buntdb"
 )
 
 var Remove = &Action{
@@ -16,34 +18,32 @@ var Remove = &Action{
 				return
 			}
 
-			models.DB().Unscoped().Delete(&command)
-		}
-	},
-	Description:     "remove one or more command",
-	HelpDescription: "wp",
+			err := models.DB().Update(func(tx *buntdb.Tx) error {
 
-	ArgumentsCheck: func(args []string) bool {
-		return len(args) >= 1
-	},
-}
+				// delete all sessions
+				var delkeys []string
 
-var RemoveById = &Action{
-	Value: func(args []string) {
+				tx.AscendKeys("command:session:"+command.Name+":*", func(k, v string) bool {
+					delkeys = append(delkeys, k)
+					return true // continue
+				})
 
-		for _, arg := range args {
+				for _, k := range delkeys {
+					if _, err := tx.Delete(k); err != nil {
+						return err
+					}
+				}
 
-			command := models.Command{}
+				_, err := tx.Delete("command:" + command.Name)
+				return err
+			})
 
-			if err := models.DB().Where("id = ?", arg).First(&command).Error; err != nil {
-				utils.Alertf("id not found\n")
-				return
+			if err != nil {
+				utils.Alertf("error while deleting\n")
 			}
-
-			models.DB().Unscoped().Delete(&command)
 		}
-
 	},
-	Description:     "remove one or more command by id",
+	Description:     "remove one or more specified command",
 	HelpDescription: "wp",
 
 	ArgumentsCheck: func(args []string) bool {

@@ -3,31 +3,41 @@ package actions
 import (
 	"jim/models"
 	"jim/utils"
+
+	"github.com/tidwall/buntdb"
 )
 
 var Add = &Action{
 	Value: func(args []string) {
 
-		to_search := models.Command{}
+		command := models.Command{
+			Name: args[0],
+		}
 
-		if err := models.DB().Where("name = ?", args[0]).First(&to_search).Error; err == nil {
+		getErr := models.DB().View(func(tx *buntdb.Tx) error {
+			_, err := tx.Get("command:" + command.Name)
+			return err
+		})
+
+		if getErr == nil {
 			utils.Alertf("a command named %s already exists!!!\n", args[0])
 			return
 		}
 
-		command_value, err := utils.GetCommandFromArgs(args, "")
-
-		if err != nil {
+		if err := utils.GetCommandFromArgs(args, &command); err != nil {
 			utils.Alertf("%s\n", err.Error())
 			return
 		}
 
-		command := models.Command{
-			Name:  args[0],
-			Value: command_value,
-		}
+		setErr := models.DB().Update(func(tx *buntdb.Tx) error {
+			_, _, err := tx.Set("command:"+command.Name, command.Value, nil)
+			return err
+		})
 
-		models.DB().Create(&command)
+		if setErr != nil {
+			utils.Alertf("error adding the command\n")
+			return
+		}
 
 	},
 	Description:     "add a command",
