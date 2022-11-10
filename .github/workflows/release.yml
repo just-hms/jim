@@ -5,31 +5,39 @@ on:
     types:
       - created
 
+name: Go
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
 
-  generate:
-    name: Generate cross-platform builds
+  build:
     runs-on: ubuntu-latest
     steps:
+    
+    - uses: actions/checkout@v3
 
-      - name: Checkout the repository
-        uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.19
+      
+    - name: Check version
+    - run: go version
 
-      - name: Install dependency?
-        run: go mod download github.com/tidwall/assert
-      - name: Generate build files
-        uses: thatisuday/go-build-action@v1.0.2
-        with:
-          platforms: "linux/amd64, windows/amd64, darwin/amd64"
-          package: ""
-          name: "jim"
-          compress: "true"
-          dest: "dist"
-          ldflags: "\"-X 'jim/utils.Version=${{ github.ref_name }}'\""
+    - name: Build
+      run: go build -v ./...
 
-      - name: Copy build-artifacts
-        uses: skx/github-action-publish-binaries@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: "./dist/*.tar.gz"
+    - name: Test
+      run: go test -v ./...
+
+    - name: Copy build-artifacts
+      uses: skx/github-action-publish-binaries@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: "./dist/*.tar.gz"
