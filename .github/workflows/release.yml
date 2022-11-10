@@ -21,18 +21,16 @@ jobs:
     - name: Check version
       run: go version
 
-    - name: Build for linux
-      run: go build .
-    
+    - name: Build executables
+      run: ./build.sh ${{ github.ref_name }}
+      shell: bash
+
     - name: Test
       run: go test -v ./...
-
-    - name: Check executable version
-      run: jim --version
 
     - name: Copy build-artifacts
       uses: skx/github-action-publish-binaries@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        args: "./dist/*.tar.gz"
+        args: "./out/*.tar.gz"
