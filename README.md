@@ -2,18 +2,17 @@
 
 The jim command line utility enables running long commands with one word, it's basically __alias but better__
 
-<!-- ## Windows installation
+# Installation
+## Windows installation
 
-use `powershell`
+download 
 
-```powershell
-	
-$ curl -O $env:TMP/jim.tar.gz https://github.com/just-hms/jim/releases/latest/download/jim-windows-amd64.tar.gz
-$ mkdir -p $env:PROGRAMFILES/jim
-$ tar -xvf $env:TMP/jim.tar.gz -C $env:PROGRAMFILES/jim
-$ setx
- 
-``` --> 
+```
+https://github.com/just-hms/jim/releases/latest/download/jim-windows-amd64.tar.gz 
+```
+
+and extract it in a folder that is included in the %PATH%
+
 
 ## Linux installation
 
