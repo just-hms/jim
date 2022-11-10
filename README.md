@@ -12,7 +12,7 @@ The `jim` command line utility enables running long commands with one word, it's
 
 	will launch the specified command.
 
-- Another use-case is to launch a command with the `--watch` utility that will time the execution of the command and will let you see it using the `--show` utility. 
+- Another use-case is to launch a command with the `--watch` utility that will time its execution and will let you see it using the `--show` utility. 
 
 	```
 	jim --watch command
