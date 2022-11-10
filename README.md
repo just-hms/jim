@@ -10,7 +10,7 @@ The `jim` command line utility enables running long commands with one word, it's
 	jim command
 	```
 
-	will launch the command.
+	will launch the specified command.
 
 - Another use-case is to launch a command with the `--watch` utility that will time the execution of the command and will let you see it using the `--show` utility. 
 
@@ -18,9 +18,9 @@ The `jim` command line utility enables running long commands with one word, it's
 	jim --watch command
 	```
 
-	will launch a command in background and time it.
+	will launch the specified command *in background* and time it.
 
-in future `jim --sync` will let you share commands between multiple devices.
+In future `jim --sync` will let you share commands between multiple devices.
 
 ## Installation
 ### Windows installation
@@ -52,29 +52,29 @@ $ sudo ln -s /opt/jim/jim /usr/local/bin/jim
 
 ## Usage
 
-type `jim` to check if the installation was completed correctly.
+Type `jim` to check if the installation was completed correctly.
 
-### Actions
+### Available Actions
 
 #### `--add`
 
-add a command
+Adds a command
 
 ```
 jim --add command <value>
 ```
 
-if no value is specified `jim` will open your default editor and let you insert a file.
+If no value is specified `jim` will open your *default editor* and will let you insert a set of instruction in a temporary file.
 
 #### `--clear`
 
-clear all commands
+Clear all commands
 
 ```
 jim --clear
 ```
 
-will remove all commands
+Will remove all commands.
 
 #### `--help`
 
@@ -84,17 +84,17 @@ will remove all commands
 jim --help <--action>
 ```
 
-if provided this utility will show more specific help of the action.
+If provided, this utility will show more specific help for the action.
 
 #### `--ls`
 
-list of all the available commands
+List of all the available commands
 
 ```
 jim --ls <filter>
 ```
 
-this command will list all the available commands, filtering them with the provided filter.
+This action will list all the available commands, filtering them with the provided filter.
 
 #### `--mod`
 
@@ -104,7 +104,7 @@ Modify a command
 jim --mod command
 ```
 
-will open the command in your default editor and will let you modify it
+Will open the command in your default editor and will let you modify it.
 
 #### `--rm`
 
@@ -114,7 +114,7 @@ Remove one or more command
 jim --rm command_1 command_2 command_3
 ```
 
-will remove the provided commands
+Will remove the provided commands.
 
 #### `--rn`
 
@@ -124,7 +124,7 @@ Rename a command
 jim --rn command new_name
 ```
 
-will rename the specified command with the provided `new_name`
+Will rename the specified command with the provided `new_name`.
 
 #### `--run`
 
@@ -134,17 +134,19 @@ Run a command
 jim <--run> command
 ```
 
-will run the specified command in *your default shell*, `--run` can be omitted
+Will run the specified command in *your default shell*, `--run` can be omitted.
 
 #### `--show`
 
-Show a list of all the `--watch` result
+Show a list of all the `--watch` results
 
 ```
 jim --show <filter>
 ```
 
-this command will list all the sessions of the commands that were launched by `--watch`, filtering them with the provided filter.
+This command will list all of the commands' sessions. Filtering them with the provided filter.
+
+A session is created when a command is launched with `--watch`.
 
 #### `--version`
 
@@ -154,7 +156,7 @@ Show the version of the executable
 jim --version
 ```
 
-will output the installed `jim` version ex: `v1.0.1`
+Will output the installed `jim` version ex: `v1.0.1`.
 
 #### `--watch`
 
@@ -164,7 +166,6 @@ Run a command in the background and time it
 jim --watch command
 ```
 
-will launch the command in background and add its time of execution in the database, the time will be visible using the `--show` utility
+Will launch the command in background and save its time of execution. The time that the command took to execute will be visible using the `--show` utility.
 
-__*User input and output don't work using watch*__
-
+__*User input and output don't work using `--watch`*__
