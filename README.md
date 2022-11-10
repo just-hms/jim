@@ -5,8 +5,29 @@ The jim command line utility enables running long commands with one word, it's b
 
 # Table of contents
 
+- [Why use `jim`?](#why-use-jim)
 - [Installation](#installation)
 - [Usage](#usage)
+
+# Why use `jim`?
+
+- The main focus of `jim` is to let you re-use commands that you previously inserted in it. For example:
+
+	```
+	jim command
+	```
+
+	will launch the command.
+
+- Another use-case is to launch a command with the `--watch` utility that will time the execution of the command and will let you see it using the `--show` utility. 
+
+	```
+	jim --watch command
+	```
+
+	will launch a command in background and time it.
+
+in future `jim --sync` will let you share commands between multiple devices.
 
 # Installation
 ## Windows installation
@@ -39,26 +60,6 @@ $ sudo ln -s /opt/jim/jim /usr/local/bin/jim
 # Usage
 
 type `jim` to check if the installation was completed correctly.
-
-## Why use `jim`?
-
-- The main focus of `jim` is to let you re-use commands that you previously inserted in it. For example:
-
-	```
-	jim command
-	```
-
-	will launch the command.
-
-- Another use-case is to launch a command with the `--watch` utility that will time the execution of the command and will let you see it using the `--show` utility. 
-
-	```
-	jim --watch command
-	```
-
-	will launch a command in background and time it.
-
-in future `jim --sync` will let you share commands between multiple devices.
 
 ## Actions
 
