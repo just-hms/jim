@@ -94,7 +94,7 @@ List of all the available commands
 jim --ls <filter>
 ```
 
-This action will list all the available commands, filtering them with the provided filter.
+Will list all the available commands, filtering them with the provided filter.
 
 #### `--mod`
 
@@ -111,7 +111,7 @@ Will open the command in your default editor and will let you modify it.
 Remove one or more command 
 
 ```
-jim --rm command_1 command_2 command_3
+jim --rm command_1 <command_2> ...
 ```
 
 Will remove the provided commands.
@@ -144,7 +144,7 @@ Show a list of all the `--watch` results
 jim --show <filter>
 ```
 
-This command will list all of the commands' sessions. Filtering them with the provided filter.
+Will list all of the commands' sessions. Filtering them with the provided filter.
 
 A session is created when a command is launched with `--watch`.
 

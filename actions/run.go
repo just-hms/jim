@@ -31,7 +31,7 @@ var Run = &Action{
 		run(command, "")
 	},
 	Description:     "run a command (not required)",
-	HelpDescription: "wp",
+	HelpDescription: " Run a command using this syntax\n\n     jim <--run> command\n\n Will run the specified command in your default shell.\n --run can be omitted.",
 
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) == 1 || len(args) == 2

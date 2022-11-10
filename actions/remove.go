@@ -44,7 +44,7 @@ var Remove = &Action{
 		}
 	},
 	Description:     "remove one or more specified command",
-	HelpDescription: "wp",
+	HelpDescription: " Remove one or more command using this syntax\n\n     jim --rm command_1 <command_2> ...\n\n Will remove the provided commands.",
 
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) >= 1

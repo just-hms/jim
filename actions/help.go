@@ -10,21 +10,29 @@ var Help = &Action{
 
 	Value: func(args []string) {
 
+		if len(args) == 1 {
+			action := Actions[args[0]]
+			if action == nil || args[0] == utils.ACTION_PREFIX+"help" {
+				utils.Alertf("action not found\n")
+				return
+			}
+
+			fmt.Println(action.HelpDescription)
+			return
+		}
+
 		fmt.Print(
 			"The jim command line utility enables running long commands with one word\n\n",
 			"usage:\n",
 		)
 
-		utils.Titlef("           jim [%s<action>] [<arguments>]\n", utils.ACTION_PREFIX)
-		utils.Commentf("           to edit your commands\n\n")
+		utils.Titlef("           jim <%saction> <arguments>\n", utils.ACTION_PREFIX)
+		utils.Commentf("           to manage your commands\n\n")
 
-		utils.Titlef("           jim %srun command\n", utils.ACTION_PREFIX)
-		fmt.Println("      or")
-
-		utils.Titlef("           jim command\n")
+		utils.Titlef("           jim <%srun> command\n", utils.ACTION_PREFIX)
 		utils.Commentf("           to launch a command\n\n")
 
-		fmt.Println("The following Actions are available")
+		fmt.Println("The following actions are available")
 
 		keys := make([]string, 0, len(Actions))
 		for k := range Actions {
@@ -56,6 +64,6 @@ var Help = &Action{
 	},
 	Description: "list of all actions and their description",
 	ArgumentsCheck: func(args []string) bool {
-		return len(args) == 0
+		return len(args) == 0 || len(args) == 1
 	},
 }

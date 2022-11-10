@@ -55,13 +55,6 @@ func main() {
 		return
 	}
 
-	// if the user wrote: "jim --action --help"
-
-	if len(args) == 1 && args[0] == utils.ACTION_PREFIX+"help" {
-		println(action.HelpDescription)
-		return
-	}
-
 	// check if the argument len is correct
 
 	if !action.ArgumentsCheck(args) {

@@ -33,7 +33,7 @@ var Mod = &Action{
 		}
 	},
 	Description:     "modify a specified command",
-	HelpDescription: "wp",
+	HelpDescription: " Modify a command using this syntax\n\n     jim --mod command\n\n Will open the command in your default editor and will let\n you modify it.",
 
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) == 1

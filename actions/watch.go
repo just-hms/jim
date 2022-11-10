@@ -30,8 +30,8 @@ var Watch = &Action{
 		utils.ContinueInBackGround(command, params)
 
 	},
-	Description:     "run a command in background and time it (user input and output don't work)",
-	HelpDescription: "wp",
+	Description:     "run a command in background and time it",
+	HelpDescription: " Run a command in the background and time it using this syntax\n\n     jim --watch command\n\n Will launch the command in background and save its time of execution.\n The time that the command took to execute will be visible using the --show utility.\n User input and output don't work using --watch",
 
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) >= 1

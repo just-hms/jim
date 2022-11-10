@@ -41,7 +41,7 @@ var Add = &Action{
 
 	},
 	Description:     "add a command",
-	HelpDescription: "wp",
+	HelpDescription: " add a command using this syntax\n\n     jim --add command <value>\n\n If no value is specified jim will open your default editor and\n will let you insert a set of instruction in a temporary file.",
 
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) == 1 || len(args) == 2

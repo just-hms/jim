@@ -42,8 +42,9 @@ var List = &Action{
 		}
 
 	},
-	Description:     "list of all commands",
-	HelpDescription: "wp",
+	Description: "list of all commands",
+
+	HelpDescription: " List of all the available commands using this syntax\n\n     jim --ls <filter>\n\n Will list all the available commands, filtering them with\n the provided filter.",
 
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) == 0 || len(args) == 1

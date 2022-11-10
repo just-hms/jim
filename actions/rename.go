@@ -82,7 +82,7 @@ var Rename = &Action{
 
 	},
 	Description:     "rename a command",
-	HelpDescription: "wp",
+	HelpDescription: " Rename a command using this syntax\n\n     jim --rn command new_name\n\n Will rename the specified command with the provided `new_name`.",
 
 	ArgumentsCheck: func(args []string) bool {
 		return len(args) == 2

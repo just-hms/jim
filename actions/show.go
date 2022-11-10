@@ -51,7 +51,7 @@ var Show = &Action{
 	ArgumentsCheck: func(args []string) bool {
 		return true
 	},
-	HelpDescription: "wp",
+	HelpDescription: " Show a list of all the --watch results using this syntax\n\n     jim --show <filter>\n\n Will list all of the commands' sessions. Filtering them with\n the provided filter.\n A session is created when a command is launched with --watch.",
 	BackgroundShit: func([]string) {
 	},
 }
