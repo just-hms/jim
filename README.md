@@ -5,7 +5,7 @@ The jim command line utility enables running long commands with one word, it's b
 
 # Table of contents
 
-- [Why use `jim`?](#why-use-jim)
+- [Why `jim`?](#why-use-jim)
 - [Installation](#installation)
 - [Usage](#usage)
 
