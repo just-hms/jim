@@ -1,3 +1,5 @@
+@echo off
+
 echo "creating the ouput folder"
 mkdir -p out
 
@@ -20,5 +22,8 @@ tar -c ./out/jim-windows-adm64.tar.gz ./out/README.md ./out/jim.exe
 rm ./out/jim.exe
 
 rm ./out/README.md
+
+echo "output"
+ls ./out/
 
 
