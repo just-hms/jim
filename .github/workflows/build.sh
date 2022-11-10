@@ -16,7 +16,7 @@ rm ./out/jim
 
 echo "windows\n"
 env GOOS=windows;GOARCH=adm64; go build -ldflags="-X 'jim/utils.Version=$1'" -o ./out/jim.exe ./cmd/
-cd ./out && tar vcfz jim-windows-adm64.tar.gz README.md jim && cd -
+cd ./out && tar vcfz jim-windows-adm64.tar.gz README.md jim.exe && cd -
 rm ./out/jim.exe
 
 rm ./out/README.md
