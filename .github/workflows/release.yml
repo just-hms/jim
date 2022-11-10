@@ -21,11 +21,14 @@ jobs:
     - name: Check version
       run: go version
 
-    - name: Build
-      run: go build -v ./...
-
+    - name: Build for linux
+      run: go build .
+    
     - name: Test
       run: go test -v ./...
+
+    - name: Check executable version
+      run: jim --version
 
     - name: Copy build-artifacts
       uses: skx/github-action-publish-binaries@master
