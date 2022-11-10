@@ -4,7 +4,7 @@ The `jim` command line utility enables running long commands with one word, it's
 
 ## Why `jim`?
 
-- The main focus of `jim` is to let you re-use commands that you previously inserted in it. For example:
+- The main focus of `jim` is to let you re-use shell commands that you previously inserted in it. For example:
 
 	```
 	jim command
@@ -134,7 +134,7 @@ Run a command
 jim <--run> command
 ```
 
-will run the specified command, `--run` can be omitted
+will run the specified command in *your default shell*, `--run` can be omitted
 
 #### `--show`
 
