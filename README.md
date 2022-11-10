@@ -1,6 +1,6 @@
 # Jim
 
-The jim command line utility enables running long commands with one word, it's basically __alias but better__
+The `jim` command line utility enables running long commands with one word, it's basically __alias but better__
 
 
 # Table of contents
