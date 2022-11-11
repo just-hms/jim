@@ -18,5 +18,6 @@ require (
 
 require (
 	github.com/fatih/color v1.13.0
+	github.com/go-playground/assert v1.2.1
 	golang.org/x/sys v0.2.0 // indirect
 )
