@@ -10,7 +10,7 @@ var Add = &Action{
 
 		command := models.Command{}
 
-		if err := models.GetCommand(&command, args[0]); err == nil {
+		if err := models.GetCommandByName(&command, args[0]); err == nil {
 			utils.Alertf("a command named %s already exists!!!\n", args[0])
 			return
 		}

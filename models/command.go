@@ -33,7 +33,7 @@ func GetCommands(filter string, commands *[]Command) error {
 	})
 }
 
-func GetCommand(command *Command, name string) error {
+func GetCommandByName(command *Command, name string) error {
 
 	err := DB().View(func(tx *buntdb.Tx) error {
 		var err error

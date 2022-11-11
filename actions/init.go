@@ -49,7 +49,7 @@ func init() {
 
 func FindCommandByName(name string, command *models.Command) error {
 
-	if err := models.GetCommand(command, name); err == nil {
+	if err := models.GetCommandByName(command, name); err == nil {
 		return nil
 	}
 
