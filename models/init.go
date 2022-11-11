@@ -22,6 +22,17 @@ func DB() (db *buntdb.DB) {
 		return database
 	}
 
+	if os.Getenv("testing") == "true" {
+
+		if db, err := buntdb.Open(":memory:"); err != nil {
+			panic("failed to connect database")
+		} else {
+			database = db
+		}
+
+		return database
+	}
+
 	dbFolder := ""
 
 	if runtime.GOOS == "windows" {
