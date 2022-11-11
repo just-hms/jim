@@ -18,7 +18,7 @@ var List = &Action{
 			filter = args[0]
 		}
 
-		if err := models.ListCommands(filter, &commands); err != nil {
+		if err := models.GetCommands(filter, &commands); err != nil {
 			utils.Alertf("error retrieving the command\n")
 			return
 		}

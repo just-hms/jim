@@ -3,8 +3,6 @@ package actions
 import (
 	"jim/models"
 	"jim/utils"
-
-	"github.com/tidwall/buntdb"
 )
 
 var Clear = &Action{
@@ -16,10 +14,7 @@ var Clear = &Action{
 			return
 		}
 
-		models.DB().Update(func(tx *buntdb.Tx) error {
-			tx.DeleteAll()
-			return nil
-		})
+		models.Clear()
 
 	},
 	Description:     "clear all commands",

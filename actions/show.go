@@ -27,7 +27,7 @@ var Show = &Action{
 			filter = args[0]
 		}
 
-		if err := models.ListSessions(filter, &sessions); err != nil {
+		if err := models.GetSessions(filter, &sessions); err != nil {
 			utils.Alertf("error retrieving the sessions\n")
 			return
 		}

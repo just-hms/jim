@@ -5,8 +5,6 @@ import (
 	"jim/levenshtein"
 	"jim/models"
 	"jim/utils"
-
-	"github.com/tidwall/buntdb"
 )
 
 type Action struct {
@@ -51,14 +49,7 @@ func init() {
 
 func FindCommandByName(name string, command *models.Command) error {
 
-	getErr := models.DB().View(func(tx *buntdb.Tx) error {
-		var err error
-		command.Value, err = tx.Get("command:" + name)
-		command.Name = name // set the name to the key if found
-		return err
-	})
-
-	if getErr == nil {
+	if err := models.GetCommand(command, name); err == nil {
 		return nil
 	}
 
@@ -66,7 +57,7 @@ func FindCommandByName(name string, command *models.Command) error {
 
 	var commands []models.Command
 
-	if err := models.ListCommands("", &commands); err != nil {
+	if err := models.GetCommands("", &commands); err != nil {
 		return errors.New("error retrieving the command")
 	}
 

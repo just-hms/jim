@@ -14,7 +14,7 @@ type Session struct {
 	Command string
 }
 
-func ListSessions(filter string, sessions *[]Session) error {
+func GetSessions(filter string, sessions *[]Session) error {
 
 	return DB().View(func(tx *buntdb.Tx) error {
 		err := tx.Ascend("sessions", func(key, value string) bool {
@@ -40,4 +40,18 @@ func ListSessions(filter string, sessions *[]Session) error {
 
 		return err
 	})
+}
+
+func (self *Session) Save() error {
+
+	err := DB().Update(func(tx *buntdb.Tx) error {
+		_, _, err := tx.Set(
+			"session:"+self.Command+":"+strconv.FormatInt(self.Start.Unix(), 10),
+			strconv.FormatInt(self.Elapsed.Milliseconds(), 10),
+			nil,
+		)
+		return err
+	})
+
+	return err
 }

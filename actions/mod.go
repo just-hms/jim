@@ -3,8 +3,6 @@ package actions
 import (
 	"jim/models"
 	"jim/utils"
-
-	"github.com/tidwall/buntdb"
 )
 
 var Mod = &Action{
@@ -17,18 +15,13 @@ var Mod = &Action{
 			return
 		}
 
-		if err := utils.GetCommandFromArgs(args, &command); err != nil {
+		if err := utils.GetCommandFromUser(args, &command); err != nil {
 			utils.Alertf("%s\n", err.Error())
 			return
 		}
 
-		setErr := models.DB().Update(func(tx *buntdb.Tx) error {
-			_, _, err := tx.Set("command:"+command.Name, command.Value, nil)
-			return err
-		})
-
-		if setErr != nil {
-			utils.Alertf("error adding the command\n")
+		if err := command.Save(); err != nil {
+			utils.Alertf("error modifying the command\n")
 			return
 		}
 	},

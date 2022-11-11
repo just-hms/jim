@@ -115,7 +115,10 @@ func fileInput(file_default_content string) (string, error) {
 
 }
 
-func GetCommandFromArgs(args []string, command *models.Command) error {
+// get the command properties from the user inputs
+// - if set it gets it from the args
+// - otherwise it opens a temp file
+func GetCommandFromUser(args []string, command *models.Command) error {
 
 	var (
 		new_command_value string
