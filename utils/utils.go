@@ -10,7 +10,6 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/fatih/color"
 	"github.com/tidwall/buntdb"
 )
 
@@ -37,11 +36,6 @@ func ReadChar() rune {
 
 	return rune(string(b)[0])
 }
-
-var Alertf = color.New(color.FgRed).PrintfFunc()
-var Titlef = color.New(color.FgHiWhite, color.Bold).PrintfFunc()
-var Commentf = color.New(color.FgHiBlack, color.Bold).PrintfFunc()
-var Warningf = color.New().PrintfFunc()
 
 func ReplaceCurrentFolderFlag(input string) string {
 	return strings.Replace(input, CURRENT_FOLDER_FLAG, CurrentFolder(), -1)
@@ -116,7 +110,7 @@ func fileInput(file_default_content string) (string, error) {
 // get the command properties from the user inputs
 // - if set it gets it from the args
 // - otherwise it opens a temp file
-func GetCommandFromUser(args []string, command *models.Command) error {
+func GetCommandValueFromArgs(args []string, command *models.Command) error {
 
 	var (
 		new_command_value string
