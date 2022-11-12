@@ -140,7 +140,6 @@ func GetCommandFromUser(args []string, command *models.Command) error {
 		new_command_value = args[1]
 	}
 
-	command.Name = args[0]
 	command.Value = ReplaceCurrentFolderFlag(new_command_value)
 
 	return nil
