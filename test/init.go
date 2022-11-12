@@ -3,15 +3,16 @@ package test
 import (
 	"io/ioutil"
 	"os"
+	"strings"
 	"testing"
 )
 
 func init() {
 	testing.Init()
-	os.Setenv("testing", "true")
 }
 
 func getStdout(callback func()) string {
+
 	rescueStdout := os.Stdout
 	r, w, _ := os.Pipe()
 	os.Stdout = w
@@ -22,5 +23,5 @@ func getStdout(callback func()) string {
 	out, _ := ioutil.ReadAll(r)
 	os.Stdout = rescueStdout
 
-	return string(out)
+	return strings.TrimSpace(string(out))
 }

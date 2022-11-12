@@ -12,40 +12,42 @@ import (
 
 func TestVersion(t *testing.T) {
 
-	var (
-		mockResponse string
-		responseData string
-	)
+	var responseData string
 
 	// correct argument test
-	mockResponse = utils.Version
+	corrMockResponse := utils.Version
+	errMockResponse := "wrong format"
 
 	responseData = getStdout(func() {
+
+		// correct input
+
 		args := []string{}
 
 		if !actions.Version.ArgumentsCheck(args) {
-			fmt.Println("wrong format")
+			fmt.Println(errMockResponse)
 			return
 		}
 		actions.Version.Value(args)
 	})
 
-	assert.Equal(t, strings.TrimSpace(responseData), mockResponse)
+	assert.Equal(t, strings.TrimSpace(responseData), corrMockResponse)
 
 	// wrong argument test
 
-	mockResponse = "wrong format"
-
 	responseData = getStdout(func() {
-		args := []string{"wrong input"}
+
+		// wrong input
+
+		args := []string{""}
 
 		if !actions.Version.ArgumentsCheck(args) {
-			fmt.Println("wrong format")
+			fmt.Println(errMockResponse)
 			return
 		}
 		actions.Version.Value(args)
 	})
 
-	assert.Equal(t, strings.TrimSpace(responseData), mockResponse)
+	assert.Equal(t, responseData, errMockResponse)
 
 }
