@@ -15,7 +15,7 @@ var Mod = &Action{
 			return
 		}
 
-		if err := utils.GetCommandFromUser(args, &command); err != nil {
+		if err := utils.GetCommandValueFromArgs(args, &command); err != nil {
 			utils.Alertf("%s\n", err.Error())
 			return
 		}

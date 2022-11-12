@@ -1,7 +1,6 @@
 package test
 
 import (
-	"fmt"
 	"jim/actions"
 	"testing"
 
@@ -15,26 +14,19 @@ func TestClear(t *testing.T) {
 	argss := [][]string{
 		{"print1", "echo 1"},
 		{"print2", "echo 2"},
-		{"print3", "echo 3"},
 	}
 
 	// create three commands
 
 	for i := 0; i < len(argss); i++ {
-
-		getStdout(func() {
-			if !actions.Add.ArgumentsCheck(argss[i]) {
-				fmt.Println("wrong format")
-				return
-			}
-
+		interceptStdout(func() {
 			actions.Add.Value(argss[i])
 		})
 	}
 
 	// clear them and check that the output is ""
 
-	responseData := getStdout(func() {
+	responseData := interceptStdout(func() {
 		actions.Clear.Value([]string{"--force"})
 		actions.List.Value([]string{})
 	})

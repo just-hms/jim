@@ -21,7 +21,7 @@ func TestList(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		getStdout(func() {
+		interceptStdout(func() {
 			if !actions.Add.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")
 				return
@@ -31,7 +31,7 @@ func TestList(t *testing.T) {
 		})
 	}
 
-	responseData := getStdout(func() {
+	responseData := interceptStdout(func() {
 		actions.List.Value([]string{})
 	})
 

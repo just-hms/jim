@@ -18,7 +18,7 @@ func TestVersion(t *testing.T) {
 	corrMockResponse := utils.Version
 	errMockResponse := "wrong format"
 
-	responseData = getStdout(func() {
+	responseData = interceptStdout(func() {
 
 		// correct input
 
@@ -35,7 +35,7 @@ func TestVersion(t *testing.T) {
 
 	// wrong argument test
 
-	responseData = getStdout(func() {
+	responseData = interceptStdout(func() {
 
 		// wrong input
 

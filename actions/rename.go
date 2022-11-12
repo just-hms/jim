@@ -18,9 +18,11 @@ var Rename = &Action{
 
 		// check if a command with the new_name exists
 		if err := models.GetCommandByName(&models.Command{}, args[1]); err == nil {
-			utils.Alertf("a command named %s already exists!!!\n", args[0])
+			utils.Alertf("a command named %s already exists!!!\n", args[1])
 			return
 		}
+
+		// if not rename the first one
 
 		if err := command.Rename(args[1]); err != nil {
 			utils.Alertf("error renaming the command\n")

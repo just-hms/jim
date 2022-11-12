@@ -25,6 +25,6 @@ var Clear = &Action{
 	Description:     "clear all commands",
 	HelpDescription: " Clear all commands using this syntax\n\n     jim --clear\n\n Will remove all commands.",
 	ArgumentsCheck: func(args []string) bool {
-		return len(args) == 0 || len(args) == 1
+		return len(args) == 0 || len(args) == 1 && args[0] == utils.ACTION_PREFIX+"force"
 	},
 }

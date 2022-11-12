@@ -26,7 +26,7 @@ func TestAdd(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		responseData = getStdout(func() {
+		responseData = interceptStdout(func() {
 
 			if !actions.Add.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")

@@ -11,7 +11,7 @@ func init() {
 	testing.Init()
 }
 
-func getStdout(callback func()) string {
+func interceptStdout(callback func()) string {
 
 	rescueStdout := os.Stdout
 	r, w, _ := os.Pipe()

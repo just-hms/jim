@@ -25,7 +25,7 @@ func TestHelp(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		responseData := getStdout(func() {
+		responseData := interceptStdout(func() {
 
 			if !actions.Help.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")

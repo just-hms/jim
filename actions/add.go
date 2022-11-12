@@ -8,14 +8,19 @@ import (
 var Add = &Action{
 	Value: func(args []string) {
 
-		command := models.Command{}
-
-		if err := models.GetCommandByName(&command, args[0]); err == nil {
+		// check if a command with this name already exists
+		if err := models.GetCommandByName(&models.Command{}, args[0]); err == nil {
 			utils.Alertf("a command named %s already exists!!!\n", args[0])
 			return
 		}
 
-		if err := utils.GetCommandFromUser(args, &command); err != nil {
+		// if not create it
+
+		command := models.Command{
+			Name: args[0],
+		}
+
+		if err := utils.GetCommandValueFromArgs(args, &command); err != nil {
 			utils.Alertf("%s\n", err.Error())
 			return
 		}
