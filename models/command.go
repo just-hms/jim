@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"errors"
 	"strings"
 
@@ -15,11 +16,13 @@ type Command struct {
 func GetCommands(filter string, commands *[]Command) error {
 
 	return DB().View(func(tx *buntdb.Tx) error {
+
 		err := tx.Ascend("commands", func(key, value string) bool {
 
-			command := Command{
-				Name:  strings.Split(key, "command:")[1],
-				Value: value,
+			command := Command{}
+
+			if err := json.Unmarshal([]byte(value), &command); err != nil {
+				return false
 			}
 
 			if filter != "" && !strings.Contains(command.Name, filter) {
@@ -29,6 +32,7 @@ func GetCommands(filter string, commands *[]Command) error {
 			*commands = append(*commands, command)
 			return true // continue iteration
 		})
+
 		return err
 	})
 }
@@ -36,10 +40,18 @@ func GetCommands(filter string, commands *[]Command) error {
 func GetCommandByName(command *Command, name string) error {
 
 	err := DB().View(func(tx *buntdb.Tx) error {
-		var err error
-		command.Value, err = tx.Get("command:" + name)
-		command.Name = name // set the name to the key if found
-		return err
+		var (
+			s   string
+			err error
+		)
+
+		s, err = tx.Get("command:" + name)
+
+		if err != nil {
+			return err
+		}
+
+		return json.Unmarshal([]byte(s), &command)
 	})
 
 	return err
@@ -48,7 +60,19 @@ func GetCommandByName(command *Command, name string) error {
 func (self *Command) Save() error {
 
 	err := DB().Update(func(tx *buntdb.Tx) error {
-		_, _, err := tx.Set("command:"+self.Name, self.Value, nil)
+
+		var (
+			b   []byte
+			err error
+		)
+
+		b, err = json.Marshal(self)
+
+		if err != nil {
+			return err
+		}
+
+		_, _, err = tx.Set("command:"+self.Name, string(b), nil)
 		return err
 	})
 
@@ -66,14 +90,15 @@ func (self *Command) Remove() error {
 
 	err := DB().Update(func(tx *buntdb.Tx) error {
 
-		// delete all sessions
 		var delkeys []string
 
+		// get the sessions' keys
 		tx.AscendKeys("session:"+self.Name+":*", func(k, v string) bool {
 			delkeys = append(delkeys, k)
 			return true // continue
 		})
 
+		// delete the sessions
 		for _, k := range delkeys {
 			if _, err := tx.Delete(k); err != nil {
 				return err
@@ -81,6 +106,7 @@ func (self *Command) Remove() error {
 		}
 
 		_, err := tx.Delete("command:" + self.Name)
+
 		return err
 	})
 

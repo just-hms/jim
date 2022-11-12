@@ -23,7 +23,6 @@ func DB() (db *buntdb.DB) {
 	}
 
 	if os.Getenv("testing") == "true" {
-
 		if db, err := buntdb.Open(":memory:"); err != nil {
 			panic("failed to connect database")
 		} else {

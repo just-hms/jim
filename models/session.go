@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"strconv"
 	"strings"
 	"time"
@@ -19,15 +20,10 @@ func GetSessions(filter string, sessions *[]Session) error {
 	return DB().View(func(tx *buntdb.Tx) error {
 		err := tx.Ascend("sessions", func(key, value string) bool {
 
-			key_data := strings.Split(strings.TrimPrefix(key, "session:"), ":")
+			session := Session{}
 
-			start_unix, _ := strconv.ParseInt(key_data[1], 10, 64)
-			elapsed, _ := strconv.ParseInt(value, 10, 64)
-
-			session := Session{
-				Start:   time.Unix(start_unix, 0),
-				Command: key_data[0],
-				Elapsed: time.Duration(elapsed) * time.Millisecond,
+			if err := json.Unmarshal([]byte(value), &session); err != nil {
+				return false
 			}
 
 			if filter != "" && !strings.Contains(session.Command, filter) {
@@ -45,9 +41,21 @@ func GetSessions(filter string, sessions *[]Session) error {
 func (self *Session) Save() error {
 
 	err := DB().Update(func(tx *buntdb.Tx) error {
-		_, _, err := tx.Set(
+
+		var (
+			b   []byte
+			err error
+		)
+
+		b, err = json.Marshal(self)
+
+		if err != nil {
+			return err
+		}
+
+		_, _, err = tx.Set(
 			"session:"+self.Command+":"+strconv.FormatInt(self.Start.Unix(), 10),
-			strconv.FormatInt(self.Elapsed.Milliseconds(), 10),
+			string(b),
 			nil,
 		)
 		return err
