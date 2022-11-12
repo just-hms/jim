@@ -10,6 +10,7 @@ var Help = &Action{
 
 	Value: func(args []string) {
 
+		// if an action is passed print it's help function
 		if len(args) == 1 {
 			action := Actions[args[0]]
 			if action == nil || args[0] == utils.ACTION_PREFIX+"help" {
@@ -20,6 +21,8 @@ var Help = &Action{
 			fmt.Println(action.HelpDescription)
 			return
 		}
+
+		// otherwise print the help text
 
 		fmt.Print(
 			"The jim command line utility enables running long commands with one word\n\n",

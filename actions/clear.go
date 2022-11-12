@@ -8,6 +8,7 @@ import (
 var Clear = &Action{
 	Value: func(args []string) {
 
+		// if force is set launch clear without asking
 		if len(args) == 1 && args[0] == utils.ACTION_PREFIX+"force" {
 			models.Clear()
 			return

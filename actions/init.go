@@ -8,11 +8,11 @@ import (
 )
 
 type Action struct {
-	Value           func([]string)
-	Description     string
-	ArgumentsCheck  func([]string) bool
-	HelpDescription string
-	BackgroundShit  func([]string)
+	Value               func([]string)
+	Description         string
+	ArgumentsCheck      func([]string) bool
+	HelpDescription     string
+	BackgroundSubAction func([]string)
 }
 
 var Actions = map[string]*Action{}
@@ -45,6 +45,7 @@ func init() {
 
 }
 
+// uses the https://en.wikipedia.org/wiki/Levenshtein_distance
 // returns error if no command was found
 
 func FindCommandByName(name string, command *models.Command) error {

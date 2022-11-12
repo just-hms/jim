@@ -9,8 +9,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-
-	"github.com/tidwall/buntdb"
 )
 
 func ExecutableFolder() string {
@@ -195,7 +193,8 @@ func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 
 }
 
-func ContinueInBackGround(command models.Command, params string) {
+func ContinueInBackground(command models.Command, params string) {
+
 	executable, _ := os.Executable()
 
 	action := BG_PREFIX + strings.Replace(os.Args[1], ACTION_PREFIX, "", -1)
@@ -213,15 +212,11 @@ func ContinueInBackGround(command models.Command, params string) {
 
 func TakeUp(args []string) (models.Command, string, error) {
 
-	command := models.Command{}
+	var command models.Command
 
-	err := models.DB().View(func(tx *buntdb.Tx) error {
-		var err error
-		command.Value, err = tx.Get("command:" + args[0])
-		command.Name = args[0] // set the name to the key if found
-		return err
-	})
+	if err := models.GetCommandByName(&command, args[0]); err != nil {
+		return command, "", err
+	}
 
-	return command, strings.Join(args[1:], " "), err
-
+	return command, strings.Join(args[1:], " "), nil
 }

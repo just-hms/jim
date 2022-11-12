@@ -39,7 +39,7 @@ func main() {
 			)]
 
 		if action != nil {
-			action.BackgroundShit(args)
+			action.BackgroundSubAction(args)
 			return
 		}
 	}

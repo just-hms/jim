@@ -119,13 +119,16 @@ func (self *Command) Remove() error {
 
 func (self *Command) Rename(new_name string) error {
 
+	old_name := self.Name
+	self.Name = new_name
+
 	err := DB().Update(func(tx *buntdb.Tx) error {
 
 		var rnKeys []string
 
 		// iterate over the sessions
 
-		tx.AscendKeys("session:"+self.Name+":*", func(k, v string) bool {
+		tx.AscendKeys("session:"+old_name+":*", func(k, v string) bool {
 			rnKeys = append(rnKeys, k)
 			return true // continue
 		})
@@ -142,7 +145,7 @@ func (self *Command) Rename(new_name string) error {
 			// set the session value to the new key
 
 			_, _, setErr := tx.Set(
-				strings.ReplaceAll(k, self.Name, new_name),
+				strings.ReplaceAll(k, old_name, self.Name),
 				val, // the old session value
 				nil,
 			)
@@ -153,15 +156,23 @@ func (self *Command) Rename(new_name string) error {
 
 		}
 
-		// delete the old commands key and set the new one
-		val, err := tx.Delete("command:" + self.Name)
+		// delete the old command and set the new one
+		_, err := tx.Delete("command:" + old_name)
 
 		if err != nil {
 			return err
 		}
 
-		_, _, setErr := tx.Set("command:"+new_name, val, nil)
-		return setErr
+		var b []byte
+		b, err = json.Marshal(self)
+
+		if err != nil {
+			return err
+		}
+
+		_, _, err = tx.Set("command:"+self.Name, string(b), nil)
+
+		return err
 	})
 
 	return err

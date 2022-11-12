@@ -7,15 +7,6 @@ import (
 	"time"
 )
 
-// format:
-// jim --show <command> --from date --to date
-
-// todo:
-// get inputs
-// - show id if no command is specified
-// - always show from and to
-// - add toady as a possible value
-
 var Show = &Action{
 	Value: func(args []string) {
 
@@ -52,6 +43,6 @@ var Show = &Action{
 		return true
 	},
 	HelpDescription: " Show a list of all the --watch results using this syntax\n\n     jim --show <filter>\n\n Will list all of the commands' sessions. Filtering them with\n the provided filter.\n A session is created when a command is launched with --watch.",
-	BackgroundShit: func([]string) {
+	BackgroundSubAction: func([]string) {
 	},
 }

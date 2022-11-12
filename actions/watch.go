@@ -24,7 +24,8 @@ var Watch = &Action{
 			params = strings.Join(args[1:], " ")
 		}
 
-		utils.ContinueInBackGround(command, params)
+		// continue in the BackgroundSubAction
+		utils.ContinueInBackground(command, params)
 
 	},
 	Description:     "run a command in background and time it",
@@ -34,7 +35,7 @@ var Watch = &Action{
 		return len(args) >= 1
 	},
 
-	BackgroundShit: func(args []string) {
+	BackgroundSubAction: func(args []string) {
 
 		command, params, err := utils.TakeUp(args)
 
@@ -48,6 +49,7 @@ var Watch = &Action{
 			return
 		}
 
+		// set the start time
 		session := models.Session{
 			Start:   time.Now(),
 			Command: command.Name,
@@ -57,7 +59,11 @@ var Watch = &Action{
 			return
 		}
 
+		// set the difference between the end and the start time
+
 		session.Elapsed = time.Since(session.Start)
+
+		// save it
 
 		if err := session.Save(); err != nil {
 			utils.Alertf("error adding the session\n")
