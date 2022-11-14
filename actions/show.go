@@ -3,7 +3,7 @@ package actions
 import (
 	"fmt"
 	"jim/models"
-	"jim/utils"
+	"jim/rainbow"
 	"time"
 )
 
@@ -19,7 +19,7 @@ var Show = &Action{
 		}
 
 		if err := models.GetSessions(filter, &sessions); err != nil {
-			utils.Alertf("error retrieving the sessions\n")
+			rainbow.Alertf("error retrieving the sessions\n")
 			return
 		}
 
@@ -27,7 +27,7 @@ var Show = &Action{
 			return
 		}
 
-		utils.Titlef(" %-10s%-30s%-1s\n", "Command", "Date", "Duration")
+		rainbow.Titlef(" %-10s%-30s%-1s\n", "Command", "Date", "Duration")
 
 		total := 0
 		for _, s := range sessions {

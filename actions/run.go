@@ -3,6 +3,7 @@ package actions
 import (
 	"fmt"
 	"jim/models"
+	"jim/rainbow"
 	"jim/utils"
 	"os"
 	"strings"
@@ -12,14 +13,14 @@ var Run = &Action{
 	Value: func(args []string) {
 
 		if len(args) != 1 && len(args) != 2 {
-			utils.Alertf("wrong format!!!\n")
+			rainbow.Alertf("wrong format!!!\n")
 			return
 		}
 
 		command := models.Command{}
 
 		if err := FindCommandByName(args[0], &command); err != nil {
-			utils.Alertf("%s\n", err.Error())
+			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 
@@ -46,7 +47,7 @@ func run(command models.Command, args string) {
 	)
 
 	if err != nil {
-		utils.Alertf("%s\n", err.Error())
+		rainbow.Alertf("%s\n", err.Error())
 		return
 	}
 

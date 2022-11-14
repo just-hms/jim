@@ -2,12 +2,12 @@ package actions
 
 import (
 	"fmt"
-	"jim/utils"
+	"jim/constants"
 )
 
 var Version = &Action{
 	Value: func(args []string) {
-		fmt.Println(utils.Version)
+		fmt.Println(constants.Version)
 	},
 	Description: "print the version of the executable",
 	ArgumentsCheck: func(args []string) bool {

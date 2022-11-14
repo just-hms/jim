@@ -3,6 +3,7 @@ package utils
 import (
 	"errors"
 	"io/ioutil"
+	"jim/constants"
 	"jim/models"
 	"os"
 	"os/exec"
@@ -36,7 +37,7 @@ func ReadChar() rune {
 }
 
 func ReplaceCurrentFolderFlag(input string) string {
-	return strings.Replace(input, CURRENT_FOLDER_FLAG, CurrentFolder(), -1)
+	return strings.Replace(input, constants.CURRENT_FOLDER_FLAG, CurrentFolder(), -1)
 }
 
 func fileInput(file_default_content string) (string, error) {
@@ -191,32 +192,4 @@ func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 
 	return c, err
 
-}
-
-func ContinueInBackground(command models.Command, params string) {
-
-	executable, _ := os.Executable()
-
-	action := BG_PREFIX + strings.Replace(os.Args[1], ACTION_PREFIX, "", -1)
-
-	c, _ := DetachedCmd(
-		executable,
-		action,
-		command.Name,
-		params,
-	)
-
-	c.Stderr = os.Stderr
-	c.Run()
-}
-
-func TakeUp(args []string) (models.Command, string, error) {
-
-	var command models.Command
-
-	if err := models.GetCommandByName(&command, args[0]); err != nil {
-		return command, "", err
-	}
-
-	return command, strings.Join(args[1:], " "), nil
 }

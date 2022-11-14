@@ -11,7 +11,7 @@ import (
 
 var database *buntdb.DB = nil
 
-func init() {
+func createIndexes() {
 	DB().CreateIndex("commands", "command:*", buntdb.IndexString)
 	DB().CreateIndex("sessions", "session:*:*", buntdb.IndexString)
 }
@@ -21,6 +21,9 @@ func DB() (db *buntdb.DB) {
 	if database != nil {
 		return database
 	}
+
+	// create indexes beside of which db was created
+	defer createIndexes()
 
 	if os.Getenv("testing") == "true" {
 		if db, err := buntdb.Open(":memory:"); err != nil {

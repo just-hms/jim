@@ -2,7 +2,7 @@ package actions
 
 import (
 	"jim/models"
-	"jim/utils"
+	"jim/rainbow"
 )
 
 var Rename = &Action{
@@ -12,20 +12,20 @@ var Rename = &Action{
 
 		// find the command
 		if err := FindCommandByName(args[0], &command); err != nil {
-			utils.Alertf("%s\n", err.Error())
+			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 
 		// check if a command with the new_name exists
 		if err := models.GetCommandByName(&models.Command{}, args[1]); err == nil {
-			utils.Alertf("a command named %s already exists!!!\n", args[1])
+			rainbow.Alertf("a command named %s already exists!!!\n", args[1])
 			return
 		}
 
 		// if not rename the first one
 
 		if err := command.Rename(args[1]); err != nil {
-			utils.Alertf("error renaming the command\n")
+			rainbow.Alertf("error renaming the command\n")
 			return
 		}
 

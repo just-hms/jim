@@ -2,6 +2,7 @@ package test
 
 import (
 	"io/ioutil"
+	"jim/rainbow"
 	"os"
 	"strings"
 	"testing"
@@ -9,6 +10,8 @@ import (
 
 func init() {
 	testing.Init()
+	rainbow.Blank()
+	os.Setenv("testing", "true")
 }
 
 func interceptStdout(callback func()) string {

@@ -2,7 +2,7 @@ package actions
 
 import (
 	"jim/models"
-	"jim/utils"
+	"jim/rainbow"
 )
 
 var Remove = &Action{
@@ -13,12 +13,12 @@ var Remove = &Action{
 			command := models.Command{}
 
 			if err := FindCommandByName(arg, &command); err != nil {
-				utils.Alertf("%s\n", err.Error())
+				rainbow.Alertf("%s\n", err.Error())
 				return
 			}
 
 			if err := command.Remove(); err != nil {
-				utils.Alertf("%s\n", err.Error())
+				rainbow.Alertf("%s\n", err.Error())
 			}
 
 		}

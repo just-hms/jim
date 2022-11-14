@@ -2,7 +2,9 @@ package actions
 
 import (
 	"jim/models"
+	"jim/rainbow"
 	"jim/utils"
+	"os"
 
 	"strings"
 	"time"
@@ -14,7 +16,7 @@ var Watch = &Action{
 		command := models.Command{}
 
 		if err := FindCommandByName(args[0], &command); err != nil {
-			utils.Alertf("%s\n", err.Error())
+			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 
@@ -24,8 +26,13 @@ var Watch = &Action{
 			params = strings.Join(args[1:], " ")
 		}
 
+		if os.Getenv("testing") == "true" {
+			Actions["--watch"].BackgroundSubAction([]string{command.Name, params})
+			return
+		}
+
 		// continue in the BackgroundSubAction
-		utils.ContinueInBackground(command, params)
+		ContinueInBackground(command, params)
 
 	},
 	Description:     "run a command in background and time it",
@@ -37,7 +44,7 @@ var Watch = &Action{
 
 	BackgroundSubAction: func(args []string) {
 
-		command, params, err := utils.TakeUp(args)
+		command, params, err := TakeUp(args)
 
 		if err != nil {
 			return
@@ -66,7 +73,7 @@ var Watch = &Action{
 		// save it
 
 		if err := session.Save(); err != nil {
-			utils.Alertf("error adding the session\n")
+			rainbow.Alertf("error adding the session\n")
 			return
 		}
 	},

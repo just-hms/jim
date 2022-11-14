@@ -1,8 +1,7 @@
-package utils
+package rainbow
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/fatih/color"
 )
@@ -12,12 +11,8 @@ var Titlef = color.New(color.FgHiWhite, color.Bold).PrintfFunc()
 var Commentf = color.New(color.FgHiBlack, color.Bold).PrintfFunc()
 var Warningf = color.New().PrintfFunc()
 
-func init() {
-
-	if os.Getenv("testing") != "true" {
-		return
-	}
-
+// change the colored apis back to standard fmt
+func Blank() {
 	var defaultf = func(format string, a ...interface{}) {
 		fmt.Printf(format, a...)
 	}

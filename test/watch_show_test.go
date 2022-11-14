@@ -3,7 +3,6 @@ package test
 import (
 	"jim/actions"
 	"testing"
-	"time"
 
 	"github.com/go-playground/assert"
 )
@@ -18,7 +17,6 @@ func TestWatchShow(t *testing.T) {
 		actions.Clear.Value([]string{"--force"})
 		actions.Add.Value([]string{"print", "echo 1"})
 		actions.Watch.Value([]string{"print"})
-		time.Sleep(1 * time.Second)
 	})
 
 	responseData := interceptStdout(func() {

@@ -2,6 +2,7 @@ package actions
 
 import (
 	"jim/models"
+	"jim/rainbow"
 	"jim/utils"
 )
 
@@ -11,18 +12,18 @@ var Mod = &Action{
 		command := models.Command{}
 
 		if err := FindCommandByName(args[0], &command); err != nil {
-			utils.Alertf("%s\n", err.Error())
+			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 
 		// modify the command
 		if err := utils.GetCommandValueFromArgs(args, &command); err != nil {
-			utils.Alertf("%s\n", err.Error())
+			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 
 		if err := command.Save(); err != nil {
-			utils.Alertf("error modifying the command\n")
+			rainbow.Alertf("error modifying the command\n")
 			return
 		}
 	},

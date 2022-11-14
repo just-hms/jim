@@ -2,9 +2,13 @@ package actions
 
 import (
 	"errors"
+	"jim/constants"
 	"jim/levenshtein"
 	"jim/models"
+	"jim/rainbow"
 	"jim/utils"
+	"os"
+	"strings"
 )
 
 type Action struct {
@@ -38,7 +42,7 @@ func init() {
 	var newActions = map[string]*Action{}
 
 	for k := range Actions {
-		newActions[utils.ACTION_PREFIX+k] = Actions[k]
+		newActions[constants.ACTION_PREFIX+k] = Actions[k]
 	}
 
 	Actions = newActions
@@ -85,11 +89,11 @@ func FindCommandByName(name string, command *models.Command) error {
 
 	}
 
-	if max_lev_rateo >= utils.MIN_ACCEPTABLE_LEV_RATEO {
+	if max_lev_rateo >= constants.MIN_ACCEPTABLE_LEV_RATEO {
 		return nil
 	}
 
-	utils.Warningf("did you mean %s? Type y or N\n", command.Name)
+	rainbow.Warningf("did you mean %s? Type y or N\n", command.Name)
 
 	if utils.ReadChar() == 'y' {
 		return nil
@@ -97,4 +101,32 @@ func FindCommandByName(name string, command *models.Command) error {
 
 	return errors.New("command not found")
 
+}
+
+func ContinueInBackground(command models.Command, params string) {
+
+	executable, _ := os.Executable()
+
+	action := constants.BG_ACTION_PREFIX + strings.Replace(os.Args[1], constants.ACTION_PREFIX, "", -1)
+
+	c, _ := utils.DetachedCmd(
+		executable,
+		action,
+		command.Name,
+		params,
+	)
+
+	c.Stderr = os.Stderr
+	c.Run()
+}
+
+func TakeUp(args []string) (models.Command, string, error) {
+
+	var command models.Command
+
+	if err := models.GetCommandByName(&command, args[0]); err != nil {
+		return command, "", err
+	}
+
+	return command, strings.Join(args[1:], " "), nil
 }

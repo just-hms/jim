@@ -2,6 +2,7 @@ package actions
 
 import (
 	"jim/models"
+	"jim/rainbow"
 	"jim/utils"
 )
 
@@ -10,7 +11,7 @@ var Add = &Action{
 
 		// check if a command with this name already exists
 		if err := models.GetCommandByName(&models.Command{}, args[0]); err == nil {
-			utils.Alertf("a command named %s already exists!!!\n", args[0])
+			rainbow.Alertf("a command named %s already exists!!!\n", args[0])
 			return
 		}
 
@@ -21,12 +22,12 @@ var Add = &Action{
 		}
 
 		if err := utils.GetCommandValueFromArgs(args, &command); err != nil {
-			utils.Alertf("%s\n", err.Error())
+			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 
 		if err := command.Save(); err != nil {
-			utils.Alertf("error adding the command\n")
+			rainbow.Alertf("error adding the command\n")
 			return
 		}
 

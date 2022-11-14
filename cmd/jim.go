@@ -2,7 +2,8 @@ package main
 
 import (
 	"jim/actions"
-	"jim/utils"
+	"jim/constants"
+	"jim/rainbow"
 
 	"os"
 	"strings"
@@ -32,10 +33,10 @@ func main() {
 	// if no action was found check if it's the background one
 	if action == nil {
 
-		action = actions.Actions[utils.ACTION_PREFIX+
+		action = actions.Actions[constants.ACTION_PREFIX+
 			strings.Replace(
 				input_command,
-				utils.BG_PREFIX, "", -1,
+				constants.BG_ACTION_PREFIX, "", -1,
 			)]
 
 		if action != nil {
@@ -58,7 +59,7 @@ func main() {
 	// check if the argument len is correct
 
 	if !action.ArgumentsCheck(args) {
-		utils.Alertf("wrong format!!!\n")
+		rainbow.Alertf("wrong format!!!\n")
 		return
 	}
 

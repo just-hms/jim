@@ -3,7 +3,7 @@ package test
 import (
 	"fmt"
 	"jim/actions"
-	"jim/utils"
+	"jim/constants"
 	"strings"
 	"testing"
 
@@ -15,7 +15,7 @@ func TestVersion(t *testing.T) {
 	var responseData string
 
 	// correct argument test
-	corrMockResponse := utils.Version
+	corrMockResponse := constants.Version
 	errMockResponse := "wrong format"
 
 	responseData = interceptStdout(func() {

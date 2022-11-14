@@ -3,7 +3,7 @@ package actions
 import (
 	"fmt"
 	"jim/models"
-	"jim/utils"
+	"jim/rainbow"
 	"strings"
 )
 
@@ -19,7 +19,7 @@ var List = &Action{
 		}
 
 		if err := models.GetCommands(filter, &commands); err != nil {
-			utils.Alertf("error retrieving the command\n")
+			rainbow.Alertf("error retrieving the command\n")
 			return
 		}
 
@@ -27,7 +27,7 @@ var List = &Action{
 			return
 		}
 
-		utils.Titlef(" %-30s%-1s\n", "Command", "Value")
+		rainbow.Titlef(" %-30s%-1s\n", "Command", "Value")
 
 		multiline_tab := "\n                               "
 
