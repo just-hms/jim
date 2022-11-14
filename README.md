@@ -1,14 +1,10 @@
-<div style="display:flex;justify-content: center;">
-
-<p><img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt=""></p>
-
-<a href="https://github.com/tidwall/buntdb">
-	<img style="margin:0px 1rem;height:2rem;" src="https://github.com/tidwall/buntdb/raw/master/logo.png" alt="Bunt DB">
+<p align="center">
+<a href="https://go.dev"><img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="golang"></a>
+<a style="margin:0px 1rem;"href="https://github.com/tidwall/buntdb">
+	<img style="height:28px;" src="https://github.com/tidwall/buntdb/raw/master/logo.png" alt="Bunt DB">
 </a>
-
-<p><img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="Github actions"></p>
-
-</div>
+<a href="https://github.com/features/actions"><img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="Github actions"></a>
+</p>
 	
 # Jim
 
