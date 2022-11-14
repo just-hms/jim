@@ -21,15 +21,15 @@ jobs:
     - name: Check version
       run: go version
 
+    - name: Test
+      run: cd test/ ; go test -v ; cd -
+
     - name: Build executables
       run: |
         chmod +x .github/workflows/build.sh
         .github/workflows/build.sh ${{ github.ref_name }}
 
       shell: bash
-
-    - name: Test
-      run: cd test/ ; go test -v ; cd -
 
     - name: Copy build-artifacts
       uses: skx/github-action-publish-binaries@master
