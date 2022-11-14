@@ -1,3 +1,20 @@
+<div style="display:flex;justify-content: center;">
+
+<p><img style="margin:0px 1rem" src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white
+" alt="Go"></p>
+
+<a href="https://github.com/tidwall/buntdb">
+<img style="margin:0px 1rem;height:2rem;" src="https://github.com/tidwall/buntdb/raw/master/logo.png
+" alt="Godoc">
+</a>
+
+<p><img style="margin:0px 1rem" src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white
+" alt="Github action"></p>
+
+</div>
+
+
+	
 # Jim
 
 The `jim` command line utility enables running long commands with one word, it's basically __alias but better__
