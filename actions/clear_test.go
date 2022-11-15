@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"jim/rainbow"
 	"jim/utils"
 	"testing"
 
@@ -9,6 +10,7 @@ import (
 
 func TestClear(t *testing.T) {
 
+	rainbow.Blank()
 	mockResponse := ""
 
 	argss := [][]string{

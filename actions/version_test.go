@@ -3,6 +3,7 @@ package actions
 import (
 	"fmt"
 	"jim/constants"
+	"jim/rainbow"
 	"jim/utils"
 	"strings"
 	"testing"
@@ -11,6 +12,8 @@ import (
 )
 
 func TestVersion(t *testing.T) {
+
+	rainbow.Blank()
 
 	var responseData string
 

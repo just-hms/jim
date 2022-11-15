@@ -1,13 +1,16 @@
 package actions
 
 import (
+	"jim/rainbow"
 	"jim/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
 )
 
-func TestWatchShow(t *testing.T) {
+func TestShow(t *testing.T) {
+
+	rainbow.Blank()
 
 	mockResponse := ""
 

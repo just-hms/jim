@@ -2,6 +2,7 @@ package actions
 
 import (
 	"fmt"
+	"jim/rainbow"
 	"jim/utils"
 	"testing"
 
@@ -9,6 +10,8 @@ import (
 )
 
 func TestRename(t *testing.T) {
+
+	rainbow.Blank()
 
 	mockResponse := ""
 
