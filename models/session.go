@@ -2,7 +2,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -53,8 +52,6 @@ func (self *Session) Save() error {
 		if err != nil {
 			return err
 		}
-
-		fmt.Print(string(b))
 
 		_, _, err = tx.Set(
 			"session:"+self.Command+":"+strconv.FormatInt(self.Start.Unix(), 10),
