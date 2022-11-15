@@ -21,8 +21,8 @@ jobs:
     - name: Check version
       run: go version
 
-    # - name: Test
-    #   run: cd test/ ; go test -v ; cd -
+    - name: Test
+      run: go test -v ./...
 
     - name: Build executables
       run: |
