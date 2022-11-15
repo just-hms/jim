@@ -1,8 +1,8 @@
-package test
+package actions
 
 import (
 	"fmt"
-	"jim/actions"
+	"jim/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -26,14 +26,14 @@ func TestAdd(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		responseData = interceptStdout(func() {
+		responseData = utils.InterceptStdout(func() {
 
-			if !actions.Add.ArgumentsCheck(argss[i]) {
+			if !Add.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")
 				return
 			}
 
-			actions.Add.Value(argss[i])
+			Add.Value(argss[i])
 
 		})
 

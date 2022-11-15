@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"jim/test"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -25,7 +26,7 @@ func DB() (db *buntdb.DB) {
 	// create indexes beside of which db was created
 	defer createIndexes()
 
-	if os.Getenv("testing") == "true" {
+	if test.IsTesting() {
 		if db, err := buntdb.Open(":memory:"); err != nil {
 			panic("failed to connect database")
 		} else {

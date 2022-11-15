@@ -1,28 +1,28 @@
-package test
+package actions
 
 import (
 	"fmt"
-	"jim/actions"
+	"jim/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
 )
 
-func TestMod(t *testing.T) {
+func TestRun(t *testing.T) {
 
 	mockResponse := "wrong format"
 	args := []string{}
 
 	// check if the args check works
 
-	responseData := interceptStdout(func() {
+	responseData := utils.InterceptStdout(func() {
 
-		if !actions.Mod.ArgumentsCheck(args) {
+		if !Run.ArgumentsCheck(args) {
 			fmt.Println("wrong format")
 			return
 		}
 
-		actions.Mod.Value(args)
+		Run.Value(args)
 
 	})
 

@@ -1,7 +1,7 @@
-package test
+package actions
 
 import (
-	"jim/actions"
+	"jim/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -19,16 +19,16 @@ func TestClear(t *testing.T) {
 	// create three commands
 
 	for i := 0; i < len(argss); i++ {
-		interceptStdout(func() {
-			actions.Add.Value(argss[i])
+		utils.InterceptStdout(func() {
+			Add.Value(argss[i])
 		})
 	}
 
 	// clear them and check that the output is ""
 
-	responseData := interceptStdout(func() {
-		actions.Clear.Value([]string{"--force"})
-		actions.List.Value([]string{})
+	responseData := utils.InterceptStdout(func() {
+		Clear.Value([]string{"--force"})
+		List.Value([]string{})
 	})
 
 	assert.Equal(t, responseData, mockResponse)

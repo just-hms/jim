@@ -1,8 +1,8 @@
-package test
+package actions
 
 import (
 	"fmt"
-	"jim/actions"
+	"jim/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -21,18 +21,18 @@ func TestList(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		interceptStdout(func() {
-			if !actions.Add.ArgumentsCheck(argss[i]) {
+		utils.InterceptStdout(func() {
+			if !Add.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")
 				return
 			}
 
-			actions.Add.Value(argss[i])
+			Add.Value(argss[i])
 		})
 	}
 
-	responseData := interceptStdout(func() {
-		actions.List.Value([]string{})
+	responseData := utils.InterceptStdout(func() {
+		List.Value([]string{})
 	})
 
 	assert.NotEqual(t, responseData, mockResponse)

@@ -193,3 +193,18 @@ func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 	return c, err
 
 }
+
+func InterceptStdout(callback func()) string {
+
+	rescueStdout := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+
+	callback()
+
+	w.Close()
+	out, _ := ioutil.ReadAll(r)
+	os.Stdout = rescueStdout
+
+	return strings.TrimSpace(string(out))
+}

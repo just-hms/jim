@@ -1,8 +1,8 @@
-package test
+package actions
 
 import (
 	"fmt"
-	"jim/actions"
+	"jim/utils"
 	"strings"
 	"testing"
 
@@ -13,7 +13,7 @@ func TestHelp(t *testing.T) {
 
 	mockResponses := []string{
 		"wrong format",
-		strings.TrimSpace(actions.Add.HelpDescription),
+		strings.TrimSpace(Add.HelpDescription),
 	}
 
 	argss := [][]string{
@@ -25,14 +25,14 @@ func TestHelp(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		responseData := interceptStdout(func() {
+		responseData := utils.InterceptStdout(func() {
 
-			if !actions.Help.ArgumentsCheck(argss[i]) {
+			if !Help.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")
 				return
 			}
 
-			actions.Help.Value(argss[i])
+			Help.Value(argss[i])
 		})
 
 		assert.Equal(t, responseData, mockResponses[i])

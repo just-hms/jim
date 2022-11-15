@@ -1,7 +1,7 @@
-package test
+package actions
 
 import (
-	"jim/actions"
+	"jim/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -13,14 +13,14 @@ func TestWatchShow(t *testing.T) {
 
 	// clearr and add a command and watch it
 
-	interceptStdout(func() {
-		actions.Clear.Value([]string{"--force"})
-		actions.Add.Value([]string{"print", "echo 1"})
-		actions.Watch.Value([]string{"print"})
+	utils.InterceptStdout(func() {
+		Clear.Value([]string{"--force"})
+		Add.Value([]string{"print", "echo 1"})
+		Watch.Value([]string{"print"})
 	})
 
-	responseData := interceptStdout(func() {
-		actions.Show.Value([]string{})
+	responseData := utils.InterceptStdout(func() {
+		Show.Value([]string{})
 	})
 
 	// check if the wacth result is in the db

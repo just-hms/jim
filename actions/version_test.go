@@ -1,9 +1,9 @@
-package test
+package actions
 
 import (
 	"fmt"
-	"jim/actions"
 	"jim/constants"
+	"jim/utils"
 	"strings"
 	"testing"
 
@@ -18,34 +18,34 @@ func TestVersion(t *testing.T) {
 	corrMockResponse := constants.Version
 	errMockResponse := "wrong format"
 
-	responseData = interceptStdout(func() {
+	responseData = utils.InterceptStdout(func() {
 
 		// correct input
 
 		args := []string{}
 
-		if !actions.Version.ArgumentsCheck(args) {
+		if !Version.ArgumentsCheck(args) {
 			fmt.Println(errMockResponse)
 			return
 		}
-		actions.Version.Value(args)
+		Version.Value(args)
 	})
 
 	assert.Equal(t, strings.TrimSpace(responseData), corrMockResponse)
 
 	// wrong argument test
 
-	responseData = interceptStdout(func() {
+	responseData = utils.InterceptStdout(func() {
 
 		// wrong input
 
 		args := []string{""}
 
-		if !actions.Version.ArgumentsCheck(args) {
+		if !Version.ArgumentsCheck(args) {
 			fmt.Println(errMockResponse)
 			return
 		}
-		actions.Version.Value(args)
+		Version.Value(args)
 	})
 
 	assert.Equal(t, responseData, errMockResponse)
