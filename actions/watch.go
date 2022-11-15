@@ -3,8 +3,8 @@ package actions
 import (
 	"jim/models"
 	"jim/rainbow"
+	"jim/test"
 	"jim/utils"
-	"os"
 
 	"strings"
 	"time"
@@ -26,7 +26,7 @@ var Watch = &Action{
 			params = strings.Join(args[1:], " ")
 		}
 
-		if os.Getenv("testing") == "true" {
+		if test.IsTesting() {
 			Actions["--watch"].BackgroundSubAction([]string{command.Name, params})
 			return
 		}

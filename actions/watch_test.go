@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"jim/models"
 	"jim/rainbow"
 	"jim/utils"
 	"testing"
@@ -14,16 +15,19 @@ func TestWatch(t *testing.T) {
 
 	mockResponse := ""
 
-	// clearr and add a command and watch it
+	// clear and add a command and watch it
 
-	utils.InterceptStdout(func() {
-		Clear.Value([]string{"--force"})
-		Add.Value([]string{"print", "echo 1"})
-		Watch.Value([]string{"print"})
-	})
+	command := models.Command{
+		Name:  "strange_name",
+		Value: "echo lolz",
+	}
+
+	command.Save()
+
+	Watch.Value([]string{command.Name})
 
 	responseData := utils.InterceptStdout(func() {
-		Show.Value([]string{})
+		Show.Value([]string{command.Name})
 	})
 
 	// check if the wacth result is in the db
