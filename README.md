@@ -31,21 +31,18 @@ In future `jim --sync` will let you share commands between multiple devices.
 ## Installation
 ### Windows installation
 
-Download 
+Download
 
-```
 https://github.com/just-hms/jim/releases/latest/download/jim-windows-amd64.tar.gz 
-```
 
 and extract it in a folder that is included in the `%PATH%`.
-
 
 #### Linux installation
 
 ```sh
 $ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-linux-amd64.tar.gz > /tmp/jim.tar.gz
 $ sudo mkdir -p /opt/jim && sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
-$ sudo ln -s /opt/jim/jim /usr/local/bin/jim
+$ [ ! -f "/usr/local/bin/jim" ] && sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```
 
 #### Mac-OS installation
@@ -53,7 +50,7 @@ $ sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```sh
 $ curl -L https://github.com/just-hms/jim/releases/latest/download/jim-darwin-amd64.tar.gz > /tmp/jim.tar.gz
 $ sudo mkdir -p /opt/jim && sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
-$ sudo ln -s /opt/jim/jim /usr/local/bin/jim
+$ [ ! -f "/usr/local/bin/jim" ] && sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```
 
 ## Usage
