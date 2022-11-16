@@ -2,9 +2,9 @@ package actions
 
 import (
 	"fmt"
-	"jim/models"
-	"jim/rainbow"
-	"jim/utils"
+	"jim/pkg/models"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 	"os"
 	"strings"
 )

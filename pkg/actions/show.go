@@ -2,8 +2,8 @@ package actions
 
 import (
 	"fmt"
-	"jim/models"
-	"jim/rainbow"
+	"jim/pkg/models"
+	"jim/pkg/rainbow"
 	"time"
 )
 

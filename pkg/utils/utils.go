@@ -3,8 +3,8 @@ package utils
 import (
 	"errors"
 	"io/ioutil"
-	"jim/constants"
-	"jim/models"
+	"jim/internal/constants"
+	"jim/pkg/models"
 	"os"
 	"os/exec"
 	"path/filepath"

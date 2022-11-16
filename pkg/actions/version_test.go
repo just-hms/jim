@@ -2,9 +2,9 @@ package actions
 
 import (
 	"fmt"
-	"jim/constants"
-	"jim/rainbow"
-	"jim/utils"
+	"jim/internal/constants"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 	"strings"
 	"testing"
 

@@ -1,18 +1,16 @@
 package actions
 
 import (
-	"fmt"
-	"jim/rainbow"
-	"jim/utils"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
 )
 
-func TestList(t *testing.T) {
+func TestClear(t *testing.T) {
 
 	rainbow.Blank()
-
 	mockResponse := ""
 
 	argss := [][]string{
@@ -23,21 +21,18 @@ func TestList(t *testing.T) {
 	// create three commands
 
 	for i := 0; i < len(argss); i++ {
-
 		utils.InterceptStdout(func() {
-			if !Add.ArgumentsCheck(argss[i]) {
-				fmt.Println("wrong format")
-				return
-			}
-
 			Add.Value(argss[i])
 		})
 	}
 
+	// clear them and check that the output is ""
+
 	responseData := utils.InterceptStdout(func() {
+		Clear.Value([]string{"--force"})
 		List.Value([]string{})
 	})
 
-	assert.NotEqual(t, responseData, mockResponse)
+	assert.Equal(t, responseData, mockResponse)
 
 }

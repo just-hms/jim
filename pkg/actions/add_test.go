@@ -2,40 +2,42 @@ package actions
 
 import (
 	"fmt"
-	"jim/rainbow"
-	"jim/utils"
-	"strings"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
 )
 
-func TestHelp(t *testing.T) {
+func TestAdd(t *testing.T) {
 
 	rainbow.Blank()
 
+	var responseData string
+
 	mockResponses := []string{
 		"wrong format",
-		strings.TrimSpace(Add.HelpDescription),
+		"",
+		"a command named print already exists!!!",
 	}
 
 	argss := [][]string{
-		{"", "", ""},
-		{"--add"},
+		{},
+		{"print", "echo hello i'm jim"},
+		{"print", ""},
 	}
-
-	// create three commands
 
 	for i := 0; i < len(argss); i++ {
 
-		responseData := utils.InterceptStdout(func() {
+		responseData = utils.InterceptStdout(func() {
 
-			if !Help.ArgumentsCheck(argss[i]) {
+			if !Add.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")
 				return
 			}
 
-			Help.Value(argss[i])
+			Add.Value(argss[i])
+
 		})
 
 		assert.Equal(t, responseData, mockResponses[i])

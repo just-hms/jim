@@ -2,14 +2,14 @@ package actions
 
 import (
 	"fmt"
-	"jim/rainbow"
-	"jim/utils"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
 )
 
-func TestRun(t *testing.T) {
+func TestMod(t *testing.T) {
 
 	rainbow.Blank()
 
@@ -20,12 +20,12 @@ func TestRun(t *testing.T) {
 
 	responseData := utils.InterceptStdout(func() {
 
-		if !Run.ArgumentsCheck(args) {
+		if !Mod.ArgumentsCheck(args) {
 			fmt.Println("wrong format")
 			return
 		}
 
-		Run.Value(args)
+		Mod.Value(args)
 
 	})
 

@@ -2,7 +2,7 @@ package actions
 
 import (
 	"fmt"
-	"jim/constants"
+	"jim/internal/constants"
 )
 
 var Version = &Action{

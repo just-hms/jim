@@ -1,10 +1,10 @@
 package actions
 
 import (
-	"jim/models"
-	"jim/rainbow"
-	"jim/test"
-	"jim/utils"
+	"jim/pkg/models"
+	"jim/pkg/rainbow"
+	"jim/pkg/test"
+	"jim/pkg/utils"
 
 	"strings"
 	"time"

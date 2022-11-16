@@ -2,8 +2,8 @@ package actions
 
 import (
 	"fmt"
-	"jim/rainbow"
-	"jim/utils"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"

@@ -1,10 +1,10 @@
 package actions
 
 import (
-	"jim/constants"
-	"jim/models"
-	"jim/rainbow"
-	"jim/utils"
+	"jim/internal/constants"
+	"jim/pkg/models"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 )
 
 var Clear = &Action{

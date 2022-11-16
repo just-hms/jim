@@ -1,8 +1,8 @@
 package actions
 
 import (
-	"jim/models"
-	"jim/rainbow"
+	"jim/pkg/models"
+	"jim/pkg/rainbow"
 )
 
 var Remove = &Action{

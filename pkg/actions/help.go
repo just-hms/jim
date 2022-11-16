@@ -2,8 +2,8 @@ package actions
 
 import (
 	"fmt"
-	"jim/constants"
-	"jim/rainbow"
+	"jim/internal/constants"
+	"jim/pkg/rainbow"
 	"sort"
 )
 

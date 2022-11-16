@@ -2,11 +2,11 @@ package actions
 
 import (
 	"errors"
-	"jim/constants"
-	"jim/levenshtein"
-	"jim/models"
-	"jim/rainbow"
-	"jim/utils"
+	"jim/internal/constants"
+	"jim/pkg/levenshtein"
+	"jim/pkg/models"
+	"jim/pkg/rainbow"
+	"jim/pkg/utils"
 	"os"
 	"strings"
 )

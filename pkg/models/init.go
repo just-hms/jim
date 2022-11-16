@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"jim/test"
+	"jim/pkg/test"
 	"os"
 	"path/filepath"
 	"runtime"

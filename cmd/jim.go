@@ -1,9 +1,9 @@
 package main
 
 import (
-	"jim/actions"
-	"jim/constants"
-	"jim/rainbow"
+	"jim/internal/constants"
+	"jim/pkg/actions"
+	"jim/pkg/rainbow"
 
 	"os"
 	"strings"
