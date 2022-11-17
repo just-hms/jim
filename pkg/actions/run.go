@@ -2,10 +2,14 @@ package actions
 
 import (
 	"fmt"
+	"io/ioutil"
+	"jim/internal/constants"
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
+	"jim/pkg/test"
 	"jim/pkg/utils"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -25,11 +29,11 @@ var Run = &Action{
 		}
 
 		if len(args) == 2 {
-			run(command, strings.Join(args[1:], " "))
+			RunCommand(command, strings.Join(args[1:], " "))
 			return
 		}
 
-		run(command, "")
+		RunCommand(command, "")
 	},
 	Description:     "run a command (not required)",
 	HelpDescription: " Run a command using this syntax\n\n     jim <--run> command\n\n Will run the specified command in your default shell.\n --run can be omitted.",
@@ -39,12 +43,54 @@ var Run = &Action{
 	},
 }
 
-func run(command models.Command, args string) {
+func RunCommand(command models.Command, args string) {
 
-	c, err := utils.CrossCmd(
-		command.Value,
-		args,
+	var (
+		c   *exec.Cmd
+		err error
 	)
+
+	if strings.HasPrefix(command.Value, constants.SHEBANG_PREFIX) {
+
+		if len(strings.Split(command.Value, "\n")) < 1 {
+			return
+		}
+
+		tmpDir := os.TempDir()
+		tmpFile, tmpFileErr := ioutil.TempFile(tmpDir, "command")
+
+		if tmpFileErr != nil {
+			return
+		}
+
+		lines := strings.Split(command.Value, "\n")
+
+		exe := strings.TrimSpace(strings.Split(lines[0], constants.SHEBANG_PREFIX)[1])
+		value := strings.Join(lines[1:], "\n")
+
+		// set the file content to file_default_content
+		tmpFile.WriteString(value)
+
+		c = exec.Command(
+			exe,
+			tmpFile.Name(),
+			args,
+		)
+
+		tmpFile.Close()
+	} else {
+		c, err = utils.CrossCmd(
+			command.Value,
+			args,
+		)
+	}
+
+	fmt.Printf("jim is launching > ")
+	fmt.Println(c.Args)
+
+	if test.IsTesting() {
+		return
+	}
 
 	if err != nil {
 		rainbow.Alertf("%s\n", err.Error())

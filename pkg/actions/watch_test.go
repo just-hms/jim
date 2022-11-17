@@ -11,12 +11,12 @@ import (
 	"github.com/go-playground/assert"
 )
 
-func TestRun(t *testing.T) {
+func TestWatch(t *testing.T) {
 
 	rainbow.Blank()
 
 	command := models.Command{
-		Name:  "to_run",
+		Name:  "to_watch",
 		Value: "echo 1",
 	}
 
@@ -24,17 +24,17 @@ func TestRun(t *testing.T) {
 
 	// correct test
 	correctMockResponse := "jim is launching > [powershell -c echo 1 ]\r"
-	correctArgs := []string{"to_run"}
+	correctArgs := []string{"to_watch"}
 
 	correctResponseData := utils.InterceptStdout(func() {
 
-		if !Run.ArgumentsCheck(correctArgs) {
+		if !Watch.ArgumentsCheck(correctArgs) {
 			fmt.Println("wrong format")
 			return
 		}
 
-		Run.Value(correctArgs)
-
+		Watch.Value(correctArgs)
+		// Show.Value([]string{})
 	})
 
 	assert.Equal(t, strings.TrimSpace(correctResponseData), strings.TrimSpace(correctMockResponse))
@@ -47,12 +47,12 @@ func TestRun(t *testing.T) {
 
 	wrongResponseData := utils.InterceptStdout(func() {
 
-		if !Run.ArgumentsCheck(wrongArgs) {
+		if !Watch.ArgumentsCheck(wrongArgs) {
 			fmt.Println("wrong format")
 			return
 		}
 
-		Run.Value(wrongArgs)
+		Watch.Value(wrongArgs)
 
 	})
 

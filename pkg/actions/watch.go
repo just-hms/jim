@@ -4,7 +4,6 @@ import (
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
 	"jim/pkg/test"
-	"jim/pkg/utils"
 
 	"strings"
 	"time"
@@ -27,7 +26,7 @@ var Watch = &Action{
 		}
 
 		if test.IsTesting() {
-			Actions["--watch"].BackgroundSubAction([]string{command.Name, params})
+			WatchCommand(command, params)
 			return
 		}
 
@@ -50,31 +49,30 @@ var Watch = &Action{
 			return
 		}
 
-		c, err := utils.CrossCmd(command.Value, params)
+		WatchCommand(command, params)
 
-		if err != nil {
-			return
-		}
-
-		// set the start time
-		session := models.Session{
-			Start:   time.Now(),
-			Command: command.Name,
-		}
-
-		if err := c.Run(); err != nil {
-			return
-		}
-
-		// set the difference between the end and the start time
-
-		session.Elapsed = time.Since(session.Start)
-
-		// save it
-
-		if err := session.Save(); err != nil {
-			rainbow.Alertf("error adding the session\n")
-			return
-		}
 	},
+}
+
+func WatchCommand(command models.Command, args string) {
+
+	// set up the session
+
+	session := models.Session{
+		Start:   time.Now(),
+		Command: command.Name,
+	}
+
+	RunCommand(command, args)
+
+	// set the difference between the end and the start time
+
+	session.Elapsed = time.Since(session.Start)
+
+	// save it
+
+	if err := session.Save(); err != nil {
+		rainbow.Alertf("error adding the session\n")
+		return
+	}
 }
