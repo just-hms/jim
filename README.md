@@ -28,6 +28,20 @@ The `jim` command line utility enables running long commands with one word, it's
 
 In future `jim --sync` will let you share commands between multiple devices.
 
+## New features 
+
+### Shebang 
+
+if a command value starts with something like
+
+```
+#!/usr/bin/env python3
+
+...
+```
+
+`jim` will launch the command using `python3`
+
 ## Installation
 ### Windows installation
 
@@ -61,13 +75,15 @@ Type `jim` to check if the installation was completed correctly.
 
 #### `--add`
 
-Adds a command
+Adds a new command to `jim`
 
 ```
 jim --add command <value>
 ```
 
 If no value is specified `jim` will open your *default editor* and will let you insert a set of instruction in a temporary file.
+
+<br>
 
 #### `--clear`
 
@@ -79,6 +95,8 @@ jim --clear
 
 Will remove all commands.
 
+<br>
+
 #### `--help`
 
 `jim` will help you with what you need
@@ -88,6 +106,8 @@ jim --help <--action>
 ```
 
 If provided, this utility will show more specific help for the action.
+
+<br>
 
 #### `--ls`
 
@@ -99,6 +119,8 @@ jim --ls <filter>
 
 Will list all the available commands, filtering them with the provided filter.
 
+<br>
+
 #### `--mod`
 
 Modify a command 
@@ -108,6 +130,8 @@ jim --mod command
 ```
 
 Will open the command in your default editor and will let you modify it.
+
+<br>
 
 #### `--rm`
 
@@ -119,6 +143,8 @@ jim --rm command_1 <command_2> ...
 
 Will remove the provided commands.
 
+<br>
+
 #### `--rn`
 
 Rename a command
@@ -129,6 +155,8 @@ jim --rn command new_name
 
 Will rename the specified command with the provided `new_name`.
 
+<br>
+
 #### `--run`
 
 Run a command
@@ -138,6 +166,8 @@ jim <--run> command
 ```
 
 Will run the specified command in *your default shell*, `--run` can be omitted.
+
+<br>
 
 #### `--show`
 
@@ -151,6 +181,8 @@ Will list all of the commands' sessions. Filtering them with the provided filter
 
 A session is created when a command is launched with `--watch`.
 
+<br>
+
 #### `--version`
 
 Show the version of the executable
@@ -160,6 +192,8 @@ jim --version
 ```
 
 Will output the installed `jim` version ex: `v1.0.1`.
+
+<br>
 
 #### `--watch`
 
