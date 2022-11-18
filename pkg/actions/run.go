@@ -102,6 +102,6 @@ func RunCommand(command models.Command, args string) {
 	c.Stderr = os.Stderr
 
 	if err := c.Run(); err != nil {
-		fmt.Println(err.Error())
+		rainbow.Alertf("%s\n", err.Error())
 	}
 }

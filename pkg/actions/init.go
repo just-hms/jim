@@ -25,6 +25,7 @@ func init() {
 
 	Actions = map[string]*Action{
 		"ls":      List,
+		"upgrade": Upgrade,
 		"add":     Add,
 		"mod":     Mod,
 		"rm":      Remove,
