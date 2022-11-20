@@ -90,9 +90,6 @@ func RunCommand(command models.Command, args string) {
 		return
 	}
 
-	fmt.Printf("jim is launching > ")
-	fmt.Println(c.Args)
-
 	if test.IsTesting() {
 		return
 	}
