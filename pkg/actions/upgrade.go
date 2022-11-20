@@ -1,11 +1,13 @@
 package actions
 
 import (
+	"fmt"
 	"jim/internal/constants"
 	"jim/pkg/rainbow"
 	"jim/pkg/utils"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
 	"runtime"
 	"strings"
@@ -26,23 +28,30 @@ var Upgrade = &Action{
 		last_version := path[len(path)-1]
 
 		if last_version == constants.Version {
+			fmt.Println("No applicable update found.")
 			return
 		}
+
+		// rename the executable so it doesn't brake
+		os.Rename(utils.Executable(), utils.Executable()+".old")
 
 		// otherwise upgrade
 
 		utils.ExecutableFolder()
+		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
+		tmp_dir := os.TempDir() + "/jim.tar.gz"
 
 		var c *exec.Cmd
 
 		if runtime.GOOS == "windows" {
-
-		} else if runtime.GOOS == "darwin" {
-
+			c, err = utils.CrossCmd(
+				"curl " + update_link + " -O " + tmp_dir + " ; " +
+					"tar -xvf " + tmp_dir + " -C " + utils.ExecutableFolder(),
+			)
 		} else {
 			c, err = utils.CrossCmd(
-				"\"curl -L https://github.com/just-hms/jim/releases/latest/download/jim-linux-amd64.tar.gz > /tmp/jim.tar.gz",
-				"sudo tar -xvf /tmp/jim.tar.gz -C "+utils.ExecutableFolder()+"\"",
+				"curl -L " + update_link + " > " + tmp_dir + " ; " +
+					"tar -xvf " + tmp_dir + " -C " + utils.ExecutableFolder(),
 			)
 		}
 
@@ -55,9 +64,6 @@ var Upgrade = &Action{
 			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
-
-		// call jim --version
-		Version.Value([]string{})
 	},
 	Description:     "upgrade jim",
 	HelpDescription: " Upgrade jim using this syntax\n\n     jim --upgrade\n\n If you have installed the last version this action will do nothing",

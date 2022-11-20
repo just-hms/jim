@@ -19,6 +19,13 @@ func ExecutableFolder() string {
 	return filepath.Dir(path)
 }
 
+func Executable() string {
+	path, _ := os.Executable()
+	path, _ = filepath.EvalSymlinks(path)
+
+	return path
+}
+
 func CurrentFolder() string {
 	path, _ := os.Getwd()
 	return path
