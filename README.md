@@ -183,6 +183,18 @@ A session is created when a command is launched with `--watch`.
 
 <br>
 
+#### `--upgrade`
+
+Upgrade `jim`
+
+```
+jim --version
+```
+
+If you have installed the last version this action will do nothing
+
+<br>
+
 #### `--version`
 
 Show the version of the executable
