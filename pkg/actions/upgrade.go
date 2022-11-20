@@ -33,11 +33,11 @@ var Upgrade = &Action{
 		}
 
 		// rename the executable so it doesn't brake
-		os.Rename(utils.Executable(), utils.Executable()+".old")
+		exe_folder := utils.ExecutableFolder()
+		exe_path := utils.Executable()
+		os.Rename(exe_path, exe_path+".old")
 
 		// otherwise upgrade
-
-		fmt.Println(utils.ExecutableFolder())
 
 		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
 		tmp_dir := os.TempDir() + "/jim.tar.gz"
@@ -47,12 +47,12 @@ var Upgrade = &Action{
 		if runtime.GOOS == "windows" {
 			c, err = utils.CrossCmd(
 				"curl " + update_link + " -O " + tmp_dir + " ; " +
-					"tar -xvf " + tmp_dir + " -C " + utils.ExecutableFolder(),
+					"tar -xvf " + tmp_dir + " -C " + exe_folder,
 			)
 		} else {
 			c, err = utils.CrossCmd(
 				"curl -L " + update_link + " > " + tmp_dir + " ; " +
-					"tar -xvf " + tmp_dir + " -C " + utils.ExecutableFolder(),
+					"tar -xvf " + tmp_dir + " -C " + exe_folder,
 			)
 		}
 
