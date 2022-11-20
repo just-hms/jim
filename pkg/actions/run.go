@@ -85,6 +85,11 @@ func RunCommand(command models.Command, args string) {
 		)
 	}
 
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return
+	}
+
 	fmt.Printf("jim is launching > ")
 	fmt.Println(c.Args)
 

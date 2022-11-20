@@ -41,7 +41,7 @@ var Upgrade = &Action{
 
 		} else {
 			c, err = utils.CrossCmd(
-				"\"curl -L https://github.com/just-hms/jim/releases/latest/download/jim-linux-amd64.tar.gz > /tmp/jim.tar.gz ;",
+				"\"curl -L https://github.com/just-hms/jim/releases/latest/download/jim-linux-amd64.tar.gz > /tmp/jim.tar.gz",
 				"sudo tar -xvf /tmp/jim.tar.gz -C "+utils.ExecutableFolder()+"\"",
 			)
 		}
