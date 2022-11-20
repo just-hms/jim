@@ -37,7 +37,8 @@ var Upgrade = &Action{
 
 		// otherwise upgrade
 
-		utils.ExecutableFolder()
+		fmt.Println(utils.ExecutableFolder())
+
 		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
 		tmp_dir := os.TempDir() + "/jim.tar.gz"
 
