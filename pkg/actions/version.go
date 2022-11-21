@@ -3,15 +3,11 @@ package actions
 import (
 	"fmt"
 	"jim/internal/constants"
-	"jim/pkg/test"
 )
 
 var Version = &Action{
 	Value: func(args []string) {
-		if !test.IsTesting() {
-			fmt.Print(constants.Jim_ASCII)
-		}
-		fmt.Printf(" %s\n\n", constants.Version)
+		fmt.Println(constants.Version)
 	},
 	Description: "print the version of the executable",
 	ArgumentsCheck: func(args []string) bool {
