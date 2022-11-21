@@ -7,7 +7,8 @@ import (
 
 var Version = &Action{
 	Value: func(args []string) {
-		fmt.Println(constants.Version)
+		fmt.Print(constants.Jim_ASCII)
+		fmt.Printf(" %s\n\n", constants.Version)
 	},
 	Description: "print the version of the executable",
 	ArgumentsCheck: func(args []string) bool {
