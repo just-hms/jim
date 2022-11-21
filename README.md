@@ -16,7 +16,7 @@ The `jim` command line utility enables running long commands with one word, it's
 - The main focus of `jim` is to let you re-use shell commands that you previously inserted in it. For example:
 
 	```
-	jim command
+	$ jim command
 	```
 
 	will launch the specified command.
@@ -24,7 +24,7 @@ The `jim` command line utility enables running long commands with one word, it's
 - Another use-case is to launch a command with the `--watch` utility that will time its execution and will let you see it using the `--show` utility. 
 
 	```
-	jim --watch command
+	$ jim --watch command
 	```
 
 	will launch the specified command *in background* and time it.
