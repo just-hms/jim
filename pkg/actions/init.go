@@ -131,3 +131,35 @@ func TakeUp(args []string) (models.Command, string, error) {
 
 	return command, strings.Join(args[1:], " "), nil
 }
+
+// get the command properties from the user inputs
+// - if set it gets it from the args
+// - otherwise it opens a temp file
+func GetCommandValueFromArgs(args []string, command *models.Command) error {
+
+	var (
+		new_command_value string
+		err               error
+	)
+
+	if len(args) == 1 {
+
+		new_command_value, err = io.FileInput(command.Value)
+
+		if err != nil {
+			return err
+		}
+
+		new_command_value = strings.TrimSpace(new_command_value)
+
+		if new_command_value == "" {
+			return errors.New("the command cannot be empty")
+		}
+	} else {
+		new_command_value = args[1]
+	}
+
+	command.Value = io.ReplaceCurrentFolderFlag(new_command_value)
+
+	return nil
+}

@@ -2,10 +2,10 @@ package models
 
 import (
 	"fmt"
+	"jim/pkg/io"
 	"jim/pkg/test"
 	"os"
 	"path/filepath"
-	"runtime"
 
 	"github.com/tidwall/buntdb"
 )
@@ -36,15 +36,7 @@ func DB() (db *buntdb.DB) {
 		return database
 	}
 
-	dbFolder := ""
-
-	if runtime.GOOS == "windows" {
-		dbFolder, _ = os.LookupEnv("APPDATA")
-		dbFolder = filepath.Join(dbFolder, "/jim")
-	} else {
-		dbFolder, _ = os.LookupEnv("HOME")
-		dbFolder = filepath.Join(dbFolder, "/.local/share/jim")
-	}
+	dbFolder := io.ConfigFolder()
 
 	os.MkdirAll(dbFolder, os.ModePerm)
 	dbName := filepath.Join(dbFolder, "/jim.kv.db")

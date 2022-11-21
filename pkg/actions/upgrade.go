@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
 	"runtime"
 	"strings"
 )
@@ -40,26 +39,15 @@ var Upgrade = &Action{
 		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
 		tmp_dir := os.TempDir() + "/jim.tar.gz"
 
-		var c *exec.Cmd
+		command := "curl -L " + update_link + " > " + tmp_dir + " ; " +
+			"tar -xvf " + tmp_dir + " -C " + exe_folder
 
 		if runtime.GOOS == "windows" {
-
-			// ask for permission on windows
-			if !io.IsRunningAsAdmin() {
-				io.RunMeElevated()
-				return
-			}
-
-			c, err = io.CrossCmd(
-				"curl " + update_link + " -O " + tmp_dir + " ; " +
-					"tar -xvf " + tmp_dir + " -C " + exe_folder,
-			)
-		} else {
-			c, err = io.CrossCmd(
-				"curl -L " + update_link + " > " + tmp_dir + " ; " +
-					"tar -xvf " + tmp_dir + " -C " + exe_folder,
-			)
+			command = "curl " + update_link + " -O " + tmp_dir + " ; " +
+				"tar -xvf " + tmp_dir + " -C " + exe_folder
 		}
+
+		c, err := io.AdminCmd(command)
 
 		if err != nil {
 			rainbow.Alertf("%s\n", err.Error())

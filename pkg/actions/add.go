@@ -1,7 +1,6 @@
 package actions
 
 import (
-	"jim/pkg/io"
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
 )
@@ -21,7 +20,7 @@ var Add = &Action{
 			Name: args[0],
 		}
 
-		if err := io.GetCommandValueFromArgs(args, &command); err != nil {
+		if err := GetCommandValueFromArgs(args, &command); err != nil {
 			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
