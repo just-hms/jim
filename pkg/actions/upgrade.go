@@ -44,7 +44,7 @@ var Upgrade = &Action{
 
 		if runtime.GOOS == "windows" {
 			command = "curl " + update_link + " -O " + tmp_dir + " ; " +
-				"tar -xvf " + tmp_dir + " -C " + exe_folder
+				"sudo tar -xvf " + tmp_dir + " -C " + exe_folder
 		}
 
 		c, err := io.AdminCmd(command)
@@ -62,6 +62,7 @@ var Upgrade = &Action{
 
 		if err := c.Run(); err != nil {
 			rainbow.Alertf("%s\n", err.Error())
+			os.Rename(exe_path+".old", exe_path)
 			return
 		}
 	},
