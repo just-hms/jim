@@ -2,8 +2,8 @@ package actions
 
 import (
 	"fmt"
+	"jim/pkg/io"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -18,7 +18,7 @@ func TestMod(t *testing.T) {
 
 	// check if the args check works
 
-	responseData := utils.InterceptStdout(func() {
+	responseData := io.InterceptStdout(func() {
 
 		if !Mod.ArgumentsCheck(args) {
 			fmt.Println("wrong format")

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"jim/internal/constants"
+	"jim/pkg/io"
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
 	"jim/pkg/test"
-	"jim/pkg/utils"
 	"os"
 	"os/exec"
 	"strings"
@@ -79,7 +79,7 @@ func RunCommand(command models.Command, args string) {
 
 		tmpFile.Close()
 	} else {
-		c, err = utils.CrossCmd(
+		c, err = io.CrossCmd(
 			command.Value,
 			args,
 		)

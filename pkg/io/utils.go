@@ -1,7 +1,8 @@
-package utils
+package io
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"jim/internal/constants"
 	"jim/pkg/models"
@@ -10,6 +11,9 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
+
+	"golang.org/x/sys/windows"
 )
 
 func ExecutableFolder() string {
@@ -214,4 +218,29 @@ func InterceptStdout(callback func()) string {
 	os.Stdout = rescueStdout
 
 	return strings.TrimSpace(string(out))
+}
+
+func RunMeElevated() {
+	verb := "runas"
+	exe, _ := os.Executable()
+	cwd, _ := os.Getwd()
+	args := strings.Join(os.Args[1:], " ")
+
+	verbPtr, _ := syscall.UTF16PtrFromString(verb)
+	exePtr, _ := syscall.UTF16PtrFromString(exe)
+	cwdPtr, _ := syscall.UTF16PtrFromString(cwd)
+	argPtr, _ := syscall.UTF16PtrFromString(args)
+
+	var showCmd int32 = 1 //SW_NORMAL
+
+	err := windows.ShellExecute(0, verbPtr, exePtr, argPtr, cwdPtr, showCmd)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func IsRunningAsAdmin() bool {
+	_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
+
+	return err == nil
 }

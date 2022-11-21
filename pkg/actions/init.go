@@ -3,10 +3,10 @@ package actions
 import (
 	"errors"
 	"jim/internal/constants"
+	"jim/pkg/io"
 	"jim/pkg/levenshtein"
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"os"
 	"strings"
 )
@@ -96,7 +96,7 @@ func FindCommandByName(name string, command *models.Command) error {
 
 	rainbow.Warningf("did you mean %s? Type y or N\n", command.Name)
 
-	if utils.ReadChar() == 'y' {
+	if io.ReadChar() == 'y' {
 		return nil
 	}
 
@@ -110,7 +110,7 @@ func ContinueInBackground(command models.Command, params string) {
 
 	action := constants.BG_ACTION_PREFIX + strings.Replace(os.Args[1], constants.ACTION_PREFIX, "", -1)
 
-	c, _ := utils.DetachedCmd(
+	c, _ := io.DetachedCmd(
 		executable,
 		action,
 		command.Name,

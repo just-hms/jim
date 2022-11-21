@@ -1,9 +1,9 @@
 package actions
 
 import (
+	"jim/pkg/io"
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 )
 
 var Mod = &Action{
@@ -17,7 +17,7 @@ var Mod = &Action{
 		}
 
 		// modify the command
-		if err := utils.GetCommandValueFromArgs(args, &command); err != nil {
+		if err := io.GetCommandValueFromArgs(args, &command); err != nil {
 			rainbow.Alertf("%s\n", err.Error())
 			return
 		}

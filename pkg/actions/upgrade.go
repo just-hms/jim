@@ -3,8 +3,8 @@ package actions
 import (
 	"fmt"
 	"jim/internal/constants"
+	"jim/pkg/io"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"log"
 	"net/http"
 	"os"
@@ -32,12 +32,10 @@ var Upgrade = &Action{
 			return
 		}
 
-		// rename the executable so it doesn't brake
-		exe_folder := utils.ExecutableFolder()
-		exe_path := utils.Executable()
-		os.Rename(exe_path, exe_path+".old")
+		// if it is not the last upgrgade jim
 
-		// otherwise upgrade
+		exe_folder := io.ExecutableFolder()
+		exe_path := io.Executable()
 
 		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
 		tmp_dir := os.TempDir() + "/jim.tar.gz"
@@ -45,12 +43,19 @@ var Upgrade = &Action{
 		var c *exec.Cmd
 
 		if runtime.GOOS == "windows" {
-			c, err = utils.CrossCmd(
+
+			// ask for permission on windows
+			if !io.IsRunningAsAdmin() {
+				io.RunMeElevated()
+				return
+			}
+
+			c, err = io.CrossCmd(
 				"curl " + update_link + " -O " + tmp_dir + " ; " +
 					"tar -xvf " + tmp_dir + " -C " + exe_folder,
 			)
 		} else {
-			c, err = utils.CrossCmd(
+			c, err = io.CrossCmd(
 				"curl -L " + update_link + " > " + tmp_dir + " ; " +
 					"tar -xvf " + tmp_dir + " -C " + exe_folder,
 			)
@@ -60,6 +65,12 @@ var Upgrade = &Action{
 			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
+
+		// rename the executable so it doesn't brake
+
+		os.Rename(exe_path, exe_path+".old")
+
+		// run the upgrade
 
 		if err := c.Run(); err != nil {
 			rainbow.Alertf("%s\n", err.Error())

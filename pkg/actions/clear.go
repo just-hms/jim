@@ -2,9 +2,9 @@ package actions
 
 import (
 	"jim/internal/constants"
+	"jim/pkg/io"
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 )
 
 var Clear = &Action{
@@ -18,7 +18,7 @@ var Clear = &Action{
 
 		rainbow.Alertf("clear all commands is not reversible, are you sure? Type y or N\n")
 
-		if utils.ReadChar() != 'y' {
+		if io.ReadChar() != 'y' {
 			return
 		}
 

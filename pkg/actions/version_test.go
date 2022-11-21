@@ -3,8 +3,8 @@ package actions
 import (
 	"fmt"
 	"jim/internal/constants"
+	"jim/pkg/io"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"strings"
 	"testing"
 
@@ -21,7 +21,7 @@ func TestVersion(t *testing.T) {
 	corrMockResponse := constants.Version
 	errMockResponse := "wrong format"
 
-	responseData = utils.InterceptStdout(func() {
+	responseData = io.InterceptStdout(func() {
 
 		// correct input
 
@@ -38,7 +38,7 @@ func TestVersion(t *testing.T) {
 
 	// wrong argument test
 
-	responseData = utils.InterceptStdout(func() {
+	responseData = io.InterceptStdout(func() {
 
 		// wrong input
 

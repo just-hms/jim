@@ -1,9 +1,9 @@
 package actions
 
 import (
+	"jim/pkg/io"
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"testing"
 	"time"
 
@@ -23,7 +23,7 @@ func TestShow(t *testing.T) {
 
 	session.Save()
 
-	responseData := utils.InterceptStdout(func() {
+	responseData := io.InterceptStdout(func() {
 		Show.Value([]string{})
 	})
 

@@ -1,8 +1,8 @@
 package actions
 
 import (
+	"jim/pkg/io"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -21,14 +21,14 @@ func TestClear(t *testing.T) {
 	// create three commands
 
 	for i := 0; i < len(argss); i++ {
-		utils.InterceptStdout(func() {
+		io.InterceptStdout(func() {
 			Add.Value(argss[i])
 		})
 	}
 
 	// clear them and check that the output is ""
 
-	responseData := utils.InterceptStdout(func() {
+	responseData := io.InterceptStdout(func() {
 		Clear.Value([]string{"--force"})
 		List.Value([]string{})
 	})

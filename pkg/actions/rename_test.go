@@ -2,8 +2,8 @@ package actions
 
 import (
 	"fmt"
+	"jim/pkg/io"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -15,7 +15,7 @@ func TestRename(t *testing.T) {
 
 	mockResponse := ""
 
-	utils.InterceptStdout(func() {
+	io.InterceptStdout(func() {
 
 		// clear all commands
 		Clear.Value([]string{"--force"})
@@ -37,7 +37,7 @@ func TestRename(t *testing.T) {
 
 	// check that it has been renamed
 
-	responseData := utils.InterceptStdout(func() {
+	responseData := io.InterceptStdout(func() {
 		List.Value([]string{"kek"})
 	})
 

@@ -2,8 +2,8 @@ package actions
 
 import (
 	"fmt"
+	"jim/pkg/io"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"testing"
 
 	"github.com/go-playground/assert"
@@ -29,7 +29,7 @@ func TestAdd(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		responseData = utils.InterceptStdout(func() {
+		responseData = io.InterceptStdout(func() {
 
 			if !Add.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")

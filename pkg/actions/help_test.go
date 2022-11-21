@@ -2,8 +2,8 @@ package actions
 
 import (
 	"fmt"
+	"jim/pkg/io"
 	"jim/pkg/rainbow"
-	"jim/pkg/utils"
 	"strings"
 	"testing"
 
@@ -28,7 +28,7 @@ func TestHelp(t *testing.T) {
 
 	for i := 0; i < len(argss); i++ {
 
-		responseData := utils.InterceptStdout(func() {
+		responseData := io.InterceptStdout(func() {
 
 			if !Help.ArgumentsCheck(argss[i]) {
 				fmt.Println("wrong format")
