@@ -16,8 +16,8 @@ func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 	)
 }
 
-func AdminCmd(arg ...string) (*exec.Cmd, error) {
-	return CrossCmd(arg...)
+func RequireAdmin(){
+
 }
 
 func CrossCmd(arg ...string) (*exec.Cmd, error) {

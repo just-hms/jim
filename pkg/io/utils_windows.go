@@ -70,12 +70,9 @@ func ConfigFolder() string {
 	return configFolder
 }
 
-func AdminCmd(arg ...string) (*exec.Cmd, error) {
-
+func RequireAdmin() {
 	if !isRunningAsAdmin() {
 		runMeElevated()
 		os.Exit(0)
 	}
-
-	return CrossCmd(arg...)
 }

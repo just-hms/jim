@@ -16,6 +16,8 @@ import (
 var Upgrade = &Action{
 	Value: func(args []string) {
 
+		io.RequireAdmin()
+
 		// check if the version of jim is the last
 
 		resp, err := http.Get("https://github.com/just-hms/jim/releases/latest")
@@ -38,10 +40,10 @@ var Upgrade = &Action{
 		exe_path := io.Executable()
 
 		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
-		tmp_dir := os.TempDir() + "/jim.tar.gz"
+		tmp_archive := os.TempDir() + "/jim.tar.gz"
 
 		// Download file from web
-		out, err := os.Create(tmp_dir)
+		out, err := os.Create(tmp_archive)
 		if err != nil {
 			rainbow.Alertf("%s\n", err.Error())
 			return
@@ -59,13 +61,13 @@ var Upgrade = &Action{
 
 		fmt.Printf("Downloaded: %d bytes\n", n)
 
-		command := "tar -xvf " + tmp_dir + " -C " + exe_folder
+		command := "sudo tar -xvf " + tmp_archive + " -C " + exe_folder
 
 		if runtime.GOOS == "windows" {
-			command = "sudo tar -xvf " + tmp_dir + " -C " + exe_folder
+			command = "tar -xvf " + tmp_archive + " -C " + exe_folder
 		}
 
-		c, err := io.AdminCmd(command)
+		c, err := io.CrossCmd(command)
 
 		if err != nil {
 			rainbow.Alertf("%s\n", err.Error())
