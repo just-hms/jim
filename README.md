@@ -78,7 +78,7 @@ Type `jim` to check if the installation was completed correctly.
 Adds a new command to `jim`
 
 ```
-jim --add command <value>
+$ jim --add command <value>
 ```
 
 If no value is specified `jim` will open your *default editor* and will let you insert a set of instruction in a temporary file.
@@ -90,7 +90,7 @@ If no value is specified `jim` will open your *default editor* and will let you 
 Clear all commands
 
 ```
-jim --clear
+$ jim --clear
 ```
 
 Will remove all commands.
@@ -102,7 +102,7 @@ Will remove all commands.
 `jim` will help you with what you need
 
 ```
-jim --help <--action>
+$ jim --help <--action>
 ```
 
 If provided, this utility will show more specific help for the action.
@@ -114,7 +114,7 @@ If provided, this utility will show more specific help for the action.
 List of all the available commands
 
 ```
-jim --ls <filter>
+$ jim --ls <filter>
 ```
 
 Will list all the available commands, filtering them with the provided filter.
@@ -126,7 +126,7 @@ Will list all the available commands, filtering them with the provided filter.
 Modify a command 
 
 ```
-jim --mod command
+$ jim --mod command
 ```
 
 Will open the command in your default editor and will let you modify it.
@@ -138,7 +138,7 @@ Will open the command in your default editor and will let you modify it.
 Remove one or more command 
 
 ```
-jim --rm command_1 <command_2> ...
+$ jim --rm command_1 <command_2> ...
 ```
 
 Will remove the provided commands.
@@ -150,7 +150,7 @@ Will remove the provided commands.
 Rename a command
 
 ```
-jim --rn command new_name
+$ jim --rn command new_name
 ```
 
 Will rename the specified command with the provided `new_name`.
@@ -162,7 +162,7 @@ Will rename the specified command with the provided `new_name`.
 Run a command
 
 ```
-jim <--run> command
+$ jim <--run> command
 ```
 
 Will run the specified command in *your default shell*, `--run` can be omitted.
@@ -174,7 +174,7 @@ Will run the specified command in *your default shell*, `--run` can be omitted.
 Show a list of all the `--watch` results
 
 ```
-jim --show <filter>
+$ jim --show <filter>
 ```
 
 Will list all of the commands' sessions. Filtering them with the provided filter.
@@ -185,10 +185,10 @@ A session is created when a command is launched with `--watch`.
 
 #### `--upgrade`
 
-Upgrade `jim`
+Upgrade `jim`, this action needs to be run with `sudo` on Linux
 
 ```
-jim --version
+# jim --version
 ```
 
 If you have installed the last version this action will do nothing
@@ -200,7 +200,7 @@ If you have installed the last version this action will do nothing
 Show the version of the executable
 
 ```
-jim --version
+$ jim --version
 ```
 
 Will output the installed `jim` version ex: `v1.0.1`.
@@ -212,7 +212,7 @@ Will output the installed `jim` version ex: `v1.0.1`.
 Run a command in the background and time it
 
 ```
-jim --watch command
+$ jim --watch command
 ```
 
 Will launch the command in background and save its time of execution. The time that the command took to execute will be visible using the `--show` utility.
