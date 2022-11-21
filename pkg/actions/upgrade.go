@@ -2,6 +2,7 @@ package actions
 
 import (
 	"fmt"
+	default_io "io"
 	"jim/internal/constants"
 	"jim/pkg/io"
 	"jim/pkg/rainbow"
@@ -39,12 +40,29 @@ var Upgrade = &Action{
 		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
 		tmp_dir := os.TempDir() + "/jim.tar.gz"
 
-		command := "curl -L " + update_link + " > " + tmp_dir + " ; " +
-			"tar -xvf " + tmp_dir + " -C " + exe_folder
+		// Download file from web
+		out, err := os.Create(tmp_dir)
+		if err != nil {
+			rainbow.Alertf("%s\n", err.Error())
+			return
+		}
+		defer out.Close()
+
+		resp, err = http.Get(update_link)
+		if err != nil {
+			rainbow.Alertf("%s\n", err.Error())
+			return
+		}
+		defer resp.Body.Close()
+
+		n, err := default_io.Copy(out, resp.Body)
+
+		fmt.Printf("Downloaded: %d bytes\n", n)
+
+		command := "tar -xvf " + tmp_dir + " -C " + exe_folder
 
 		if runtime.GOOS == "windows" {
-			command = "curl " + update_link + " -O " + tmp_dir + " ; " +
-				"sudo tar -xvf " + tmp_dir + " -C " + exe_folder
+			command = "sudo tar -xvf " + tmp_dir + " -C " + exe_folder
 		}
 
 		c, err := io.AdminCmd(command)
