@@ -4,6 +4,7 @@ package io
 
 import (
 	"errors"
+	"jim/pkg/rainbow"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -16,8 +17,11 @@ func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 	)
 }
 
-func RequireAdmin(){
-
+func RequireAdmin() {
+	if os.Getuid() != 0 {
+		rainbow.Alertf("permission denied\n")
+		os.Exit(0)
+	}
 }
 
 func CrossCmd(arg ...string) (*exec.Cmd, error) {

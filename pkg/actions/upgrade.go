@@ -2,7 +2,6 @@ package actions
 
 import (
 	"fmt"
-	default_io "io"
 	"jim/internal/constants"
 	"jim/pkg/io"
 	"jim/pkg/rainbow"
@@ -57,33 +56,17 @@ var Upgrade = &Action{
 		}
 		defer resp.Body.Close()
 
-		n, err := default_io.Copy(out, resp.Body)
-
-		fmt.Printf("Downloaded: %d bytes\n", n)
-
-		command := "sudo tar -xvf " + tmp_archive + " -C " + exe_folder
-
-		if runtime.GOOS == "windows" {
-			command = "tar -xvf " + tmp_archive + " -C " + exe_folder
-		}
-
-		c, err := io.CrossCmd(command)
-
 		if err != nil {
 			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 
 		// rename the executable so it doesn't brake
-
 		os.Rename(exe_path, exe_path+".old")
 
-		// run the upgrade
-
-		if err := c.Run(); err != nil {
+		if err := io.Untar(exe_folder, resp.Body); err != nil {
 			rainbow.Alertf("%s\n", err.Error())
 			os.Rename(exe_path+".old", exe_path)
-			return
 		}
 	},
 	Description:     "upgrade jim",

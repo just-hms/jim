@@ -30,12 +30,6 @@ func runMeElevated() {
 	}
 }
 
-func isRunningAsAdmin() bool {
-	_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
-
-	return err == nil
-}
-
 func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 
 	return CrossCmd(
