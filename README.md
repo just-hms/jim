@@ -11,7 +11,7 @@ The `jim` command line utility enables running long commands with one word, it's
 
 <br>
 
-## Why `jim`? <img style="width:3rem;transform: translate(0, 0.5rem) rotate(-33deg);" src="./assets/jim.png" alt="jim">
+## Why `jim`? <img style="margin-bottom:-0.5rem;width:3rem;" src="./assets/jim.png" alt="jim">
 
 - The main focus of `jim` is to let you re-use shell commands that you previously inserted in it. For example:
 
@@ -45,7 +45,7 @@ if a command value starts with something like
 
 `jim` will launch the command using `python3`
 
-## Installation <img style="width:3rem;transform: translate(0, 0.5rem) rotate(-120deg);" src="./assets/jim.png" alt="jim">
+## Installation <img style="margin-bottom:-0.5rem;width:3rem;" src="./assets/jim.png" alt="jim">
 
 ### Windows installation
 
@@ -71,7 +71,7 @@ $ sudo mkdir -p /opt/jim && sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
 $ [ ! -f "/usr/local/bin/jim" ] && sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```
 
-## Usage <div style="display:inline-block;transform: translate(0, 0.5rem) rotate(47deg);"><img style="width:3rem;" src="./assets/jim.png" alt="jim"><div>
+## Usage <img style="margin-bottom:-0.5rem;width:3rem;" src="./assets/jim.png" alt="jim">
 
 Type `jim` to check if the installation was completed correctly.
 
