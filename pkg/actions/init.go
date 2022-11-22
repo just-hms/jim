@@ -117,7 +117,6 @@ func ContinueInBackground(command models.Command, params string) {
 		params,
 	)
 
-	c.Stderr = os.Stderr
 	c.Run()
 }
 

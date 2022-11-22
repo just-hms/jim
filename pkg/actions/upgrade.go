@@ -66,6 +66,8 @@ var Upgrade = &Action{
 
 		if err := io.Untar(exe_folder, resp.Body); err != nil {
 			rainbow.Alertf("%s\n", err.Error())
+
+			// re-rename it in case of errors
 			os.Rename(exe_path+".old", exe_path)
 		}
 	},
