@@ -3,7 +3,6 @@ package actions
 import (
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
-	"jim/pkg/test"
 
 	"strings"
 	"time"
@@ -23,11 +22,6 @@ var Watch = &Action{
 
 		if len(args) == 2 {
 			params = strings.Join(args[1:], " ")
-		}
-
-		if test.IsTesting() {
-			WatchCommand(command, params)
-			return
 		}
 
 		// continue in the BackgroundSubAction
