@@ -47,6 +47,16 @@ if a command value starts with something like
 
 `jim` will launch the command using `python3`
 
+### Self upgrade
+
+if you've already installed `jim`, just type
+
+```
+# jim --upgrade 
+```
+
+to upgrade it
+
 ## Installation 
 
 ### Windows installation
