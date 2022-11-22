@@ -71,7 +71,7 @@ $ sudo mkdir -p /opt/jim && sudo tar -xvf /tmp/jim.tar.gz -C /opt/jim/
 $ [ ! -f "/usr/local/bin/jim" ] && sudo ln -s /opt/jim/jim /usr/local/bin/jim
 ```
 
-## Usage <img style="width:3rem;transform: translate(0, 0.5rem) rotate(47deg);" src="./assets/jim.png" alt="jim">
+## Usage <div style="display:inline-block;transform: translate(0, 0.5rem) rotate(47deg);"><img style="width:3rem;" src="./assets/jim.png" alt="jim"><div>
 
 Type `jim` to check if the installation was completed correctly.
 
