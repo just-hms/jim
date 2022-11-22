@@ -1,6 +1,8 @@
 <p align="center">
 <img style="width:12rem;" src="./assets/jim.png" alt="jim">
 <br>
+Jim
+<br>
 <br>
 <a href="https://go.dev"><img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="golang"></a>
 <a style="margin:0px 1rem;"href="https://github.com/tidwall/buntdb"><img style="height:28px;" src="https://github.com/tidwall/buntdb/raw/master/logo.png" alt="Bunt DB"></a>
