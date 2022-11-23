@@ -85,7 +85,7 @@ $ [ ! -f "/usr/local/bin/jim" ] && sudo ln -s /opt/jim/jim /usr/local/bin/jim
 
 ## Usage
 
-Type `jim` to check if the installation was completed correctly.
+Type `jim --version` to check if the installation was completed correctly.
 
 ### Available Actions
 
