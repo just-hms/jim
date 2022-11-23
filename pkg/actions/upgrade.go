@@ -39,15 +39,8 @@ var Upgrade = &Action{
 		exe_path := io.Executable()
 
 		update_link := "https://github.com/just-hms/jim/releases/latest/download/jim-" + runtime.GOOS + "-amd64.tar.gz"
-		tmp_archive := os.TempDir() + "/jim.tar.gz"
 
 		// Download file from web
-		out, err := os.Create(tmp_archive)
-		if err != nil {
-			rainbow.Alertf("%s\n", err.Error())
-			return
-		}
-		defer out.Close()
 
 		resp, err = http.Get(update_link)
 		if err != nil {
@@ -55,11 +48,6 @@ var Upgrade = &Action{
 			return
 		}
 		defer resp.Body.Close()
-
-		if err != nil {
-			rainbow.Alertf("%s\n", err.Error())
-			return
-		}
 
 		// rename the executable so it doesn't brake
 		os.Rename(exe_path, exe_path+".old")
