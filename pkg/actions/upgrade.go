@@ -15,11 +15,6 @@ import (
 var Upgrade = &Action{
 	Value: func(args []string) {
 
-		if err := io.RequireAdmin(); err != nil {
-			rainbow.Alertf("%s\n", err.Error())
-			return
-		}
-
 		// check if the version of jim is the last
 
 		resp, err := http.Get("https://github.com/just-hms/jim/releases/latest")
@@ -33,6 +28,11 @@ var Upgrade = &Action{
 
 		if last_version == constants.Version {
 			fmt.Println("No applicable update found.")
+			return
+		}
+
+		if err := io.RequireAdmin(); err != nil {
+			rainbow.Alertf("%s\n", err.Error())
 			return
 		}
 

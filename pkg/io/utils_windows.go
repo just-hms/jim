@@ -27,7 +27,6 @@ func runMeElevated() error {
 }
 
 func DetachedCmd(arg ...string) (*exec.Cmd, error) {
-
 	return CrossCmd(
 		"Invoke-Expression",
 
