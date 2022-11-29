@@ -43,6 +43,4 @@ var Show = &Action{
 		return true
 	},
 	HelpDescription: " Show a list of all the --watch results using this syntax\n\n     jim --show <filter>\n\n Will list all of the commands' sessions. Filtering them with\n the provided filter.\n A session is created when a command is launched with --watch.",
-	BackgroundSubAction: func([]string) {
-	},
 }

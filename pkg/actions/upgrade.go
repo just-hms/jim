@@ -15,7 +15,10 @@ import (
 var Upgrade = &Action{
 	Value: func(args []string) {
 
-		io.RequireAdmin()
+		if err := io.RequireAdmin(); err != nil {
+			rainbow.Alertf("%s\n", err.Error())
+			return
+		}
 
 		// check if the version of jim is the last
 

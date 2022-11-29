@@ -94,12 +94,6 @@ func FileInput(file_default_content string) (string, error) {
 
 }
 
-func isRunningAsAdmin() bool {
-	_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
-
-	return err == nil
-}
-
 func InterceptStdout(callback func()) string {
 
 	rescueStdout := os.Stdout

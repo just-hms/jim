@@ -14,10 +14,11 @@ require (
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tidwall/rtred v0.1.2 // indirect
 	github.com/tidwall/tinyqueue v0.1.1 // indirect
-	golang.org/x/sys v0.2.0 
 )
 
 require (
 	github.com/fatih/color v1.13.0
 	github.com/go-playground/assert v1.2.1
 )
+
+require golang.org/x/sys v0.2.0

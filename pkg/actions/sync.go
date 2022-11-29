@@ -12,13 +12,18 @@ package actions
 //	move aliases between local and global
 
 // HOW TO CREATE A NEW REPO ON GITHUB
-// $ touch README.md
 // $ git init
-// $ git add README.md
+// $ git add .
 // $ git commit -m "first commit"
+
 // $ git remote add origin git@github.com:alexpchin/<reponame>.git
 // $ git push -u origin master
 
-// Push an existing repository from the command line
-// $ git remote add origin git@github.com:alexpchin/<reponame>.git
-// $ git push -u origin master
+var Sync = &Action{
+	Value: func(args []string) {
+
+	},
+	ArgumentsCheck: func(args []string) bool {
+		return len(args) == 1
+	},
+}

@@ -3,8 +3,8 @@
 package io
 
 import (
+	"bufio"
 	"errors"
-	"jim/pkg/rainbow"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -15,13 +15,6 @@ func DetachedCmd(arg ...string) (*exec.Cmd, error) {
 	return CrossCmd(
 		"'" + arg[0] + "' " + strings.Join(arg[1:], " ") + "& disown",
 	)
-}
-
-func RequireAdmin() {
-	if os.Getuid() != 0 {
-		rainbow.Alertf("permission denied\n")
-		os.Exit(0)
-	}
 }
 
 func CrossCmd(arg ...string) (*exec.Cmd, error) {
@@ -56,9 +49,55 @@ func GetDefaultTextEditor() string {
 	return editor
 }
 
-func ConfigFolder() string {
-	configFolder, _ := os.LookupEnv("HOME")
-	configFolder = filepath.Join(configFolder, "/.local/share/jim")
+func RequireAdmin() error {
+	if os.Getuid() != 0 {
+		return errors.New("permission denied")
+		os.Exit(0)
+	}
 
+	return nil
+}
+
+func ConfigFolder() string {
+
+	configFolder := os.Getenv("HOME")
+
+	// get the config folder of the sudo user
+	if isRunningAsAdmin() {
+
+		sudo_user := os.Getenv("SUDO_USER")
+
+		if sudo_user != "" {
+			configFolder, _ = getUserHome(sudo_user)
+		}
+	}
+
+	configFolder = filepath.Join(configFolder, ".local/share/jim")
 	return configFolder
+
+}
+
+func isRunningAsAdmin() bool {
+	return os.Getuid() == 0
+}
+
+func getUserHome(username string) (string, error) {
+	file, err := os.Open("/etc/passwd")
+	if err != nil {
+		return "", errors.New("error accessing config folder")
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	// optionally, resize scanner's capacity for lines over 64K, see next example
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.HasPrefix(line, username) {
+			return strings.Split(line, ":")[5], nil
+		}
+	}
+
+	return "", errors.New("user not found")
+
 }

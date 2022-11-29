@@ -1,7 +1,6 @@
 package io
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -11,7 +10,7 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-func runMeElevated() {
+func runMeElevated() error {
 	verb := "runas"
 	exe, _ := os.Executable()
 	cwd, _ := os.Getwd()
@@ -24,10 +23,7 @@ func runMeElevated() {
 
 	var showCmd int32 = 1 //SW_NORMAL
 
-	err := windows.ShellExecute(0, verbPtr, exePtr, argPtr, cwdPtr, showCmd)
-	if err != nil {
-		fmt.Println(err)
-	}
+	return windows.ShellExecute(0, verbPtr, exePtr, argPtr, cwdPtr, showCmd)
 }
 
 func DetachedCmd(arg ...string) (*exec.Cmd, error) {
@@ -56,17 +52,30 @@ func GetDefaultTextEditor() string {
 	return "notepad"
 }
 
+func RequireAdmin() error {
+
+	if isRunningAsAdmin() {
+		return nil
+	}
+
+	if err := runMeElevated(); err != nil {
+		return err
+	}
+
+	os.Exit(0)
+	return nil
+}
+
 func ConfigFolder() string {
 
-	configFolder, _ := os.LookupEnv("APPDATA")
+	configFolder, _ := os.UserConfigDir()
 	configFolder = filepath.Join(configFolder, "/jim")
 
 	return configFolder
 }
 
-func RequireAdmin() {
-	if !isRunningAsAdmin() {
-		runMeElevated()
-		os.Exit(0)
-	}
+func isRunningAsAdmin() bool {
+	_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
+
+	return err == nil
 }
