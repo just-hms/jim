@@ -17,40 +17,27 @@ func Levenshtein(a, b string) int {
 		return 0
 	}
 
-	// We need to convert to []rune if the strings are non-ASCII.
-	// This could be avoided by using utf8.RuneCountInString
-	// and then doing some juggling with rune indices,
-	// but leads to far more bounds checks. It is a reasonable trade-off.
 	s1 := []rune(a)
 	s2 := []rune(b)
 
-	// swap to save some memory O(min(a,b)) instead of O(a)
 	if len(s1) > len(s2) {
 		s1, s2 = s2, s1
 	}
 	lenS1 := len(s1)
 	lenS2 := len(s2)
 
-	// Init the row.
 	var x []uint16
 	if lenS1+1 > minLengthThreshold {
 		x = make([]uint16, lenS1+1)
 	} else {
-		// We make a small optimization here for small strings.
-		// Because a slice of constant length is effectively an array,
-		// it does not allocate. So we can re-slice it to the right length
-		// as long as it is below a desired threshold.
 		x = make([]uint16, minLengthThreshold)
 		x = x[:lenS1+1]
 	}
 
-	// we start from 1 because index 0 is already 0.
 	for i := 1; i < len(x); i++ {
 		x[i] = uint16(i)
 	}
 
-	// make a dummy bounds check to prevent the 2 bounds check down below.
-	// The one inside the loop is particularly costly.
 	_ = x[lenS1]
 	// fill in the rest
 	for i := 1; i <= lenS2; i++ {
