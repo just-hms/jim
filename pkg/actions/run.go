@@ -57,6 +57,8 @@ func RunCommand(command models.Command, args string) {
 		command.Value, err = tokenize.Tokenize(command.Value, strings.Split(args, ","))
 	}
 
+	fmt.Println(command.Value)
+
 	if err != nil {
 		rainbow.Alertf("%s\n", err.Error())
 		return
@@ -86,16 +88,12 @@ func RunCommand(command models.Command, args string) {
 		c = exec.Command(
 			exe,
 			tmpFile.Name(),
-			args,
 		)
 
 		tmpFile.Close()
 
 	} else {
-		c, err = io.CrossCmd(
-			command.Value,
-			args,
-		)
+		c, err = io.CrossCmd(command.Value)
 
 		if err != nil {
 			fmt.Printf("%s\n", err.Error())
