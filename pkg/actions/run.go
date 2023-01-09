@@ -8,6 +8,7 @@ import (
 	"jim/pkg/models"
 	"jim/pkg/rainbow"
 	"jim/pkg/test"
+	"jim/pkg/tokenize"
 	"os"
 	"os/exec"
 	"strings"
@@ -50,9 +51,22 @@ func RunCommand(command models.Command, args string) {
 		err error
 	)
 
+	if strings.TrimSpace(args) == "" {
+		command.Value, err = tokenize.Tokenize(command.Value, []string{})
+	} else {
+		command.Value, err = tokenize.Tokenize(command.Value, strings.Split(args, ","))
+	}
+
+	if err != nil {
+		rainbow.Alertf("%s\n", err.Error())
+		return
+	}
+
 	if strings.HasPrefix(command.Value, constants.SHEBANG_PREFIX) {
 
-		if len(strings.Split(command.Value, "\n")) < 1 {
+		lines := strings.Split(command.Value, "\n")
+
+		if len(lines) < 1 {
 			return
 		}
 
@@ -62,8 +76,6 @@ func RunCommand(command models.Command, args string) {
 		if tmpFileErr != nil {
 			return
 		}
-
-		lines := strings.Split(command.Value, "\n")
 
 		exe := strings.TrimSpace(strings.Split(lines[0], constants.SHEBANG_PREFIX)[1])
 		value := strings.Join(lines[1:], "\n")
@@ -78,16 +90,17 @@ func RunCommand(command models.Command, args string) {
 		)
 
 		tmpFile.Close()
+
 	} else {
 		c, err = io.CrossCmd(
 			command.Value,
 			args,
 		)
-	}
 
-	if err != nil {
-		fmt.Printf("%s\n", err.Error())
-		return
+		if err != nil {
+			fmt.Printf("%s\n", err.Error())
+			return
+		}
 	}
 
 	if test.IsTesting() {
