@@ -57,8 +57,6 @@ func RunCommand(command models.Command, args string) {
 		command.Value, err = tokenize.Tokenize(command.Value, strings.Split(args, ","))
 	}
 
-	fmt.Println(command.Value)
-
 	if err != nil {
 		rainbow.Alertf("%s\n", err.Error())
 		return

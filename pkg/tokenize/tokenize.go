@@ -2,7 +2,6 @@ package tokenize
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -37,7 +36,6 @@ func Tokenize(text string, args []string) (string, error) {
 
 		// if it is passed replace it with the value
 		if index < len(args) {
-			fmt.Println(args)
 			resultString = strings.ReplaceAll(resultString, fullMatch, args[index])
 			continue
 		}
